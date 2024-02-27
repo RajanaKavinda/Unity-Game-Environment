@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 
 public class GetMethod : MonoBehaviour
 {
@@ -36,6 +37,8 @@ public class GetMethod : MonoBehaviour
             if (request.result != UnityWebRequest.Result.Success)
             {
                 outputArea.text = request.error;
+                Invoke("NextLevel", 4f);
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             }
             else
             {
@@ -43,6 +46,9 @@ public class GetMethod : MonoBehaviour
                 string jsonResponse = request.downloadHandler.text;
                 LoginResponse loginResponse = JsonUtility.FromJson<LoginResponse>(jsonResponse);
                 outputArea.text = loginResponse.token;
+                Invoke("NextLevel", 4f);
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
+
             }
         }
     }
