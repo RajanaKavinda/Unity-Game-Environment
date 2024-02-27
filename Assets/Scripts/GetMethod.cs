@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 public class GetMethod : MonoBehaviour
 {
     InputField outputArea;
-    string apiKey = "NjVkNDIyMjNmMjc3NmU3OTI5MWJmZGIyOjY1ZDQyMjIzZjI3NzZlNzkyOTFiZmRhOA"; // Replace with your actual API key
+    [SerializeField] string apiKey = "NjVkNDIyMjNmMjc3NmU3OTI5MWJmZGIyOjY1ZDQyMjIzZjI3NzZlNzkyOTFiZmRhOA"; // Replace with your actual API key
 
     void Start()
     {
@@ -42,7 +42,7 @@ public class GetMethod : MonoBehaviour
                 // Parse the response to get the JWT token
                 string jsonResponse = request.downloadHandler.text;
                 LoginResponse loginResponse = JsonUtility.FromJson<LoginResponse>(jsonResponse);
-                outputArea.text = "JWT Token: " + loginResponse.token;
+                outputArea.text = loginResponse.token;
             }
         }
     }
