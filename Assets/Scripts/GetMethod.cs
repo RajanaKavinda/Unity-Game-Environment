@@ -9,6 +9,8 @@ public class GetMethod : MonoBehaviour
     InputField outputArea;
     [SerializeField] string apiKey = "NjVkNDIyMjNmMjc3NmU3OTI5MWJmZGIyOjY1ZDQyMjIzZjI3NzZlNzkyOTFiZmRhOA"; // Replace with your actual API key
 
+    public static string jwtToken; // Static variable to store the JWT token
+
     void Start()
     {
         outputArea = GameObject.Find("OutputArea").GetComponent<InputField>();
@@ -45,10 +47,9 @@ public class GetMethod : MonoBehaviour
                 // Parse the response to get the JWT token
                 string jsonResponse = request.downloadHandler.text;
                 LoginResponse loginResponse = JsonUtility.FromJson<LoginResponse>(jsonResponse);
-                outputArea.text = loginResponse.token;
+                jwtToken = loginResponse.token; // Store the JWT token in the static variable
                 Invoke("NextLevel", 4f);
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
-
             }
         }
     }
@@ -60,3 +61,6 @@ public class GetMethod : MonoBehaviour
         public string token;
     }
 }
+
+
+
