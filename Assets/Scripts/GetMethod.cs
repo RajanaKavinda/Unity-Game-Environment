@@ -39,7 +39,7 @@ public class GetMethod : MonoBehaviour
             if (request.result != UnityWebRequest.Result.Success)
             {
                 outputArea.text = request.error;
-                Invoke("NextLevel", 4f);
+                yield return new WaitForSeconds(1f);
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             }
             else
@@ -48,7 +48,7 @@ public class GetMethod : MonoBehaviour
                 string jsonResponse = request.downloadHandler.text;
                 LoginResponse loginResponse = JsonUtility.FromJson<LoginResponse>(jsonResponse);
                 jwtToken = loginResponse.token; // Store the JWT token in the static variable
-                Invoke("NextLevel", 4f);
+                yield return new WaitForSeconds(1f);
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
             }
         }
