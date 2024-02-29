@@ -10,8 +10,13 @@ public class getPlayerData : MonoBehaviour
 
     void Start()
     {
-        profileArea = GameObject.Find("PlayerInformation").GetComponent<InputField>();
-        // Make sure jwtToken is not null before fetching player information
+        profileArea = GameObject.Find("PlayerInformation")?.GetComponent<InputField>();
+        if (profileArea == null)
+        {
+            Debug.LogError("PlayerInformation InputField not found.");
+            return;
+        }
+
         if (GetMethod.jwtToken != null)
         {
             StartCoroutine(FetchPlayerInformation());
@@ -26,7 +31,7 @@ public class getPlayerData : MonoBehaviour
     IEnumerator FetchPlayerInformation()
     {
         UnityWebRequest request = UnityWebRequest.Get(apiUrl);
-        request.SetRequestHeader("Authorization", "Bearer " + GetMethod.jwtToken); // Use the JWT token from GetMethod script
+        request.SetRequestHeader("Authorization", "Bearer " + GetMethod.jwtToken);
         yield return request.SendWebRequest();
 
         if (request.result != UnityWebRequest.Result.Success)
@@ -38,18 +43,26 @@ public class getPlayerData : MonoBehaviour
         {
             string jsonResponse = request.downloadHandler.text;
             PlayerProfileData profileData = JsonUtility.FromJson<PlayerProfileData>(jsonResponse);
-            UpdatePlayerInformation(profileData);
+
+            if (profileData.user == null)
+            {
+                Debug.LogError("Player data is null or malformed.");
+                profileArea.text = "Error fetching player information";
+            }
+            else
+            {
+                UpdatePlayerInformation(profileData);
+            }
         }
     }
 
     void UpdatePlayerInformation(PlayerProfileData profileData)
     {
         profileArea.text = $"Name: {profileData.user.firstname} {profileData.user.lastname}\n" +
-                   $"Username: {profileData.user.username}\n" +
-                   $"NIC: {profileData.user.nic}\n" +
-                   $"Phone Number: {profileData.user.phoneNumber}\n" +
-                   $"Email: {profileData.user.email}\n";
-
+                           $"Username: {profileData.user.username}\n" +
+                           $"NIC: {profileData.user.nic}\n" +
+                           $"Phone Number: {profileData.user.phoneNumber}\n" +
+                           $"Email: {profileData.user.email}\n";
     }
 
     [System.Serializable]

@@ -31,9 +31,19 @@ public class UserProfilePage : MonoBehaviour
         if (request.result == UnityWebRequest.Result.Success)
         {
             string jsonResponse = request.downloadHandler.text;
-            currentUserData = JsonUtility.FromJson<UserData>(jsonResponse);
-            Debug.Log("Player data received");
-            UpdateProfileFields();
+            UserDataResponse userDataResponse = JsonUtility.FromJson<UserDataResponse>(jsonResponse);
+
+            if (userDataResponse != null && userDataResponse.user != null)
+            {
+                currentUserData = userDataResponse.user;
+                UpdateProfileFields();
+                Debug.Log("Player data received");
+                Debug.Log(currentUserData.firstname);
+            }
+            else
+            {
+                Debug.LogError("Error: User data is null or invalid JSON response structure.");
+            }
         }
         else
         {
@@ -83,6 +93,12 @@ public class UserProfilePage : MonoBehaviour
         {
             Debug.LogError("Error updating user data: " + request.error);
         }
+    }
+
+    [System.Serializable]
+    private class UserDataResponse
+    {
+        public UserData user;
     }
 
     [System.Serializable]
