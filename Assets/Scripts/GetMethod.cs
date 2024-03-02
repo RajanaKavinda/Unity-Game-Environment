@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class GetMethod : MonoBehaviour
 {
     InputField outputArea;
-    [SerializeField] string apiKey = "NjVkNDIyMjNmMjc3NmU3OTI5MWJmZGIyOjY1ZDQyMjIzZjI3NzZlNzkyOTFiZmRhOA"; // Replace with your actual API key
+    string apiKey = "NjVkNDIyMjNmMjc3NmU3OTI5MWJmZGIyOjY1ZDQyMjIzZjI3NzZlNzkyOTFiZmRhOA"; // Replace with your actual API key
 
     public static string jwtToken; // Static variable to store the JWT token
 
