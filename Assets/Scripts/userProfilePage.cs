@@ -3,9 +3,14 @@ using UnityEngine;
 using UnityEngine.Networking;
 using TMPro;
 
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
+
 public class UserProfilePage : MonoBehaviour
 {
     private const string apiUrl = "http://20.15.114.131:8080/api/user/profile/view";
+    private const string updateUrl = "http://20.15.114.131:8080/api/user/profile/update";
 
     public TMP_InputField firstName;
     public TMP_InputField lastName;
@@ -16,10 +21,12 @@ public class UserProfilePage : MonoBehaviour
     public TMP_InputField profilePicture;
 
     private UserData currentUserData;
+    private NewUserData ChangedUserData;
 
     void Start()
     {
         StartCoroutine(FetchUserData());
+        GameObject.Find("submit").GetComponent<Button>().onClick.AddListener(SaveChanges);
     }
 
     IEnumerator FetchUserData()
@@ -59,18 +66,18 @@ public class UserProfilePage : MonoBehaviour
         NIC.text = currentUserData.nic;
         phoneNumber.text = currentUserData.phoneNumber;
         email.text = currentUserData.email;
-        profilePicture.text = currentUserData.profilePicture;
+        profilePicture.text = currentUserData.profilePictureUrl;
     }
 
     public void SaveChanges()
     {
-        currentUserData.firstname = firstName.text;
-        currentUserData.lastname = lastName.text;
-        currentUserData.username = username.text;
-        currentUserData.nic = NIC.text;
-        currentUserData.phoneNumber = phoneNumber.text;
-        currentUserData.email = email.text;
-        currentUserData.profilePicture = profilePicture.text;
+        ChangedUserData = new NewUserData();
+        ChangedUserData.firstname = firstName.text;
+        ChangedUserData.lastname = lastName.text;
+        ChangedUserData.nic = NIC.text;
+        ChangedUserData.phoneNumber = phoneNumber.text;
+        ChangedUserData.email = email.text;
+        ChangedUserData.profilePictureUrl = profilePicture.text;
 
         StartCoroutine(UpdateUserData());
     }
@@ -80,18 +87,19 @@ public class UserProfilePage : MonoBehaviour
         string jsonUserData = JsonUtility.ToJson(currentUserData);
         byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonUserData);
 
-        UnityWebRequest request = UnityWebRequest.Put(apiUrl, bodyRaw);
-        request.SetRequestHeader("Authorization", "Bearer " + GetMethod.jwtToken);
-        request.SetRequestHeader("Content-Type", "application/json");
-        yield return request.SendWebRequest();
+        UnityWebRequest request1 = UnityWebRequest.Put(updateUrl, bodyRaw);
+        request1.SetRequestHeader("Authorization", "Bearer " + GetMethod.jwtToken);
+        request1.SetRequestHeader("Content-Type", "application/json");
+        yield return request1.SendWebRequest();
 
-        if (request.result == UnityWebRequest.Result.Success)
+        if (request1.result == UnityWebRequest.Result.Success)
         {
             Debug.Log("User data updated successfully!");
+            SceneManager.LoadScene("Main Menu");
         }
         else
         {
-            Debug.LogError("Error updating user data: " + request.error);
+            Debug.LogError("Error updating user data: " + request1.error);
         }
     }
 
@@ -110,6 +118,16 @@ public class UserProfilePage : MonoBehaviour
         public string nic;
         public string phoneNumber;
         public string email;
-        public string profilePicture;
+        public string profilePictureUrl;
+    }
+
+    private class NewUserData
+    {
+        public string firstname;
+        public string lastname;       
+        public string nic;
+        public string phoneNumber;
+        public string email;
+        public string profilePictureUrl;
     }
 }
