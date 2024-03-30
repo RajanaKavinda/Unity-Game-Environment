@@ -15,16 +15,16 @@ public class SceneNavigator : MonoBehaviour
 
     public void GoToGameScene()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene("Game");
     }
 
     public void GoToMarksScene()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        SceneManager.LoadScene("Marks");
     }
 
     public void GoToProfilePage()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 2);
+        SceneManager.LoadScene("View Player Profile");
     }
 }
