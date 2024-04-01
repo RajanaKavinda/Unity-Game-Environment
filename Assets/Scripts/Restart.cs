@@ -14,6 +14,6 @@ public class Restart : MonoBehaviour
     IEnumerator LoadNextSceneAfterDelay()
     {
         yield return new WaitForSeconds(3f);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 2);
+        SceneManager.LoadScene("Loading");
     }
 }

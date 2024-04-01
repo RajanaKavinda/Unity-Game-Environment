@@ -40,7 +40,7 @@ public class GetMethod : MonoBehaviour
             {
                 outputArea.text = request.error;
                 yield return new WaitForSeconds(1f);
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                SceneManager.LoadScene("Error");
             }
             else
             {
@@ -49,7 +49,7 @@ public class GetMethod : MonoBehaviour
                 LoginResponse loginResponse = JsonUtility.FromJson<LoginResponse>(jsonResponse);
                 jwtToken = loginResponse.token; // Store the JWT token in the static variable
                 yield return new WaitForSeconds(1f);
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
+                SceneManager.LoadScene("Player Profile");
             }
         }
     }
