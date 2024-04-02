@@ -3,9 +3,15 @@ using UnityEngine;
 using UnityEngine.Networking;
 using TMPro;
 
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using System.Text;
+
+
 public class UserProfilePage : MonoBehaviour
 {
     private const string apiUrl = "http://20.15.114.131:8080/api/user/profile/view";
+    private const string updateUrl = "http://20.15.114.131:8080/api/user/profile/update";
 
     public TMP_InputField firstName;
     public TMP_InputField lastName;
@@ -13,13 +19,15 @@ public class UserProfilePage : MonoBehaviour
     public TMP_InputField NIC;
     public TMP_InputField phoneNumber;
     public TMP_InputField email;
-    public TMP_InputField profilePicture;
+    
 
     private UserData currentUserData;
+    private NewUserData ChangedUserData;
 
     void Start()
     {
         StartCoroutine(FetchUserData());
+        GameObject.Find("submit").GetComponent<Button>().onClick.AddListener(SaveChanges);
     }
 
     IEnumerator FetchUserData()
@@ -59,41 +67,78 @@ public class UserProfilePage : MonoBehaviour
         NIC.text = currentUserData.nic;
         phoneNumber.text = currentUserData.phoneNumber;
         email.text = currentUserData.email;
-        profilePicture.text = currentUserData.profilePicture;
+        
     }
 
     public void SaveChanges()
     {
-        currentUserData.firstname = firstName.text;
-        currentUserData.lastname = lastName.text;
-        currentUserData.username = username.text;
-        currentUserData.nic = NIC.text;
-        currentUserData.phoneNumber = phoneNumber.text;
-        currentUserData.email = email.text;
-        currentUserData.profilePicture = profilePicture.text;
+        ChangedUserData = new NewUserData();
+        ChangedUserData.firstname = firstName.text;
+        ChangedUserData.lastname = lastName.text;
+        ChangedUserData.nic = NIC.text;
+        ChangedUserData.phoneNumber = phoneNumber.text;
+        ChangedUserData.email = email.text;
+
+        Debug.Log(ChangedUserData.lastname);
+        
 
         StartCoroutine(UpdateUserData());
     }
 
     IEnumerator UpdateUserData()
     {
-        string jsonUserData = JsonUtility.ToJson(currentUserData);
+        string jsonUserData = JsonUtility.ToJson(ChangedUserData);
         byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonUserData);
 
-        UnityWebRequest request = UnityWebRequest.Put(apiUrl, bodyRaw);
-        request.SetRequestHeader("Authorization", "Bearer " + GetMethod.jwtToken);
-        request.SetRequestHeader("Content-Type", "application/json");
-        yield return request.SendWebRequest();
+        UnityWebRequest request1 = UnityWebRequest.Put(updateUrl, bodyRaw);
+        request1.SetRequestHeader("Authorization", "Bearer " + GetMethod.jwtToken);
+        request1.SetRequestHeader("Content-Type", "application/json");
+        yield return request1.SendWebRequest();
 
-        if (request.result == UnityWebRequest.Result.Success)
+        if (request1.result == UnityWebRequest.Result.Success)
         {
             Debug.Log("User data updated successfully!");
+            StartCoroutine(SetProfileEdited());
+
+            SceneManager.LoadScene("Questionere Not Completed");
         }
         else
         {
-            Debug.LogError("Error updating user data: " + request.error);
+            Debug.LogError("Error updating user data: " + request1.error);
         }
     }
+
+    IEnumerator SetProfileEdited()
+    {
+        // URL of the endpoint to update the user profile
+        string url = "http://localhost:8080/energy-quest/user/profile/" + GetMethod.userID;
+
+        // Create a POST request
+        using (UnityWebRequest request = new UnityWebRequest(url, "POST"))
+        {
+            // Set the request headers
+            request.SetRequestHeader("Authorization", "Bearer " + GetMethod.jwtToken2);
+
+            // Send the request
+            yield return request.SendWebRequest();
+
+            // Check for errors
+            if (request.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError("Error setting profileEdited: " + request.error);
+            }
+            else
+            {
+                Debug.Log("ProfileEdited set successfully");
+
+                // Assuming you need to parse the response, you can do it here if needed
+                // PlayerProfileResponse profileResponse = JsonUtility.FromJson<PlayerProfileResponse>(request.downloadHandler.text);
+            }
+        }
+    }
+
+
+
 
     [System.Serializable]
     private class UserDataResponse
@@ -110,6 +155,16 @@ public class UserProfilePage : MonoBehaviour
         public string nic;
         public string phoneNumber;
         public string email;
-        public string profilePicture;
+        
+    }
+
+    private class NewUserData
+    {
+        public string firstname;
+        public string lastname;       
+        public string nic;
+        public string phoneNumber;
+        public string email;
+        
     }
 }
