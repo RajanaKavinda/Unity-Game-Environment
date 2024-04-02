@@ -29,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/View Player Profile.unity
     guid: 95378d3fa34ab2d488b7d5b78b114675
+  - enabled: 1
+    path: Assets/Scenes/Questionere Not Completed.unity
+    guid: cb31a1576de1dc14d8da809f3e710f22
   m_configObjects: {}

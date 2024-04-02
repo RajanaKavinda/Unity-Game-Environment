@@ -3,13 +3,21 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
+using System.Linq;
+using UnityEditor.PackageManager.Requests;
+using System.Collections.Generic;
+
 
 public class GetMethod : MonoBehaviour
 {
     InputField outputArea;
     string apiKey = "NjVkNDIyMjNmMjc3NmU3OTI5MWJmZGIyOjY1ZDQyMjIzZjI3NzZlNzkyOTFiZmRhOA"; // Replace with your actual API key
-
     public static string jwtToken; // Static variable to store the JWT token
+    public static string jwtToken2;
+    public static string userID;
+    public bool profileCompleted;
+    public bool questionereCompleted;
+    private string baseURL = "http://localhost:8080/energy-quest/user";
 
     void Start()
     {
@@ -23,8 +31,6 @@ public class GetMethod : MonoBehaviour
     {
         outputArea.text = "Loading...";
         string uri = "http://20.15.114.131:8080/api/login";
-
-        // Create JSON object for the request body
         string jsonRequestBody = "{\"apiKey\":\"" + apiKey + "\"}";
 
         using (UnityWebRequest request = new UnityWebRequest(uri, "POST"))
@@ -44,23 +50,138 @@ public class GetMethod : MonoBehaviour
             }
             else
             {
-                // Parse the response to get the JWT token
                 string jsonResponse = request.downloadHandler.text;
                 LoginResponse loginResponse = JsonUtility.FromJson<LoginResponse>(jsonResponse);
-                jwtToken = loginResponse.token; // Store the JWT token in the static variable
+                jwtToken = loginResponse.token;
+
                 yield return new WaitForSeconds(1f);
-                SceneManager.LoadScene("Player Profile");
+                yield return StartCoroutine(GetUserTokenCoroutine(jwtToken));
+
+                // SceneManager.LoadScene("Player Profile");
             }
         }
     }
 
-    // Class to represent the response body from the login endpoint
+    
+
+    IEnumerator GetUserTokenCoroutine(string jwtToken)
+    {
+        string jsonRequestBody = "\"" + jwtToken + "\"";
+        using (UnityWebRequest request = new UnityWebRequest(baseURL, "POST"))
+        {
+            request.SetRequestHeader("Content-Type", "application/json");
+            request.SetRequestHeader("accept", "*/*");
+
+            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonRequestBody);
+            request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
+            request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+
+            yield return request.SendWebRequest();
+
+            if (request.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError("Error getting user token: " + request.error);
+            }
+            else
+            {
+                string responseBody = request.downloadHandler.text;
+                UserResponse response = JsonUtility.FromJson<UserResponse>(responseBody);
+
+                userID = response.userID;
+                jwtToken2 = response.token;
+
+                Debug.Log("User ID: " + userID);
+                Debug.Log("JWT Token: " + jwtToken2);
+
+                yield return StartCoroutine(CheckProfileAndQuestionnaire());
+
+
+            }
+        }
+    }
+
+    IEnumerator CheckProfileAndQuestionnaire()
+    {
+        // URL of the endpoint with the user ID
+        string url = "http://localhost:8080/energy-quest/user/questionnaire/" + userID;
+
+        // Create a GET request
+        using (UnityWebRequest request = UnityWebRequest.PostWwwForm(url,""))
+        {
+            // Set the request headers
+            request.SetRequestHeader("Authorization", "Bearer " + jwtToken2);
+
+            // Send the request
+            yield return request.SendWebRequest();
+
+            // Check for errors
+            if (request.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError("Error checking profile and questionnaire: " + request.error);
+            }
+            else
+            {
+                // Parse the response
+                PlayerProfileResponse profileResponse = JsonUtility.FromJson<PlayerProfileResponse>(request.downloadHandler.text);
+
+                // Set profileCompleted and questionnaireCompleted properties
+                profileCompleted = profileResponse.profileEdited;
+                questionereCompleted = profileResponse.questionnaireTaken;
+
+                // Log the values for verification
+                Debug.Log("Profile Completed: " + profileCompleted);
+                Debug.Log("Questionnaire Completed: " + questionereCompleted);
+
+                if (profileCompleted == false)
+                {
+                    SceneManager.LoadScene("Player Profile");
+                }
+
+                else if (questionereCompleted == false)
+                {
+                    SceneManager.LoadScene("Questionere Not Completed");
+                }
+
+                else
+                {
+                    SceneManager.LoadScene("Main Menu");
+                }
+            }
+        }
+    }
+
+
+
+
+
+
+
+
     [System.Serializable]
     public class LoginResponse
     {
         public string token;
     }
+
+ 
+
+    [System.Serializable]
+    public class UserResponse
+    {
+        public string userID;
+        public string token;
+    }
+
+    
+
+    // Class to represent the response body from the user questionnaire endpoint
+    [System.Serializable]
+    public class PlayerProfileResponse
+    {
+        public int userId;
+        public string userName;
+        public bool profileEdited;
+        public bool questionnaireTaken;
+        public int questionnaireScore;
+    }
 }
-
-
-

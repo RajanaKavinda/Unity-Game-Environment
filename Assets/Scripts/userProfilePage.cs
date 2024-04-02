@@ -95,7 +95,7 @@ public class UserProfilePage : MonoBehaviour
         if (request1.result == UnityWebRequest.Result.Success)
         {
             Debug.Log("User data updated successfully!");
-            SceneManager.LoadScene("Main Menu");
+            SceneManager.LoadScene("Questionere Not Completed");
         }
         else
         {
