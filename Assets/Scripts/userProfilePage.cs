@@ -5,6 +5,7 @@ using TMPro;
 
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Text;
 
 
 public class UserProfilePage : MonoBehaviour
@@ -18,7 +19,7 @@ public class UserProfilePage : MonoBehaviour
     public TMP_InputField NIC;
     public TMP_InputField phoneNumber;
     public TMP_InputField email;
-    public TMP_InputField profilePicture;
+    
 
     private UserData currentUserData;
     private NewUserData ChangedUserData;
@@ -66,7 +67,7 @@ public class UserProfilePage : MonoBehaviour
         NIC.text = currentUserData.nic;
         phoneNumber.text = currentUserData.phoneNumber;
         email.text = currentUserData.email;
-        profilePicture.text = currentUserData.profilePictureUrl;
+        
     }
 
     public void SaveChanges()
@@ -77,14 +78,16 @@ public class UserProfilePage : MonoBehaviour
         ChangedUserData.nic = NIC.text;
         ChangedUserData.phoneNumber = phoneNumber.text;
         ChangedUserData.email = email.text;
-        ChangedUserData.profilePictureUrl = profilePicture.text;
+
+        Debug.Log(ChangedUserData.lastname);
+        
 
         StartCoroutine(UpdateUserData());
     }
 
     IEnumerator UpdateUserData()
     {
-        string jsonUserData = JsonUtility.ToJson(currentUserData);
+        string jsonUserData = JsonUtility.ToJson(ChangedUserData);
         byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonUserData);
 
         UnityWebRequest request1 = UnityWebRequest.Put(updateUrl, bodyRaw);
@@ -95,6 +98,8 @@ public class UserProfilePage : MonoBehaviour
         if (request1.result == UnityWebRequest.Result.Success)
         {
             Debug.Log("User data updated successfully!");
+            StartCoroutine(SetProfileEdited());
+
             SceneManager.LoadScene("Questionere Not Completed");
         }
         else
@@ -102,6 +107,38 @@ public class UserProfilePage : MonoBehaviour
             Debug.LogError("Error updating user data: " + request1.error);
         }
     }
+
+    IEnumerator SetProfileEdited()
+    {
+        // URL of the endpoint to update the user profile
+        string url = "http://localhost:8080/energy-quest/user/profile/" + GetMethod.userID;
+
+        // Create a POST request
+        using (UnityWebRequest request = new UnityWebRequest(url, "POST"))
+        {
+            // Set the request headers
+            request.SetRequestHeader("Authorization", "Bearer " + GetMethod.jwtToken2);
+
+            // Send the request
+            yield return request.SendWebRequest();
+
+            // Check for errors
+            if (request.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError("Error setting profileEdited: " + request.error);
+            }
+            else
+            {
+                Debug.Log("ProfileEdited set successfully");
+
+                // Assuming you need to parse the response, you can do it here if needed
+                // PlayerProfileResponse profileResponse = JsonUtility.FromJson<PlayerProfileResponse>(request.downloadHandler.text);
+            }
+        }
+    }
+
+
+
 
     [System.Serializable]
     private class UserDataResponse
@@ -118,7 +155,7 @@ public class UserProfilePage : MonoBehaviour
         public string nic;
         public string phoneNumber;
         public string email;
-        public string profilePictureUrl;
+        
     }
 
     private class NewUserData
@@ -128,6 +165,6 @@ public class UserProfilePage : MonoBehaviour
         public string nic;
         public string phoneNumber;
         public string email;
-        public string profilePictureUrl;
+        
     }
 }

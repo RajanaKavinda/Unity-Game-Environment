@@ -220,7 +220,7 @@ GameObject:
   - component: {fileID: 116984815}
   - component: {fileID: 116984814}
   m_Layer: 5
-  m_Name: Marks
+  m_Name: QuizReview
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -902,7 +902,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Marks
+  m_Text: Quiz Review
 --- !u!222 &485007200
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -17,7 +17,7 @@ public class GetMethod : MonoBehaviour
     public static string userID;
     public bool profileCompleted;
     public bool questionereCompleted;
-    private string baseURL = "http://localhost:8080/energy-quest/user";
+    
 
     void Start()
     {
@@ -66,6 +66,7 @@ public class GetMethod : MonoBehaviour
 
     IEnumerator GetUserTokenCoroutine(string jwtToken)
     {
+        string baseURL = "http://localhost:8080/energy-quest/user";
         string jsonRequestBody = "\"" + jwtToken + "\"";
         using (UnityWebRequest request = new UnityWebRequest(baseURL, "POST"))
         {
@@ -103,10 +104,10 @@ public class GetMethod : MonoBehaviour
     IEnumerator CheckProfileAndQuestionnaire()
     {
         // URL of the endpoint with the user ID
-        string url = "http://localhost:8080/energy-quest/user/questionnaire/" + userID;
+        string url = "http://localhost:8080/energy-quest/user/id/" + userID;
 
         // Create a GET request
-        using (UnityWebRequest request = UnityWebRequest.PostWwwForm(url,""))
+        using (UnityWebRequest request = UnityWebRequest.Get(url))
         {
             // Set the request headers
             request.SetRequestHeader("Authorization", "Bearer " + jwtToken2);
@@ -132,16 +133,14 @@ public class GetMethod : MonoBehaviour
                 Debug.Log("Profile Completed: " + profileCompleted);
                 Debug.Log("Questionnaire Completed: " + questionereCompleted);
 
-                if (profileCompleted == false)
+                if (!profileCompleted)
                 {
                     SceneManager.LoadScene("Player Profile");
                 }
-
-                else if (questionereCompleted == false)
+                else if (!questionereCompleted)
                 {
                     SceneManager.LoadScene("Questionere Not Completed");
                 }
-
                 else
                 {
                     SceneManager.LoadScene("Main Menu");
@@ -149,6 +148,7 @@ public class GetMethod : MonoBehaviour
             }
         }
     }
+
 
 
 
