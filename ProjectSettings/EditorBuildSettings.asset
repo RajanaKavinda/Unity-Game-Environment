@@ -17,7 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Player Profile.unity
     guid: 48eb382884c9a4d4dbf2a891942c1ede
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Marks.unity
     guid: dc86b73325a4913429a9c25fa6c758b7
   - enabled: 1
