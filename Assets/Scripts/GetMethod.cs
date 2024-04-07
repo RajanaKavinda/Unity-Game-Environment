@@ -3,9 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
-using System.Linq;
-using UnityEditor.PackageManager.Requests;
-using System.Collections.Generic;
+
 
 
 public class GetMethod : MonoBehaviour

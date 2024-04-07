@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using System.Linq;
-using UnityEditor.PackageManager.Requests;
+
 using System.Collections.Generic;
 using static GetMethod;
 
@@ -28,6 +28,8 @@ public class OpenWebApplication : MonoBehaviour
     {
         
         StartCoroutine(CheckQuestionnaire());
+
+        Debug.Log(questionereCompleted);
 
         if (questionereCompleted)
         {
