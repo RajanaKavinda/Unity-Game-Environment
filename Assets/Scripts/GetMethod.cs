@@ -15,7 +15,9 @@ public class GetMethod : MonoBehaviour
     public static string userID;
     public bool profileCompleted;
     public bool questionereCompleted;
-    
+    public int questionereScore;
+
+
 
     void Start()
     {
@@ -126,6 +128,7 @@ public class GetMethod : MonoBehaviour
                 // Set profileCompleted and questionnaireCompleted properties
                 profileCompleted = profileResponse.profileEdited;
                 questionereCompleted = profileResponse.questionnaireTaken;
+                questionereScore = profileResponse.questionnaireScore;
 
                 // Log the values for verification
                 Debug.Log("Profile Completed: " + profileCompleted);

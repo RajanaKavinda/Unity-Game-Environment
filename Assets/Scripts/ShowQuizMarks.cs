@@ -2,31 +2,22 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
-using UnityEngine.SceneManagement;
 using static GetMethod;
 
-public class OpenWebApplication : MonoBehaviour
+public class ShowQuizMarks : MonoBehaviour
 {
-    public bool questionnaireCompleted;
+    public int Marks = 0;
 
-    private void Start()
+    // Reference to the Text component where you want to display the marks
+    [SerializeField] private Text QuizMarks;
+
+    // Start is called before the first frame update
+    void Start()
     {
-        GameObject.Find("Quiz").GetComponent<Button>().onClick.AddListener(LaunchQuiz);
-        GameObject.Find("Next").GetComponent<Button>().onClick.AddListener(Next);
+        StartCoroutine(CheckMarks());
     }
 
-    public void LaunchQuiz()
-    {
-        string url = "http://localhost:3000/" + GetMethod.jwtToken2 + "/" + GetMethod.userID; // URL of your web application
-        Application.OpenURL(url);
-    }
-
-    public void Next()
-    {
-        StartCoroutine(CheckQuestionnaire());
-    }
-
-    IEnumerator CheckQuestionnaire()
+    IEnumerator CheckMarks()
     {
         // URL of the endpoint with the user ID
         string url = "http://localhost:8080/energy-quest/user/id/" + GetMethod.userID;
@@ -51,16 +42,23 @@ public class OpenWebApplication : MonoBehaviour
                 PlayerProfileResponse profileResponse = JsonUtility.FromJson<PlayerProfileResponse>(request.downloadHandler.text);
 
                 // Set questionnaireCompleted property
-                questionnaireCompleted = profileResponse.questionnaireTaken;
+                Marks = profileResponse.questionnaireScore;
 
-                Debug.Log("Questionnaire completed: " + questionnaireCompleted);
+                // Log marks to console for debugging
+                Debug.Log("Marks: " + Marks);
 
-                // Check if questionnaire is completed
-                if (questionnaireCompleted)
-                {
-                    SceneManager.LoadScene("Main Menu");
-                }
+                // Update the UI text with marks
+                QuizMarks.text = Marks.ToString();
             }
         }
+    }
+
+    public class PlayerProfileResponse
+    {
+        public int userId;
+        public string userName;
+        public bool profileEdited;
+        public bool questionnaireTaken;
+        public int questionnaireScore;
     }
 }
