@@ -1235,7 +1235,6 @@ GameObject:
   - component: {fileID: 1649583027}
   - component: {fileID: 1649583026}
   - component: {fileID: 1649583025}
-  - component: {fileID: 1649583028}
   m_Layer: 0
   m_Name: BG Music
   m_TagString: GameMusic
@@ -1269,7 +1268,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -1366,20 +1365,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1649583028
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1649583024}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc5b9d370d7d86347b9fa314d3abeb77, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  volumeSlider: {fileID: 0}
-  objectMusic: {fileID: 1649583024}
 --- !u!1 &1667262108
 GameObject:
   m_ObjectHideFlags: 0
