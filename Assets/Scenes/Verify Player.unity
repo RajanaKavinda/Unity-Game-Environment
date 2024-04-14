@@ -992,6 +992,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   profileCompleted: 0
   questionereCompleted: 0
+  questionereScore: 0
 --- !u!1 &821170126
 GameObject:
   m_ObjectHideFlags: 0
