@@ -140,7 +140,7 @@ public class GetMethod : MonoBehaviour
                 }
                 else if (!questionereCompleted)
                 {
-                    SceneManager.LoadScene("Questionere Not Completed");
+                    SceneManager.LoadScene("Questionere");
                 }
                 else
                 {

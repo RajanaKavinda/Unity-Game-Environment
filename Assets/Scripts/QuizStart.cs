@@ -8,6 +8,7 @@ using static GetMethod;
 public class OpenWebApplication : MonoBehaviour
 {
     public bool questionnaireCompleted;
+    public PromptMsg Prompt;
 
     private void Start()
     {
@@ -59,6 +60,11 @@ public class OpenWebApplication : MonoBehaviour
                 if (questionnaireCompleted)
                 {
                     SceneManager.LoadScene("Main Menu");
+                }
+
+                else
+                {
+                    Prompt.ShowPrompt("Please complete the quiz");
                 }
             }
         }

@@ -18,7 +18,7 @@ public class ViewUserProfile : MonoBehaviour
     public TMP_InputField NIC;
     public TMP_InputField phoneNumber;
     public TMP_InputField email;
-    public TMP_InputField profilePicture;
+    
 
     private UserData currentUserData;
     
@@ -45,7 +45,7 @@ public class ViewUserProfile : MonoBehaviour
                 currentUserData = userDataResponse.user;
                 UpdateProfileFields();
                 Debug.Log("Player data received");
-                Debug.Log(currentUserData.firstname);
+                Debug.Log(currentUserData.lastname);
             }
             else
             {
@@ -66,7 +66,7 @@ public class ViewUserProfile : MonoBehaviour
         NIC.text = currentUserData.nic;
         phoneNumber.text = currentUserData.phoneNumber;
         email.text = currentUserData.email;
-        profilePicture.text = currentUserData.profilePictureUrl;
+        
     }
 
     
@@ -86,7 +86,7 @@ public class ViewUserProfile : MonoBehaviour
         public string nic;
         public string phoneNumber;
         public string email;
-        public string profilePictureUrl;
+        
     }
 
     

@@ -730,7 +730,7 @@ GameObject:
   - component: {fileID: 639987053}
   - component: {fileID: 639987052}
   m_Layer: 5
-  m_Name: submit
+  m_Name: Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

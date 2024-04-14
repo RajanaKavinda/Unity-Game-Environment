@@ -2,11 +2,8 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
 using TMPro;
-
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using System.Text;
-
 
 public class UserProfilePage : MonoBehaviour
 {
@@ -19,7 +16,8 @@ public class UserProfilePage : MonoBehaviour
     public TMP_InputField NIC;
     public TMP_InputField phoneNumber;
     public TMP_InputField email;
-    
+
+    public PromptMsg Prompt;
 
     private UserData currentUserData;
     private NewUserData ChangedUserData;
@@ -27,7 +25,17 @@ public class UserProfilePage : MonoBehaviour
     void Start()
     {
         StartCoroutine(FetchUserData());
-        GameObject.Find("submit").GetComponent<Button>().onClick.AddListener(SaveChanges);
+
+        
+        GameObject submitButton = GameObject.Find("submit");
+        if (submitButton != null)
+        {
+            submitButton.GetComponent<Button>().onClick.AddListener(SaveChanges);
+        }
+        else
+        {
+            Debug.LogError("Submit button not found!");
+        }
     }
 
     IEnumerator FetchUserData()
@@ -67,10 +75,32 @@ public class UserProfilePage : MonoBehaviour
         NIC.text = currentUserData.nic;
         phoneNumber.text = currentUserData.phoneNumber;
         email.text = currentUserData.email;
-        
     }
 
     public void SaveChanges()
+    {
+        // Check if any field is empty
+        if (string.IsNullOrEmpty(firstName.text) ||
+            string.IsNullOrEmpty(lastName.text) ||
+            string.IsNullOrEmpty(username.text) ||
+            string.IsNullOrEmpty(NIC.text) ||
+            string.IsNullOrEmpty(phoneNumber.text) ||
+            string.IsNullOrEmpty(email.text))
+        {
+            // Show the prompt if any field is empty
+            Prompt.ShowPrompt("Please complete your profile.");
+        }
+        else
+        {
+            // If all fields are filled, proceed with updating the user data
+            StartCoroutine(UpdateUserData());
+        }
+    }
+
+
+
+
+    IEnumerator UpdateUserData()
     {
         ChangedUserData = new NewUserData();
         ChangedUserData.firstname = firstName.text;
@@ -79,14 +109,6 @@ public class UserProfilePage : MonoBehaviour
         ChangedUserData.phoneNumber = phoneNumber.text;
         ChangedUserData.email = email.text;
 
-        Debug.Log(ChangedUserData.lastname);
-        
-
-        StartCoroutine(UpdateUserData());
-    }
-
-    IEnumerator UpdateUserData()
-    {
         string jsonUserData = JsonUtility.ToJson(ChangedUserData);
         byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonUserData);
 
@@ -99,8 +121,7 @@ public class UserProfilePage : MonoBehaviour
         {
             Debug.Log("User data updated successfully!");
             StartCoroutine(SetProfileEdited());
-
-            SceneManager.LoadScene("Questionere Not Completed");
+            SceneManager.LoadScene("Questionere");
         }
         else
         {
@@ -110,19 +131,14 @@ public class UserProfilePage : MonoBehaviour
 
     IEnumerator SetProfileEdited()
     {
-        // URL of the endpoint to update the user profile
         string url = "http://localhost:8080/energy-quest/user/profile/" + GetMethod.userID;
 
-        // Create a POST request
         using (UnityWebRequest request = new UnityWebRequest(url, "POST"))
         {
-            // Set the request headers
             request.SetRequestHeader("Authorization", "Bearer " + GetMethod.jwtToken2);
 
-            // Send the request
             yield return request.SendWebRequest();
 
-            // Check for errors
             if (request.result != UnityWebRequest.Result.Success)
             {
                 Debug.LogError("Error setting profileEdited: " + request.error);
@@ -130,13 +146,9 @@ public class UserProfilePage : MonoBehaviour
             else
             {
                 Debug.Log("ProfileEdited set successfully");
-
-                // Assuming you need to parse the response, you can do it here if needed
-                // PlayerProfileResponse profileResponse = JsonUtility.FromJson<PlayerProfileResponse>(request.downloadHandler.text);
             }
         }
     }
-
 
 
 
@@ -155,16 +167,14 @@ public class UserProfilePage : MonoBehaviour
         public string nic;
         public string phoneNumber;
         public string email;
-        
     }
 
     private class NewUserData
     {
         public string firstname;
-        public string lastname;       
+        public string lastname;
         public string nic;
         public string phoneNumber;
         public string email;
-        
     }
 }
