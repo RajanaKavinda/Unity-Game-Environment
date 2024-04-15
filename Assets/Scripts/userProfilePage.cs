@@ -10,9 +10,9 @@ public class UserProfilePage : MonoBehaviour
     private const string apiUrl = "http://20.15.114.131:8080/api/user/profile/view";
     private const string updateUrl = "http://20.15.114.131:8080/api/user/profile/update";
 
+    public Text username;
     public TMP_InputField firstName;
     public TMP_InputField lastName;
-    public TMP_InputField username;
     public TMP_InputField NIC;
     public TMP_InputField phoneNumber;
     public TMP_InputField email;

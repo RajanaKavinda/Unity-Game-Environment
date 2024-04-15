@@ -6,18 +6,24 @@ using static GetMethod;
 
 public class ShowQuizMarks : MonoBehaviour
 {
-    public int Marks = 0;
+    public int Land = 0;
+    public int GameCoins = 0;
+    public int EnergyCoins = 0;
 
     // Reference to the Text component where you want to display the marks
-    [SerializeField] private Text QuizMarks;
+    public Text LandText;
+    public Text GameCoinText;
+    public Text EnergyCoinText;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(CheckMarks());
+        StartCoroutine(CheckStatus());
+        
     }
 
-    IEnumerator CheckMarks()
+    IEnumerator CheckStatus()
     {
         // URL of the endpoint with the user ID
         string url = "http://localhost:8080/energy-quest/user/id/" + GetMethod.userID;
@@ -42,13 +48,15 @@ public class ShowQuizMarks : MonoBehaviour
                 PlayerProfileResponse profileResponse = JsonUtility.FromJson<PlayerProfileResponse>(request.downloadHandler.text);
 
                 // Set questionnaireCompleted property
-                Marks = profileResponse.questionnaireScore;
+                Land = (profileResponse.questionnaireScore)/10 + 4;
+                GameCoins = (profileResponse.gameCoin);
+                EnergyCoins = (profileResponse.energyCoin);
 
                 // Log marks to console for debugging
-                Debug.Log("Marks: " + Marks);
+                Debug.Log("Land is :" + Land);
 
                 // Update the UI text with marks
-                QuizMarks.text = Marks.ToString();
+                LandText.text = Land.ToString();
             }
         }
     }
@@ -60,5 +68,8 @@ public class ShowQuizMarks : MonoBehaviour
         public bool profileEdited;
         public bool questionnaireTaken;
         public int questionnaireScore;
+        public int gameCoin;
+        public int energyCoin;
+
     }
 }

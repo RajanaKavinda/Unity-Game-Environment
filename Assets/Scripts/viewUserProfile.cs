@@ -12,12 +12,12 @@ public class ViewUserProfile : MonoBehaviour
     private const string apiUrl = "http://20.15.114.131:8080/api/user/profile/view";
     
 
-    public TMP_InputField firstName;
-    public TMP_InputField lastName;
-    public TMP_InputField username;
-    public TMP_InputField NIC;
-    public TMP_InputField phoneNumber;
-    public TMP_InputField email;
+    public Text firstName;
+    public Text lastName;
+    public Text username;
+    public Text NIC;
+    public Text phoneNumber;
+    public Text email;
     
 
     private UserData currentUserData;
