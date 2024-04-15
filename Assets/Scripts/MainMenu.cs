@@ -20,7 +20,7 @@ public class SceneNavigator : MonoBehaviour
 
     public void GoToQuizScene()
     {
-        string url = "http://localhost:3000/" + GetMethod.jwtToken2 + "/" + GetMethod.userID; // URL of your web application
+        string url = "http://localhost:3000/" + GetMethod.jwtToken2 + "/" + GetMethod.userID; 
         Application.OpenURL(url);
     }
 
