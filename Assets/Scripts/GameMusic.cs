@@ -5,9 +5,6 @@ public class GameMusic : MonoBehaviour
     // The audio source component attached to this game object
     private AudioSource audioSource;
 
-    
-
-
     private void Awake()
     {
         // Find the audio source component
@@ -21,13 +18,22 @@ public class GameMusic : MonoBehaviour
         }
         else
         {
-            
-
             // Make the GameObject persist across scenes
             DontDestroyOnLoad(this.gameObject);
         }
     }
 
     // Function to change the volume of the game music
-   
+
+    // Method to play the music
+    public void PlayMusic()
+    {
+        audioSource.Play();
+    }
+
+    // Method to pause the music
+    public void PauseMusic()
+    {
+        audioSource.Pause();
+    }
 }
