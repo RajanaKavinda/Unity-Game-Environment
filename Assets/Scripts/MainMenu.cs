@@ -8,23 +8,24 @@ public class SceneNavigator : MonoBehaviour
     {
         GameObject.Find("Play").GetComponent<Button>().onClick.AddListener(GoToGameScene);
         GameObject.Find("ViewProfile").GetComponent<Button>().onClick.AddListener(GoToProfilePage);
-        GameObject.Find("Marks").GetComponent<Button>().onClick.AddListener(GoToMarksScene);
+        GameObject.Find("QuizReview").GetComponent<Button>().onClick.AddListener(GoToQuizScene);
 
        
     }
 
     public void GoToGameScene()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene("Game");
     }
 
-    public void GoToMarksScene()
+    public void GoToQuizScene()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        string url = "http://localhost:3000/" + GetMethod.jwtToken2 + "/" + GetMethod.userID; 
+        Application.OpenURL(url);
     }
 
     public void GoToProfilePage()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 2);
+        SceneManager.LoadScene("View Player Profile");
     }
 }
