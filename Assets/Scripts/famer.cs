@@ -2,12 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class famer : MonoBehaviour
+public class Farmer : MonoBehaviour
 {
     [SerializeField]
     private float moveForce = 5f;
-
-    private float movementX, movementY;
 
     private Rigidbody2D myBody;
     private SpriteRenderer sr;
@@ -16,60 +14,73 @@ public class famer : MonoBehaviour
     private string WALK_BACKWARD_ANIMATION = "walk backward";
     private string WALK_FOREWARD_ANIMATION = "walk foreward";
 
-    private void Awake(){
+    private void Awake()
+    {
         myBody = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
     }
 
-    void Start()
-    {
-         
-    }
-
-    
-
-    // Update is called once per frame
     void Update()
     {
-        FamerMoveKeyboard();
-        AnimateFamer();
+        FarmerMoveKeyboard();
+        AnimateFarmer();
     }
 
-    void FamerMoveKeyboard(){
-        movementX = Input.GetAxisRaw("Horizontal");
-        movementY = Input.GetAxisRaw("Vertical");
-        transform.position += new Vector3(movementX, movementY, 0f) * Time.deltaTime * moveForce;
+    void FarmerMoveKeyboard()
+    {
+        float movementX = Input.GetAxisRaw("Horizontal");
+        float movementY = Input.GetAxisRaw("Vertical");
+
+        Vector3 newPosition = transform.position + new Vector3(movementX, movementY, 0f) * Time.deltaTime * moveForce;
+
+        // Check if the new position is within the ground boundaries
+        Collider2D[] colliders = Physics2D.OverlapBoxAll(newPosition, new Vector2(1f, 1f), 0f);
+        foreach (Collider2D collider in colliders)
+        {
+            if (collider.CompareTag("ground"))
+            {
+                // Update position only if within ground boundaries
+                myBody.MovePosition(newPosition);
+                break;
+            }
+        }
     }
 
-    void AnimateFamer(){
+    void AnimateFarmer()
+    {
+        float movementX = Input.GetAxisRaw("Horizontal");
+        float movementY = Input.GetAxisRaw("Vertical");
+
         if (movementX > 0)
         {
-            anim.SetBool(WALK_ANIMATION,true);
+            anim.SetBool(WALK_ANIMATION, true);
             sr.flipX = false;
-        }else if (movementX < 0)
+        }
+        else if (movementX < 0)
         {
-            anim.SetBool(WALK_ANIMATION,true);
+            anim.SetBool(WALK_ANIMATION, true);
             sr.flipX = true;
         }
-        else{
-            anim.SetBool(WALK_ANIMATION,false);
+        else
+        {
+            anim.SetBool(WALK_ANIMATION, false);
         }
 
         if (movementY > 0)
         {
-            anim.SetBool(WALK_BACKWARD_ANIMATION,true);
+            anim.SetBool(WALK_BACKWARD_ANIMATION, true);
             sr.flipX = false;
-        }else if (movementY < 0)
+        }
+        else if (movementY < 0)
         {
-            anim.SetBool(WALK_FOREWARD_ANIMATION,true);
+            anim.SetBool(WALK_FOREWARD_ANIMATION, true);
             sr.flipX = false;
         }
-        else{
-            anim.SetBool(WALK_FOREWARD_ANIMATION,false);
-            anim.SetBool(WALK_BACKWARD_ANIMATION,false);
+        else
+        {
+            anim.SetBool(WALK_FOREWARD_ANIMATION, false);
+            anim.SetBool(WALK_BACKWARD_ANIMATION, false);
         }
-        
-
     }
 }
