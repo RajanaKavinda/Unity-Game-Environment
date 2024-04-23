@@ -55,7 +55,7 @@ public class TreeContoller : MonoBehaviour
         treeAnim.SetBool(DIE6_ANIMATION, false);
         treeAnim.SetBool(DIE7_ANIMATION, false);
         treeAnim.SetBool(DIE8_ANIMATION, false);
-        treeAnim.SetBool(DIE9_ANIMATION, true);
+        treeAnim.SetBool(DIE9_ANIMATION, false);
 
         treeAnim.SetBool(REGROW_ANIMATION, false);
         treeAnim.SetBool(REGROW2_ANIMATION, false);
@@ -246,10 +246,14 @@ public class TreeContoller : MonoBehaviour
 
     IEnumerator DelayedHarvestAnimationReset()
     {
-        // Wait for 1 millisecond
-        yield return new WaitForSeconds(0.5f);
+        // Wait for random milliseconds
+        yield return new WaitForSeconds(Random.Range(5f, 20f));
+        
+        treeAnim.SetBool(DIE9_ANIMATION, true);
         // Set HARVEST_ANIMATION back to false
         treeAnim.SetBool(HARVEST_ANIMATION, false);
+        yield return new WaitForSeconds(0.5f);
+        treeAnim.SetBool(DIE9_ANIMATION, false);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
