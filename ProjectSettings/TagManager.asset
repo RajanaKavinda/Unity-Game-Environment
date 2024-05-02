@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - GameMusic
+  - ground
+  - Farmer
+  - Tree
   layers:
   - Default
   - TransparentFX

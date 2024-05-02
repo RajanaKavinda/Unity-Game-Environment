@@ -26,43 +26,49 @@ public class ShowQuizMarks : MonoBehaviour
 
     IEnumerator CheckStatus()
     {
-        // URL of the endpoint with the user ID
-        string url = "http://localhost:8080/energy-quest/user/id/" + GetMethod.userID;
+        string urlExtension = "/user/id/" + GetMethod.userID;
+        string jwtToken = GetMethod.jwtToken2;
 
-        // Create a GET request
-        using (UnityWebRequest request = UnityWebRequest.Get(url))
+        // Create an instance of the HttpRequest class
+        HttpRequest httpRequest = new HttpRequest();
+
+        // Send HTTP GET request
+        yield return StartCoroutine(httpRequest.SendHttpRequest("get", "ourBackend", urlExtension, jwtToken, ""));
+
+        // Check if the request was successful
+        string result = (string)httpRequest.result;
+        if (result == "Error")
         {
-            // Set the request headers
-            request.SetRequestHeader("Authorization", "Bearer " + GetMethod.jwtToken2);
-
-            // Send the request
-            yield return request.SendWebRequest();
-
-            // Check for errors
-            if (request.result != UnityWebRequest.Result.Success)
-            {
-                Debug.LogError("Error checking profile and questionnaire: " + request.error);
-            }
-            else
-            {
-                // Parse the response
-                PlayerProfileResponse profileResponse = JsonUtility.FromJson<PlayerProfileResponse>(request.downloadHandler.text);
-
-                // Set questionnaireCompleted property
-                Land = (profileResponse.questionnaireScore)/10 + 4;
-                GameCoins = (profileResponse.gameCoin);
-                EnergyCoins = (profileResponse.energyCoin);
-                gameLevel = (profileResponse.gameLevel);
-
-
-                // Update the UI text with marks
-                LandText.text = Land.ToString();
-                GameCoinText.text = GameCoins.ToString();
-                EnergyCoinText.text = EnergyCoins.ToString();
-                GameLevelText.text = "Level " + gameLevel.ToString();
-            }
+            Debug.LogError("Error checking profile and questionnaire");
+            yield break;
         }
+    
+        // Parse the response
+        PlayerProfileResponse profileResponse = JsonUtility.FromJson<PlayerProfileResponse>(result);
+
+        // Set questionnaireCompleted property
+        if (profileResponse.lands == 0){
+             Land = (profileResponse.questionnaireScore)/20 + 1;
+             // Create an instance of the HttpRequest class
+             HttpRequest updateLands = new HttpRequest();
+             string urlExtension2 = "/user/lands/" + GetMethod.userID + "/" + Land;
+            // Send HTTP GET request
+            yield return StartCoroutine(updateLands.SendHttpRequest("post", "ourBackend", urlExtension2, jwtToken, ""));
+        }   
+        else{
+            Land = profileResponse.lands;
+        }
+        GameCoins = (profileResponse.gameCoin);
+        EnergyCoins = (profileResponse.energyCoin);
+        gameLevel = (profileResponse.gameLevel);
+
+        // Update the UI text with marks
+        LandText.text = Land.ToString();
+        GameCoinText.text = GameCoins.ToString();
+        EnergyCoinText.text = EnergyCoins.ToString();
+        GameLevelText.text = "Level " + gameLevel.ToString();
     }
+
 
     public class PlayerProfileResponse
     {
@@ -74,6 +80,7 @@ public class ShowQuizMarks : MonoBehaviour
         public int gameCoin;
         public int energyCoin;
         public int gameLevel;
+        public int lands;
 
     }
 }
