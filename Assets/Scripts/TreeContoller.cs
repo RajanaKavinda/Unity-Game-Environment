@@ -1,11 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
+using System;
 
 public class TreeContoller : MonoBehaviour
 {
     [SerializeField]
+    //private integer gemeCoin = 0;
+
+    //private integer energyCoin = 0;
     private float energyConsumption = 23f;
+    private float previousEnergyConsumption = 0;
+    private DateTime lastTime;
 
     private string GROW_ANIMATION = "grow";
     private string GROW1_ANIMATION = "grow1";
@@ -64,6 +71,13 @@ public class TreeContoller : MonoBehaviour
         treeAnim.SetBool(HARVEST_ANIMATION, false);
     }
 
+    private void Start()
+    {
+        // Start the coroutine to update power consumption
+        StartCoroutine(UpdatePowerConsumption());
+    }
+
+
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -80,7 +94,7 @@ public class TreeContoller : MonoBehaviour
                 StartCoroutine(DelayedHarvestAnimationReset());
             }
         }
-        if (energyConsumption<5){
+        if (energyConsumption<0.001){
             treeAnim.SetBool(REGROW_ANIMATION, true);
             treeAnim.SetBool(REGROW2_ANIMATION, true);
             treeAnim.SetBool(REGROW3_ANIMATION, true);
@@ -100,7 +114,7 @@ public class TreeContoller : MonoBehaviour
             treeAnim.SetBool(DIE7_ANIMATION, false);
             treeAnim.SetBool(DIE8_ANIMATION, false);
             
-        }else if (energyConsumption<10){
+        }else if (energyConsumption<0.005){
             treeAnim.SetBool(REGROW_ANIMATION, true);
             treeAnim.SetBool(REGROW2_ANIMATION, true);
             treeAnim.SetBool(REGROW3_ANIMATION, true);
@@ -120,7 +134,7 @@ public class TreeContoller : MonoBehaviour
             treeAnim.SetBool(DIE7_ANIMATION, false);
             treeAnim.SetBool(DIE8_ANIMATION, false);
             
-        }else if (energyConsumption<15){
+        }else if (energyConsumption<0.01){
             treeAnim.SetBool(REGROW_ANIMATION, true);
             treeAnim.SetBool(REGROW2_ANIMATION, true);
             treeAnim.SetBool(REGROW3_ANIMATION, true);
@@ -140,7 +154,7 @@ public class TreeContoller : MonoBehaviour
             treeAnim.SetBool(DIE7_ANIMATION, false);
             treeAnim.SetBool(DIE8_ANIMATION, false);
             
-        }else if (energyConsumption<20){
+        }else if (energyConsumption<0.05){
             treeAnim.SetBool(REGROW_ANIMATION, true);
             treeAnim.SetBool(REGROW2_ANIMATION, true);
             treeAnim.SetBool(REGROW3_ANIMATION, true);
@@ -160,7 +174,7 @@ public class TreeContoller : MonoBehaviour
             treeAnim.SetBool(DIE7_ANIMATION, false);
             treeAnim.SetBool(DIE8_ANIMATION, false);
             
-        }else if (energyConsumption<25){
+        }else if (energyConsumption<0.08){
             treeAnim.SetBool(REGROW_ANIMATION, true);
             treeAnim.SetBool(REGROW2_ANIMATION, true);
             treeAnim.SetBool(REGROW3_ANIMATION, true);
@@ -180,7 +194,7 @@ public class TreeContoller : MonoBehaviour
             treeAnim.SetBool(DIE7_ANIMATION, false);
             treeAnim.SetBool(DIE8_ANIMATION, false);
             
-        }else if (energyConsumption<30){
+        }else if (energyConsumption<0.1){
             treeAnim.SetBool(REGROW_ANIMATION, true);
             treeAnim.SetBool(REGROW2_ANIMATION, true);
             treeAnim.SetBool(REGROW3_ANIMATION, false);
@@ -200,7 +214,7 @@ public class TreeContoller : MonoBehaviour
             treeAnim.SetBool(DIE7_ANIMATION, false);
             treeAnim.SetBool(DIE8_ANIMATION, false);
             
-        }else if (energyConsumption<35){
+        }else if (energyConsumption<0.2){
             treeAnim.SetBool(REGROW_ANIMATION, false);
             treeAnim.SetBool(REGROW2_ANIMATION, false);
             treeAnim.SetBool(REGROW3_ANIMATION, false);
@@ -247,7 +261,7 @@ public class TreeContoller : MonoBehaviour
     IEnumerator DelayedHarvestAnimationReset()
     {
         // Wait for random milliseconds
-        yield return new WaitForSeconds(Random.Range(5f, 20f));
+        yield return new WaitForSeconds(UnityEngine.Random.Range(5f, 20f));
         
         treeAnim.SetBool(DIE9_ANIMATION, true);
         // Set HARVEST_ANIMATION back to false
@@ -267,5 +281,63 @@ public class TreeContoller : MonoBehaviour
         {
             Debug.Log("Collided with something else");
         }
+    }
+
+    IEnumerator UpdatePowerConsumption()
+    {
+        string urlExtension = "/power-consumption/current/view";
+        string jwtToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJvdmVyc2lnaHRfZzEzIiwiaWF0IjoxNzE0NTUzNzY1LCJleHAiOjE3MTQ1ODk3NjV9.GgqiJPDeExKpYM8-oYLv_sh5EWudp1j9_yqWO0g6cv-2PNxum4L5bOG8DFMfdxLifWHwohYW54rfC-8qe6WmAA";
+
+        // Create an instance of the HttpRequest class
+        HttpRequest httpRequest = new HttpRequest();
+
+        while (true)
+        {
+            // Send HTTP GET request
+            yield return StartCoroutine(httpRequest.SendHttpRequest("get", "givenBackend", urlExtension, jwtToken, ""));
+
+            // Check if the request was successful
+            string result = (string)httpRequest.result;
+            if (result == "Error")
+            {
+                Debug.LogError("Error checking profile and questionnaire");
+                yield break;
+            }
+
+            // Deserialize the JSON string into a JsonData object
+            CurrentConsumptionResponse jsonData = JsonUtility.FromJson<CurrentConsumptionResponse>(result);
+
+            // Access the currentConsumption field
+            float totalEnergyConsumption = jsonData.currentConsumption;
+
+            Debug.Log("total energyConsumption: " + totalEnergyConsumption);
+            // Get the current date and time
+            DateTime now = DateTime.Now;
+                    
+            // Calculate the time difference between the current and previous readings
+            TimeSpan timeDifference = now - lastTime;
+
+            // Convert the time difference to seconds
+            float timeDifferenceInSeconds = (float)timeDifference.TotalSeconds;
+
+             // Print the timestamp
+            Debug.Log("Timestamp: " + now + " , timeDifference " + timeDifference + " timeDifferenceInSeconds " + timeDifferenceInSeconds);
+
+            // Calculate the energy consumption for the elapsed time
+            energyConsumption = (totalEnergyConsumption - previousEnergyConsumption) / timeDifferenceInSeconds;
+            Debug.Log("energyConsumption: " + energyConsumption);
+
+            lastTime = now;
+            previousEnergyConsumption = totalEnergyConsumption;
+
+            // Wait for 10 seconds before the next update
+            yield return new WaitForSeconds(10f);
+        }
+    }
+
+    public class CurrentConsumptionResponse
+    {
+        public float currentConsumption;
+       
     }
 }
