@@ -101,7 +101,15 @@ public class PlayerController : MonoBehaviour
         {
             isDashing = true;
             moveSpeed *= dashSpeed;
-            myTrailRenderer.emitting = true;
+            // Check if myTrailRenderer is not null before accessing it
+            if (myTrailRenderer != null)
+            {
+                myTrailRenderer.emitting = true;
+            }
+            else
+            {
+                Debug.LogWarning("TrailRenderer is null. Cannot emit trail.");
+            }
             StartCoroutine(EndDashRoutine());
         }
     }
@@ -148,6 +156,16 @@ public class PlayerController : MonoBehaviour
         {
             hitSound.Play();
         }
+    }
+
+    public int GetCoinCount()
+    {
+        return coinCount;
+    }
+
+    public void SetCoinCount(int amount)
+    {
+        coinCount = amount;
     }
 
     private IEnumerator EndDashRoutine()
