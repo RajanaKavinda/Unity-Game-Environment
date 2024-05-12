@@ -1,12 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
+
 {
+    // Static reference to the player instance
+    public static PlayerController Instance { get; private set; }
+
+    // Reference to the UI Text element
+    public Text coinCountText;
+
     [SerializeField] private float moveSpeed = 1f;
     [SerializeField] private float dashSpeed = 4f;
     [SerializeField] private TrailRenderer myTrailRenderer;
+
 
     private PlayerControls playerControls;
     private Vector2 movement;
@@ -15,6 +24,8 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer mySpriteRender;
 
     private bool isDashing = false;
+    
+    private int coinCount = 0;
 
 
     private void Awake()
@@ -23,6 +34,9 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         myAnimator = GetComponent<Animator>();
         mySpriteRender = GetComponent<SpriteRenderer>();
+
+        // Assign the current instance to the static property
+        Instance = this;
     }
 
     private void Start()
@@ -61,20 +75,22 @@ public class PlayerController : MonoBehaviour
 
     private void AdjustPlayerFacingDirection()
     {
-        // Read horizontal input axis
-        float horizontalInput = Input.GetAxisRaw("Horizontal");
-
-        // If moving left, flip the sprite
-        if (horizontalInput < 0)
+        // If there is movement in the horizontal direction
+        if (movement.x != 0)
         {
-            mySpriteRender.flipX = true;
-        }
-        // If moving right, keep the sprite facing right
-        else
-        {
-            mySpriteRender.flipX = false;
+            // If moving left, flip the sprite
+            if (movement.x < 0)
+            {
+                mySpriteRender.flipX = true;
+            }
+            // If moving right, keep the sprite facing right
+            else
+            {
+                mySpriteRender.flipX = false;
+            }
         }
     }
+
 
     private void Dash()
     {
@@ -84,6 +100,31 @@ public class PlayerController : MonoBehaviour
             moveSpeed *= dashSpeed;
             myTrailRenderer.emitting = true;
             StartCoroutine(EndDashRoutine());
+        }
+    }
+
+    public void IncreaseCoinCount()
+    {
+        coinCount++;
+        // Update UI or perform any other actions related to collecting coins
+        UpdateCoinCountDisplay();
+    }
+
+    public void DecreaseCoinCount(int amount)
+    {
+        coinCount -= amount;
+        if (coinCount < 0)
+        {
+            coinCount = 0;
+        }
+        UpdateCoinCountDisplay();
+    }
+
+    private void UpdateCoinCountDisplay()
+    {
+        if (coinCountText != null) // Check if UI Text reference is assigned
+        {
+            coinCountText.text = coinCount.ToString(); // Update text with coin count
         }
     }
 
