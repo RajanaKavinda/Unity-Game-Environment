@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
 
     // Reference to the UI Text element
     public Text coinCountText;
+    public AudioSource coinSound;
+    public AudioSource hitSound;
 
     [SerializeField] private float moveSpeed = 1f;
     [SerializeField] private float dashSpeed = 4f;
@@ -35,6 +37,7 @@ public class PlayerController : MonoBehaviour
         myAnimator = GetComponent<Animator>();
         mySpriteRender = GetComponent<SpriteRenderer>();
 
+        UpdateCoinCountDisplay();
         // Assign the current instance to the static property
         Instance = this;
     }
@@ -108,6 +111,8 @@ public class PlayerController : MonoBehaviour
         coinCount++;
         // Update UI or perform any other actions related to collecting coins
         UpdateCoinCountDisplay();
+        PlayCoinSound();
+        
     }
 
     public void DecreaseCoinCount(int amount)
@@ -117,14 +122,31 @@ public class PlayerController : MonoBehaviour
         {
             coinCount = 0;
         }
+        PlayHitSound();
         UpdateCoinCountDisplay();
     }
 
     private void UpdateCoinCountDisplay()
     {
-        if (coinCountText != null) // Check if UI Text reference is assigned
+        if (coinCountText != null) 
         {
-            coinCountText.text = coinCount.ToString(); // Update text with coin count
+            coinCountText.text = coinCount.ToString(); 
+        }
+    }
+
+    private void PlayCoinSound()
+    {
+        if (coinSound != null && coinSound.clip != null)
+        {
+            coinSound.Play(); 
+        }
+    }
+
+    private void PlayHitSound()
+    {
+        if (hitSound != null && hitSound.clip != null)
+        {
+            hitSound.Play();
         }
     }
 
