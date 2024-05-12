@@ -38,13 +38,11 @@ public class EnemyAI : MonoBehaviour
         return new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (other.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player"))
         {
-            // Reduce player's coin count
-            PlayerController.Instance.DecreaseCoinCount(1); // Assuming 1 coin is lost on collision
-            
+            PlayerController.Instance.DecreaseCoinCount(1);
         }
     }
 }
