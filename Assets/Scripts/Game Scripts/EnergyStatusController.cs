@@ -13,10 +13,10 @@ public class EnergyStatusController : MonoBehaviour
     private float currentEnergyReading;
     private DateTime lastTime ; // May 12, 2024, 6:28:00 PM; = new DateTime(2024, 5, 12, 18, 28, 0)
     private long tenSecondPeriods;
-    private string jwtToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJvdmVyc2lnaHRfZzEzIiwiaWF0IjoxNzE1NTE4MTc3LCJleHAiOjE3MTU1NTQxNzd9.g8TYOvqfY0vmlnF9gK0HL2wqsjMq78gg0UPFu9fbtN56DJ33P-1IJQ0Yzmzz9Ee3nlxUTMednjEbCtjgb1R_mw";
+    private string jwtToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJvdmVyc2lnaHRfZzEzIiwiaWF0IjoxNzE1NTY3NDIyLCJleHAiOjE3MTU2MDM0MjJ9.wc1Z4UHw8RBFfE22M0m2jBlIz0_EJ_ezeMTXWnYr5osTTKPMYTwG6YqV2hoCRAfuOGbpY708v86VY5qQL3UUrg";
     private string urlExtension1 = "/power-consumption/current/view";
     
-    private long totalFruits = 0;
+    public long totalFruits = 0;
 
 
     private void Start()
@@ -101,7 +101,7 @@ public class EnergyStatusController : MonoBehaviour
             }
             else
             {
-               
+               Debug.LogError("Last time null.");
                // Send HTTP GET request
                yield return StartCoroutine(httpRequest.SendHttpRequest("get", "givenBackend", urlExtension1, jwtToken, ""));
 
@@ -123,8 +123,7 @@ public class EnergyStatusController : MonoBehaviour
                lastTime = DateTime.Now;
                
 
-               // Wait for 10 seconds before the next update
-               yield return new WaitForSeconds(10f);
+               
             }  
         }
     }
@@ -158,13 +157,13 @@ public class EnergyStatusController : MonoBehaviour
     }*/
 
     public void updateFruits(float averageEnergyConsumption,long tenSecondPeriods){
-        if (averageEnergyConsumption<0.1){
-            totalFruits += 3*tenSecondPeriods;
-        } else if (averageEnergyConsumption<0.2){
-            totalFruits += 2*tenSecondPeriods;
-        } else if (averageEnergyConsumption<0.5){
-            totalFruits += 1*tenSecondPeriods;
+        if (averageEnergyConsumption<0.2){
+            totalFruits += 10*tenSecondPeriods;
+        } else if (averageEnergyConsumption<0.4){
+            totalFruits += 8*tenSecondPeriods;
         } else if (averageEnergyConsumption<0.8){
+            totalFruits += 7*tenSecondPeriods;
+        } else if (averageEnergyConsumption<1){
             totalFruits -= 1*tenSecondPeriods;
         } else{
             totalFruits -= 2*tenSecondPeriods;
