@@ -1,15 +1,11 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
-
 {
-    // Static reference to the player instance
     public static PlayerController Instance { get; private set; }
 
-    // Reference to the UI Text element
     public Text coinCountText;
     public AudioSource coinSound;
     public AudioSource hitSound;
@@ -18,7 +14,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float dashSpeed = 4f;
     [SerializeField] private TrailRenderer myTrailRenderer;
 
-
     private PlayerControls playerControls;
     private Vector2 movement;
     private Rigidbody2D rb;
@@ -26,9 +21,7 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer mySpriteRender;
 
     private bool isDashing = false;
-    
     private int coinCount = 0;
-
 
     private void Awake()
     {
@@ -37,9 +30,11 @@ public class PlayerController : MonoBehaviour
         myAnimator = GetComponent<Animator>();
         mySpriteRender = GetComponent<SpriteRenderer>();
 
-        UpdateCoinCountDisplay();
         // Assign the current instance to the static property
         Instance = this;
+
+        // Load player state if exists
+        LoadPlayerState();
     }
 
     private void Start()
@@ -66,7 +61,6 @@ public class PlayerController : MonoBehaviour
     private void PlayerInput()
     {
         movement = playerControls.Movement.Move.ReadValue<Vector2>();
-
         myAnimator.SetFloat("moveX", movement.x);
         myAnimator.SetFloat("moveY", movement.y);
     }
@@ -78,84 +72,64 @@ public class PlayerController : MonoBehaviour
 
     private void AdjustPlayerFacingDirection()
     {
-        // If there is movement in the horizontal direction
         if (movement.x != 0)
         {
-            // If moving left, flip the sprite
-            if (movement.x < 0)
-            {
-                mySpriteRender.flipX = true;
-            }
-            // If moving right, keep the sprite facing right
-            else
-            {
-                mySpriteRender.flipX = false;
-            }
+            mySpriteRender.flipX = movement.x < 0;
         }
     }
-
 
     private void Dash()
+{
+    if (!isDashing)
     {
-        if (!isDashing)
+        isDashing = true;
+        moveSpeed *= dashSpeed;
+        
+        // Check if myTrailRenderer is not null before accessing it
+        if (myTrailRenderer != null)
         {
-            isDashing = true;
-            moveSpeed *= dashSpeed;
-            // Check if myTrailRenderer is not null before accessing it
-            if (myTrailRenderer != null)
-            {
-                myTrailRenderer.emitting = true;
-            }
-            else
-            {
-                Debug.LogWarning("TrailRenderer is null. Cannot emit trail.");
-            }
+            myTrailRenderer.emitting = true;
             StartCoroutine(EndDashRoutine());
         }
+        else
+        {
+            // Reset isDashing flag if trail renderer is null
+            isDashing = false;
+        }
     }
+}
+
 
     public void IncreaseCoinCount()
     {
         coinCount++;
-        // Update UI or perform any other actions related to collecting coins
         UpdateCoinCountDisplay();
         PlayCoinSound();
-        
     }
 
     public void DecreaseCoinCount(int amount)
     {
-        coinCount -= amount;
-        if (coinCount < 0)
-        {
-            coinCount = 0;
-        }
+        coinCount = Mathf.Max(0, coinCount - amount);
         PlayHitSound();
         UpdateCoinCountDisplay();
     }
 
     private void UpdateCoinCountDisplay()
     {
-        if (coinCountText != null) 
+        if (coinCountText != null)
         {
-            coinCountText.text = coinCount.ToString(); 
+            coinCountText.text = coinCount.ToString();
         }
     }
 
     private void PlayCoinSound()
     {
-        if (coinSound != null && coinSound.clip != null)
-        {
-            coinSound.Play(); 
-        }
+        coinSound?.Play();
     }
 
     private void PlayHitSound()
     {
-        if (hitSound != null && hitSound.clip != null)
-        {
-            hitSound.Play();
-        }
+        hitSound?.Play();
     }
 
     public int GetCoinCount()
@@ -166,17 +140,40 @@ public class PlayerController : MonoBehaviour
     public void SetCoinCount(int amount)
     {
         coinCount = amount;
+        UpdateCoinCountDisplay();
+    }
+
+    public void SetPlayerPosition(Vector3 position)
+    {
+        transform.position = position;
     }
 
     private IEnumerator EndDashRoutine()
     {
-        float dashTime = .2f;
-        float dashCD = .25f;
+        float dashTime = 0.2f;
+        float dashCD = 0.25f;
         yield return new WaitForSeconds(dashTime);
-        moveSpeed /= dashSpeed; ;
+        moveSpeed /= dashSpeed;
         myTrailRenderer.emitting = false;
         yield return new WaitForSeconds(dashCD);
         isDashing = false;
     }
 
+    private void LoadPlayerState()
+    {
+        if (PlayerPrefs.HasKey("PlayerX") && PlayerPrefs.HasKey("PlayerY") && PlayerPrefs.HasKey("PlayerZ"))
+        {
+            Vector3 playerPosition = new Vector3(
+                PlayerPrefs.GetFloat("PlayerX"),
+                PlayerPrefs.GetFloat("PlayerY"),
+                PlayerPrefs.GetFloat("PlayerZ")
+            );
+            SetPlayerPosition(playerPosition);
+        }
+
+        if (PlayerPrefs.HasKey("Score"))
+        {
+            SetCoinCount(PlayerPrefs.GetInt("Score"));
+        }
+    }
 }
