@@ -1,28 +1,61 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class InventoryManager : MonoBehaviour
 {
-    public GameObject inventoryUI; // Reference to the Inventory UI panel
+    public Text[] itemTexts; // Array of UI Text elements to display item counts
+    private int[] itemCounts; // Array to store the count of each item type
 
-    // Start is called before the first frame update
+
+   
+
     void Start()
     {
-        // Hide the inventory UI panel when the game starts
-        HideInventoryUI();
+        itemCounts = new int[] { 0, 0, 0, 0, 0 };
     }
 
-    // Function to show the inventory UI panel
-    public void ShowInventoryUI()
+
+    public void IncreaseItemCount(int itemType)
     {
-        // Activate the inventory UI panel
-        inventoryUI.SetActive(true);
+        Debug.LogError("Entered IncreaseItemCount");
+        int index = itemType;
+        Debug.LogError(index != -1);
+        if (index != -1)
+        {   
+
+            itemCounts[index]++;
+            Debug.LogError(itemCounts);
+
+        }
+        else
+        {
+            Debug.LogError("Item type not found in inventory!");
+        }
     }
 
-    // Function to hide the inventory UI panel
-    public void HideInventoryUI()
+    // Update the inventory UI with the current item counts
+    public void UpdateInventoryUI()
     {
-        // Deactivate the inventory UI panel
-        inventoryUI.SetActive(false);
+        if (itemTexts == null)
+        {
+            Debug.LogError("Item texts array is not initialized!");
+            return;
+        }
+
+        if (itemTexts.Length != itemCounts.Length)
+        {
+            Debug.LogError("Item texts array length does not match item counts array length!");
+            return;
+        }
+
+        for (int i = 0; i < itemCounts.Length; i++)
+        {
+            itemTexts[i].text = itemCounts[i].ToString();
+        }
     }
+
+    
+    
+
 }
