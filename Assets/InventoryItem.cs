@@ -1,30 +1,53 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class InventoryItem : MonoBehaviour
+public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    public string itemType; // Type of the item
-    public int itemCount; // Count of this item in the inventory
+    private RectTransform rectTransform;
+    private Vector2 initialPosition; // Store the initial position of the item
 
-    // Function to initialize the item with its type and count
-    public void Initialize(string type, int count)
+    public GameObject itemPrefab; // Reference to the prefab of the corresponding game object
+    public Transform gridTransform; // Reference to the grid transform
+
+    void Awake()
     {
-        itemType = type;
-        itemCount = count;
+        rectTransform = GetComponent<RectTransform>();
     }
 
-    // Function to increase the count of this item in the inventory
-    public void IncreaseCount(int amount)
+    public void OnBeginDrag(PointerEventData eventData)
     {
-        itemCount += amount;
+        initialPosition = rectTransform.anchoredPosition; // Store the initial position
     }
 
-    // Function to decrease the count of this item in the inventory
-    public void DecreaseCount(int amount)
+    public void OnDrag(PointerEventData eventData)
     {
-        itemCount -= amount;
-        if (itemCount < 0)
-        {
-            itemCount = 0;
-        }
+        rectTransform.anchoredPosition += eventData.delta;
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        // Calculate the drop position in world space
+        Vector3 dropPosition = eventData.pointerCurrentRaycast.worldPosition;
+
+        // Snap the drop position to the grid
+        Vector3 snappedPosition = SnapToGrid(dropPosition);
+
+        // Instantiate the corresponding game object in the game environment at the snapped position
+        Instantiate(itemPrefab, snappedPosition, Quaternion.identity);
+
+        // Return the item to its initial position
+        rectTransform.anchoredPosition = initialPosition;
+    }
+
+    // Snap the given position to the nearest grid point
+    private Vector3 SnapToGrid(Vector3 position)
+    {
+        Vector3Int snappedPosition = new Vector3Int(
+            Mathf.RoundToInt(position.x),
+            Mathf.RoundToInt(position.y),
+            Mathf.RoundToInt(position.z)
+        );
+
+        return gridTransform.TransformPoint(snappedPosition);
     }
 }
