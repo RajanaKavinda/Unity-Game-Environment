@@ -1268,8 +1268,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1593ced60e688d4fbe5db133f641b14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rectTransform: {fileID: 605948092}
   itemPrefab: {fileID: 1531128503}
-  gridTransform: {fileID: 605948092}
+  gridTransform: {fileID: 1766687625}
+  parentTransform: {fileID: 732224980}
 --- !u!225 &173547003
 CanvasGroup:
   m_ObjectHideFlags: 0
