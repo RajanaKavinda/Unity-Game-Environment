@@ -3,12 +3,12 @@ using UnityEngine.EventSystems;
 
 public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    public RectTransform rectTransform;
+    private RectTransform rectTransform;
     private Vector2 initialPosition; // Store the initial position of the item
 
     public GameObject itemPrefab; // Reference to the prefab of the corresponding game object
     public Transform gridTransform; // Reference to the grid transform
-    public Transform parentTransform; // Reference to the parent transform to attach to
+    public Camera mainCamera; // Reference to the main camera
 
     void Awake()
     {
@@ -18,30 +18,36 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public void OnBeginDrag(PointerEventData eventData)
     {
         initialPosition = rectTransform.anchoredPosition; // Store the initial position
+        Debug.Log("Initial Position: " + initialPosition);
     }
 
     public void OnDrag(PointerEventData eventData)
     {
         rectTransform.anchoredPosition += eventData.delta / gridTransform.localScale.x; // Consider the scale of the grid
+        Debug.Log("Dragged Position: " + rectTransform.anchoredPosition);
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        // Convert the drop position from screen space to world space
-        Vector3 dropPosition;
-        RectTransformUtility.ScreenPointToWorldPointInRectangle(rectTransform, eventData.position, eventData.pressEventCamera, out dropPosition);
+        // Use a fixed Z-depth for the world point conversion
+        Vector3 worldPoint = mainCamera.ScreenToWorldPoint(new Vector3(eventData.position.x, eventData.position.y, mainCamera.transform.position.z + 10.0f)); // Adjust 10.0f to an appropriate depth if needed
+        Debug.Log("World Pointer Position: " + worldPoint);
 
         // Snap the drop position to the grid
-        Vector3 snappedPosition = SnapToGrid(dropPosition);
+        Vector3 snappedPosition = SnapToGrid(worldPoint);
+        Debug.Log("Snapped Position: " + snappedPosition);
 
         // Instantiate the corresponding game object in the game environment at the snapped position
         GameObject newObject = Instantiate(itemPrefab, snappedPosition, Quaternion.identity);
 
-        // Attach the new object to the parent if needed
-        if (parentTransform != null)
+        // Optionally, parent the new object if needed
+        if (gridTransform != null)
         {
-            newObject.transform.parent = parentTransform;
+            newObject.transform.SetParent(gridTransform, true);
         }
+
+        // Ensure the new object is visible
+        newObject.transform.position = new Vector3(newObject.transform.position.x, newObject.transform.position.y, mainCamera.transform.position.z + 10.0f);
 
         // Return the item to its initial position
         rectTransform.anchoredPosition = initialPosition;
@@ -52,11 +58,12 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         Vector3 localPosition = gridTransform.InverseTransformPoint(position);
 
-        // Round to the nearest grid position
+        // Adjust to grid spacing if necessary (assuming grid spacing of 1 unit)
+        float gridSpacing = 1.0f; // Adjust this value based on your grid size
         Vector3 snappedPosition = new Vector3(
-            Mathf.Round(localPosition.x),
-            Mathf.Round(localPosition.y),
-            Mathf.Round(localPosition.z)
+            Mathf.Round(localPosition.x / gridSpacing) * gridSpacing,
+            Mathf.Round(localPosition.y / gridSpacing) * gridSpacing,
+            Mathf.Round(localPosition.z / gridSpacing) * gridSpacing
         );
 
         return gridTransform.TransformPoint(snappedPosition);
