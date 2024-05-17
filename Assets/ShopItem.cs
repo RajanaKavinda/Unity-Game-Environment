@@ -8,6 +8,16 @@ public class ShopItem : MonoBehaviour
     public int itemType; // Type of the item
     public InventoryManager inventoryManager; // Reference to the InventoryManager
 
+    // Start is called before the first frame update
+    void Start()
+    {
+        // Update the coins text with the initial coin count at the start
+        if (coinsText != null)
+        {
+            coinsText.text = "Coins: " + CoinManager.currentCoins.ToString();
+        }
+    }
+
     // Function to purchase the item
     public void PurchaseItem()
     {
