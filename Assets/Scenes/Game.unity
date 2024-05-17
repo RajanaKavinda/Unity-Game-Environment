@@ -17480,7 +17480,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1424984687}
         m_TargetAssemblyTypeName: ShopManager, Assembly-CSharp
         m_MethodName: HideShopUI
         m_Mode: 1
@@ -18902,7 +18902,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1424984687}
         m_TargetAssemblyTypeName: ShopManager, Assembly-CSharp
         m_MethodName: ShowShopUI
         m_Mode: 1
