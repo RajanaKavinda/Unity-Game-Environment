@@ -23,6 +23,9 @@ public class PlayerController : MonoBehaviour
     private bool isDashing = false;
     private int coinCount = 0;
 
+    // Add this variable to track quiz marks
+    private int quizMarks = 10;
+
     private void Awake()
     {
         playerControls = new PlayerControls();
@@ -141,6 +144,16 @@ public class PlayerController : MonoBehaviour
     {
         coinCount = amount;
         UpdateCoinCountDisplay();
+    }
+
+    public int GetQuizMarks()
+    {
+        return quizMarks;
+    }
+
+    public void SetQuizMarks(int marks)
+    {
+        quizMarks = marks;
     }
 
     public void SetPlayerPosition(Vector3 position)
