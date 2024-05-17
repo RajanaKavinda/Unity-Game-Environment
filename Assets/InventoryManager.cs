@@ -7,26 +7,18 @@ public class InventoryManager : MonoBehaviour
     public Text[] itemTexts; // Array of UI Text elements to display item counts
     private int[] itemCounts; // Array to store the count of each item type
 
-
-   
-
     void Start()
     {
         itemCounts = new int[] { 0, 0, 0, 0, 0 };
+        UpdateInventoryUI();
     }
-
 
     public void IncreaseItemCount(int itemType)
     {
-        Debug.LogError("Entered IncreaseItemCount");
-        int index = itemType;
-        Debug.LogError(index != -1);
-        if (index != -1)
-        {   
-
-            itemCounts[index]++;
-            Debug.LogError(itemCounts);
-
+        if (itemType >= 0 && itemType < itemCounts.Length)
+        {
+            itemCounts[itemType]++;
+            UpdateInventoryUI();
         }
         else
         {
@@ -34,28 +26,48 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    // Update the inventory UI with the current item counts
-    public void UpdateInventoryUI()
+    public void DecreaseItemCount(int itemType)
     {
-        if (itemTexts == null)
+        if (itemType >= 0 && itemType < itemCounts.Length)
         {
-            Debug.LogError("Item texts array is not initialized!");
-            return;
+            if (itemCounts[itemType] > 0)
+            {
+                itemCounts[itemType]--;
+                UpdateInventoryUI();
+            }
+            else
+            {
+                Debug.LogError("No items left to decrease!");
+            }
         }
-
-        if (itemTexts.Length != itemCounts.Length)
+        else
         {
-            Debug.LogError("Item texts array length does not match item counts array length!");
-            return;
-        }
-
-        for (int i = 0; i < itemCounts.Length; i++)
-        {
-            itemTexts[i].text = itemCounts[i].ToString();
+            Debug.LogError("Item type not found in inventory!");
         }
     }
 
-    
-    
+    public int GetItemCount(int itemType)
+    {
+        if (itemType >= 0 && itemType < itemCounts.Length)
+        {
+            return itemCounts[itemType];
+        }
+        else
+        {
+            Debug.LogError("Item type not found in inventory!");
+            return 0;
+        }
+    }
 
+    // Update the inventory UI with the current item counts
+    public void UpdateInventoryUI()
+    {
+        for (int i = 0; i < itemCounts.Length; i++)
+        {
+            if (itemTexts.Length > i && itemTexts[i] != null)
+            {
+                itemTexts[i].text = itemCounts[i].ToString();
+            }
+        }
+    }
 }

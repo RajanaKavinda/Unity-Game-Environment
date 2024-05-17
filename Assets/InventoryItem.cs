@@ -9,6 +9,8 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public GameObject itemPrefab; // Reference to the prefab of the corresponding game object
     public Transform gridTransform; // Reference to the grid transform
     public Camera mainCamera; // Reference to the main camera
+    public InventoryManager inventoryManager; // Reference to the Inventory Manager
+    public int itemType; // The type of item this script handles
 
     void Awake()
     {
@@ -17,20 +19,36 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (inventoryManager.GetItemCount(itemType) <= 0)
+        {
+            Debug.Log("No items left to drag!");
+            return;
+        }
+
         initialPosition = rectTransform.anchoredPosition; // Store the initial position
         Debug.Log("Initial Position: " + initialPosition);
     }
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (inventoryManager.GetItemCount(itemType) <= 0)
+        {
+            return;
+        }
+
         rectTransform.anchoredPosition += eventData.delta / gridTransform.localScale.x; // Consider the scale of the grid
         Debug.Log("Dragged Position: " + rectTransform.anchoredPosition);
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (inventoryManager.GetItemCount(itemType) <= 0)
+        {
+            return;
+        }
+
         // Use a fixed Z-depth for the world point conversion
-        Vector3 worldPoint = mainCamera.ScreenToWorldPoint(new Vector3(eventData.position.x, eventData.position.y, mainCamera.transform.position.z + 10.0f)); // Adjust 10.0f to an appropriate depth if needed
+        Vector3 worldPoint = mainCamera.ScreenToWorldPoint(new Vector3(eventData.position.x, eventData.position.y, mainCamera.nearClipPlane)); // Adjust nearClipPlane to an appropriate depth if needed
         Debug.Log("World Pointer Position: " + worldPoint);
 
         // Snap the drop position to the grid
@@ -46,8 +64,11 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             newObject.transform.SetParent(gridTransform, true);
         }
 
+        // Reduce item count
+        inventoryManager.DecreaseItemCount(itemType);
+
         // Ensure the new object is visible
-        newObject.transform.position = new Vector3(newObject.transform.position.x, newObject.transform.position.y, mainCamera.transform.position.z + 10.0f);
+        newObject.transform.position = new Vector3(newObject.transform.position.x, newObject.transform.position.y, 0.0f);
 
         // Return the item to its initial position
         rectTransform.anchoredPosition = initialPosition;

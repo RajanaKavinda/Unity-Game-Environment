@@ -1271,6 +1271,8 @@ MonoBehaviour:
   itemPrefab: {fileID: 1531128503}
   gridTransform: {fileID: 732224980}
   mainCamera: {fileID: 519420031}
+  inventoryManager: {fileID: 1454163260}
+  itemType: 0
 --- !u!225 &173547003
 CanvasGroup:
   m_ObjectHideFlags: 0
