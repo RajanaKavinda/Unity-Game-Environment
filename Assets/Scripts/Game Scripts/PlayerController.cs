@@ -21,7 +21,6 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer mySpriteRender;
 
     private bool isDashing = false;
-    private int coinCount = 0;
 
     // Add this variable to track quiz marks
     private int quizMarks = 10;
@@ -53,6 +52,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         PlayerInput();
+        UpdateCoinCountDisplay();
     }
 
     private void FixedUpdate()
@@ -82,37 +82,36 @@ public class PlayerController : MonoBehaviour
     }
 
     private void Dash()
-{
-    if (!isDashing)
     {
-        isDashing = true;
-        moveSpeed *= dashSpeed;
-        
-        // Check if myTrailRenderer is not null before accessing it
-        if (myTrailRenderer != null)
+        if (!isDashing)
         {
-            myTrailRenderer.emitting = true;
-            StartCoroutine(EndDashRoutine());
-        }
-        else
-        {
-            // Reset isDashing flag if trail renderer is null
-            isDashing = false;
+            isDashing = true;
+            moveSpeed *= dashSpeed;
+
+            // Check if myTrailRenderer is not null before accessing it
+            if (myTrailRenderer != null)
+            {
+                myTrailRenderer.emitting = true;
+                StartCoroutine(EndDashRoutine());
+            }
+            else
+            {
+                // Reset isDashing flag if trail renderer is null
+                isDashing = false;
+            }
         }
     }
-}
-
 
     public void IncreaseCoinCount()
     {
-        coinCount++;
+        CoinManager.IncreaseCoins(1);
         UpdateCoinCountDisplay();
         PlayCoinSound();
     }
 
     public void DecreaseCoinCount(int amount)
     {
-        coinCount = Mathf.Max(0, coinCount - amount);
+        CoinManager.DecreaseCoins(amount);
         PlayHitSound();
         UpdateCoinCountDisplay();
     }
@@ -121,7 +120,7 @@ public class PlayerController : MonoBehaviour
     {
         if (coinCountText != null)
         {
-            coinCountText.text = coinCount.ToString();
+            coinCountText.text = CoinManager.currentCoins.ToString();
         }
     }
 
@@ -133,17 +132,6 @@ public class PlayerController : MonoBehaviour
     private void PlayHitSound()
     {
         hitSound?.Play();
-    }
-
-    public int GetCoinCount()
-    {
-        return coinCount;
-    }
-
-    public void SetCoinCount(int amount)
-    {
-        coinCount = amount;
-        UpdateCoinCountDisplay();
     }
 
     public int GetQuizMarks()
@@ -186,7 +174,10 @@ public class PlayerController : MonoBehaviour
 
         if (PlayerPrefs.HasKey("Score"))
         {
-            SetCoinCount(PlayerPrefs.GetInt("Score"));
+            CoinManager.currentCoins = PlayerPrefs.GetInt("Score");
+            UpdateCoinCountDisplay();
         }
     }
 }
+
+

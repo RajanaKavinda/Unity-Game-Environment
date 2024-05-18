@@ -51,7 +51,7 @@ public class PauseWithPopUp : MonoBehaviour
             PlayerPrefs.SetFloat("PlayerX", playerPosition.x);
             PlayerPrefs.SetFloat("PlayerY", playerPosition.y);
             PlayerPrefs.SetFloat("PlayerZ", playerPosition.z);
-            PlayerPrefs.SetInt("Score", playerController.GetCoinCount());
+            PlayerPrefs.SetInt("Score", CoinManager.currentCoins);
             PlayerPrefs.Save();
         }
         else
