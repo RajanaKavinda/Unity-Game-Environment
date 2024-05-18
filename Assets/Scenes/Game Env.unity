@@ -27840,8 +27840,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemPrefab: {fileID: 2332269785892312124, guid: 23b53aeb7b3a6bd47ae3b88abe4bd00d, type: 3}
-  gridTransform: {fileID: 0}
-  mainCamera: {fileID: 0}
+  gridTransform: {fileID: 732224980}
+  mainCamera: {fileID: 519420031}
   inventoryManager: {fileID: 48811219}
   itemType: 4
 --- !u!114 &509070715
@@ -29423,8 +29423,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemPrefab: {fileID: 2517903473571529490, guid: d3c38ab18c95eac49b1cfd5ffff09425, type: 3}
-  gridTransform: {fileID: 0}
-  mainCamera: {fileID: 0}
+  gridTransform: {fileID: 732224980}
+  mainCamera: {fileID: 519420031}
   inventoryManager: {fileID: 48811219}
   itemType: 3
 --- !u!114 &717646405
