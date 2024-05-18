@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
     private bool isDashing = false;
 
     // Add this variable to track quiz marks
-    private int quizMarks = 10;
+    private int quizMarks = 80;
 
     private void Awake()
     {
