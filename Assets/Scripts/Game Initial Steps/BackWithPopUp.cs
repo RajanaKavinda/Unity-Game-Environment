@@ -12,9 +12,9 @@ public class BackWithPopUp : MonoBehaviour
         PopUpPanel.SetActive(false);
 
         // Find the buttons and add listeners
-        GameObject.Find("Back").GetComponent<Button>().onClick.AddListener(PopUp);
-        transform.Find("PopUpPanel").Find("BackPopUpPanel").GetComponent<Button>().onClick.AddListener(BackToMainMenu);
-        transform.Find("PopUpPanel").Find("Play").GetComponent<Button>().onClick.AddListener(BackToGame);
+        GameObject.Find("BackToMainMenu").GetComponent<Button>().onClick.AddListener(PopUp);
+        transform.Find("PopUp").Find("PopUpPanel").Find("Save & Quit").GetComponent<Button>().onClick.AddListener(BackToMainMenu);
+        transform.Find("PopUp").Find("PopUpPanel").Find("Resume").GetComponent<Button>().onClick.AddListener(BackToGame);
     }
 
     public void PopUp()
