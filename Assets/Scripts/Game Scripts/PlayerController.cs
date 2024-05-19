@@ -1,6 +1,6 @@
 using System.Collections;
-using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -22,7 +22,6 @@ public class PlayerController : MonoBehaviour
 
     private bool isDashing = false;
 
-    // Add this variable to track quiz marks
     private int quizMarks = 80;
 
     private void Awake()
@@ -32,16 +31,13 @@ public class PlayerController : MonoBehaviour
         myAnimator = GetComponent<Animator>();
         mySpriteRender = GetComponent<SpriteRenderer>();
 
-        // Assign the current instance to the static property
         Instance = this;
-
-        // Load player state if exists
-        LoadPlayerState();
     }
 
     private void Start()
     {
         playerControls.Combat.Dash.performed += _ => Dash();
+        SaveManager.Instance.LoadGame();
     }
 
     private void OnEnable()
@@ -88,7 +84,6 @@ public class PlayerController : MonoBehaviour
             isDashing = true;
             moveSpeed *= dashSpeed;
 
-            // Check if myTrailRenderer is not null before accessing it
             if (myTrailRenderer != null)
             {
                 myTrailRenderer.emitting = true;
@@ -96,7 +91,6 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                // Reset isDashing flag if trail renderer is null
                 isDashing = false;
             }
         }
@@ -159,25 +153,4 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(dashCD);
         isDashing = false;
     }
-
-    private void LoadPlayerState()
-    {
-        if (PlayerPrefs.HasKey("PlayerX") && PlayerPrefs.HasKey("PlayerY") && PlayerPrefs.HasKey("PlayerZ"))
-        {
-            Vector3 playerPosition = new Vector3(
-                PlayerPrefs.GetFloat("PlayerX"),
-                PlayerPrefs.GetFloat("PlayerY"),
-                PlayerPrefs.GetFloat("PlayerZ")
-            );
-            SetPlayerPosition(playerPosition);
-        }
-
-        if (PlayerPrefs.HasKey("Score"))
-        {
-            CoinManager.currentCoins = PlayerPrefs.GetInt("Score");
-            UpdateCoinCountDisplay();
-        }
-    }
 }
-
-
