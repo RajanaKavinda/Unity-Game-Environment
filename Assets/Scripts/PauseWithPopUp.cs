@@ -6,19 +6,21 @@ using UnityEngine.UI;
 public class PauseWithPopUp : MonoBehaviour
 {
     public GameObject PopUpPanel;
+    public Button PauseButton; 
 
     void Start()
     {
         PopUpPanel.SetActive(false);
         PopUpPanel.transform.Find("Save & Quit").GetComponent<Button>().onClick.AddListener(SaveAndQuit);
         PopUpPanel.transform.Find("Resume").GetComponent<Button>().onClick.AddListener(ResumeGame);
-    }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (PauseButton != null)
         {
-            PopUp();
+            PauseButton.onClick.AddListener(PopUp);
+        }
+        else
+        {
+            Debug.LogError("Pause button not assigned!");
         }
     }
 
