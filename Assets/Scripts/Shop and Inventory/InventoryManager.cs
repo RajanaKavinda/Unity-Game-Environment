@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +9,7 @@ public class InventoryManager : MonoBehaviour
     void Start()
     {
         itemCounts = new int[] { 0, 0, 0, 0, 0 };
+        LoadInventory();
         UpdateInventoryUI();
     }
 
@@ -57,6 +57,25 @@ public class InventoryManager : MonoBehaviour
             Debug.LogError("Item type not found in inventory!");
             return 0;
         }
+    }
+
+    public void SaveInventory()
+    {
+        for (int i = 0; i < itemCounts.Length; i++)
+        {
+            PlayerPrefs.SetInt("ItemCount_" + i, itemCounts[i]);
+        }
+        PlayerPrefs.Save();
+        Debug.Log("Saved inventory.");
+    }
+
+    public void LoadInventory()
+    {
+        for (int i = 0; i < itemCounts.Length; i++)
+        {
+            itemCounts[i] = PlayerPrefs.GetInt("ItemCount_" + i, 0);
+        }
+        Debug.Log("Loaded inventory.");
     }
 
     // Update the inventory UI with the current item counts
