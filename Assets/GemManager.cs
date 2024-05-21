@@ -26,6 +26,11 @@ public class GemManager : MonoBehaviour
         UpdateGemUI();
     }
 
+    public int GetGems()
+    {
+        return gems;
+    }
+
     public void AddGems(int amount)
     {
         gems += amount;
@@ -51,7 +56,7 @@ public class GemManager : MonoBehaviour
     {
         if (gemCountText != null)
         {
-            gemCountText.text = "Gems: " + gems;
+            gemCountText.text = gems.ToString();
         }
     }
 }
