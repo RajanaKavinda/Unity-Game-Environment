@@ -154,7 +154,8 @@ public class EnergyStatusController : MonoBehaviour
 
         yield return jsonData.currentConsumption; 
        
-    }*/
+    }
+    */
 
     public void updateFruits(float averageEnergyConsumption,long tenSecondPeriods){
         if (averageEnergyConsumption<0.2){
