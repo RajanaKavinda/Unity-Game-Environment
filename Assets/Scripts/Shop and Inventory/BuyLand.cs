@@ -33,7 +33,7 @@ public class GemPurchasePanel : MonoBehaviour
         if (barrier == null) return;
 
         // Check if the player has enough gems
-        if (GemManager.Instance.UseGems(barrier.gemCost))
+        if (GemsDisplay.Instance.UseGems(barrier.gemCost))
         {
             barrier.UnlockWithGems(); // Unlock the barrier
             Hide(); // Hide the panel after purchase
