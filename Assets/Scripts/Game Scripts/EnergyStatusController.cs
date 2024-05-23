@@ -13,9 +13,9 @@ public class EnergyStatusController : MonoBehaviour
     private float currentEnergyReading;
     private DateTime lastTime ; // May 12, 2024, 6:28:00 PM; = new DateTime(2024, 5, 12, 18, 28, 0)
     private long tenSecondPeriods;
-    private string jwtToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJvdmVyc2lnaHRfZzEzIiwiaWF0IjoxNzE1NTY3NDIyLCJleHAiOjE3MTU2MDM0MjJ9.wc1Z4UHw8RBFfE22M0m2jBlIz0_EJ_ezeMTXWnYr5osTTKPMYTwG6YqV2hoCRAfuOGbpY708v86VY5qQL3UUrg";
+    private string jwtToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJvdmVyc2lnaHRfZzEzIiwiaWF0IjoxNzE2NDI3ODcyLCJleHAiOjE3MTY0NjM4NzJ9.UxxZo8stk0aL5HGJRM2Qlk-OoatgKyqwmEVXc_PlOUH6R_fK9aThrkT7FFS58WEeqoVqeIYUcU9d7Ouk-CWwcQ";
     private string urlExtension1 = "/power-consumption/current/view";
-    
+    public float averageEnergyConsumption;
     public long totalFruits = 0;
 
 
@@ -76,10 +76,10 @@ public class EnergyStatusController : MonoBehaviour
 
                     // Calculate the average energy consumption for 10 s
                     float energyConsumptionFromLastTime = currentEnergyReading - lastEnergyReading;
-                    float averageEnergyConsumption = energyConsumptionFromLastTime * 10 / timeDifferenceInSeconds;
+                    averageEnergyConsumption = energyConsumptionFromLastTime * 10 / timeDifferenceInSeconds;
                     Debug.Log("averageEnergyConsumption: " + averageEnergyConsumption);
 
-                    updateFruits(averageEnergyConsumption,tenSecondPeriods);
+                    //updateFruits(averageEnergyConsumption,tenSecondPeriods);
 
                     
 
