@@ -3481,6 +3481,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1487221100861830776, guid: bf118a25ce4dc0146835cd9d5b373486, type: 3}
+      propertyPath: gemCost
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1487221100861830776, guid: bf118a25ce4dc0146835cd9d5b373486, type: 3}
       propertyPath: barrierID
       value: 6
       objectReference: {fileID: 0}
@@ -3488,6 +3492,10 @@ PrefabInstance:
       propertyPath: requiredMarks
       value: 60
       objectReference: {fileID: 0}
+    - target: {fileID: 1487221100861830776, guid: bf118a25ce4dc0146835cd9d5b373486, type: 3}
+      propertyPath: gemPurchasePanel
+      value: 
+      objectReference: {fileID: 1641441815}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -29697,6 +29705,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1487221100861830776, guid: bf118a25ce4dc0146835cd9d5b373486, type: 3}
+      propertyPath: gemCost
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1487221100861830776, guid: bf118a25ce4dc0146835cd9d5b373486, type: 3}
       propertyPath: barrierID
       value: 9
       objectReference: {fileID: 0}
@@ -29704,6 +29716,10 @@ PrefabInstance:
       propertyPath: requiredMarks
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 1487221100861830776, guid: bf118a25ce4dc0146835cd9d5b373486, type: 3}
+      propertyPath: gemPurchasePanel
+      value: 
+      objectReference: {fileID: 1641441815}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -29850,6 +29866,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1487221100861830776, guid: bf118a25ce4dc0146835cd9d5b373486, type: 3}
+      propertyPath: gemCost
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1487221100861830776, guid: bf118a25ce4dc0146835cd9d5b373486, type: 3}
       propertyPath: barrierID
       value: 14
       objectReference: {fileID: 0}
@@ -29857,6 +29877,10 @@ PrefabInstance:
       propertyPath: requiredMarks
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 1487221100861830776, guid: bf118a25ce4dc0146835cd9d5b373486, type: 3}
+      propertyPath: gemPurchasePanel
+      value: 
+      objectReference: {fileID: 1641441815}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -30256,6 +30280,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1487221100861830776, guid: bf118a25ce4dc0146835cd9d5b373486, type: 3}
+      propertyPath: gemCost
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1487221100861830776, guid: bf118a25ce4dc0146835cd9d5b373486, type: 3}
       propertyPath: barrierID
       value: 2
       objectReference: {fileID: 0}
@@ -30263,6 +30291,10 @@ PrefabInstance:
       propertyPath: requiredMarks
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 1487221100861830776, guid: bf118a25ce4dc0146835cd9d5b373486, type: 3}
+      propertyPath: gemPurchasePanel
+      value: 
+      objectReference: {fileID: 1641441815}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -30643,6 +30675,10 @@ PrefabInstance:
       value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 1487221100861830776, guid: bf118a25ce4dc0146835cd9d5b373486, type: 3}
+      propertyPath: gemCost
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1487221100861830776, guid: bf118a25ce4dc0146835cd9d5b373486, type: 3}
       propertyPath: barrierID
       value: 3
       objectReference: {fileID: 0}
@@ -30650,6 +30686,10 @@ PrefabInstance:
       propertyPath: requiredMarks
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 1487221100861830776, guid: bf118a25ce4dc0146835cd9d5b373486, type: 3}
+      propertyPath: gemPurchasePanel
+      value: 
+      objectReference: {fileID: 715475804}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -31064,6 +31104,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1487221100861830776, guid: bf118a25ce4dc0146835cd9d5b373486, type: 3}
+      propertyPath: gemCost
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1487221100861830776, guid: bf118a25ce4dc0146835cd9d5b373486, type: 3}
       propertyPath: barrierID
       value: 10
       objectReference: {fileID: 0}
@@ -31071,6 +31115,10 @@ PrefabInstance:
       propertyPath: requiredMarks
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 1487221100861830776, guid: bf118a25ce4dc0146835cd9d5b373486, type: 3}
+      propertyPath: gemPurchasePanel
+      value: 
+      objectReference: {fileID: 1641441815}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -33458,6 +33506,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1487221100861830776, guid: bf118a25ce4dc0146835cd9d5b373486, type: 3}
+      propertyPath: gemCost
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1487221100861830776, guid: bf118a25ce4dc0146835cd9d5b373486, type: 3}
       propertyPath: barrierID
       value: 5
       objectReference: {fileID: 0}
@@ -33465,6 +33517,10 @@ PrefabInstance:
       propertyPath: requiredMarks
       value: 50
       objectReference: {fileID: 0}
+    - target: {fileID: 1487221100861830776, guid: bf118a25ce4dc0146835cd9d5b373486, type: 3}
+      propertyPath: gemPurchasePanel
+      value: 
+      objectReference: {fileID: 1641441815}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -34201,6 +34257,10 @@ PrefabInstance:
       value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 1487221100861830776, guid: bf118a25ce4dc0146835cd9d5b373486, type: 3}
+      propertyPath: gemCost
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1487221100861830776, guid: bf118a25ce4dc0146835cd9d5b373486, type: 3}
       propertyPath: barrierID
       value: 4
       objectReference: {fileID: 0}
@@ -34208,6 +34268,10 @@ PrefabInstance:
       propertyPath: requiredMarks
       value: 40
       objectReference: {fileID: 0}
+    - target: {fileID: 1487221100861830776, guid: bf118a25ce4dc0146835cd9d5b373486, type: 3}
+      propertyPath: gemPurchasePanel
+      value: 
+      objectReference: {fileID: 1641441815}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -35187,6 +35251,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1487221100861830776, guid: bf118a25ce4dc0146835cd9d5b373486, type: 3}
+      propertyPath: gemCost
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1487221100861830776, guid: bf118a25ce4dc0146835cd9d5b373486, type: 3}
       propertyPath: barrierID
       value: 13
       objectReference: {fileID: 0}
@@ -35194,6 +35262,10 @@ PrefabInstance:
       propertyPath: requiredMarks
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 1487221100861830776, guid: bf118a25ce4dc0146835cd9d5b373486, type: 3}
+      propertyPath: gemPurchasePanel
+      value: 
+      objectReference: {fileID: 1641441815}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -88256,6 +88328,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1487221100861830776, guid: bf118a25ce4dc0146835cd9d5b373486, type: 3}
+      propertyPath: gemCost
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1487221100861830776, guid: bf118a25ce4dc0146835cd9d5b373486, type: 3}
       propertyPath: barrierID
       value: 1
       objectReference: {fileID: 0}
@@ -88263,6 +88339,10 @@ PrefabInstance:
       propertyPath: requiredMarks
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 1487221100861830776, guid: bf118a25ce4dc0146835cd9d5b373486, type: 3}
+      propertyPath: gemPurchasePanel
+      value: 
+      objectReference: {fileID: 1641441815}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -89015,6 +89095,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1487221100861830776, guid: bf118a25ce4dc0146835cd9d5b373486, type: 3}
+      propertyPath: gemCost
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1487221100861830776, guid: bf118a25ce4dc0146835cd9d5b373486, type: 3}
       propertyPath: barrierID
       value: 8
       objectReference: {fileID: 0}
@@ -89022,6 +89106,10 @@ PrefabInstance:
       propertyPath: requiredMarks
       value: 80
       objectReference: {fileID: 0}
+    - target: {fileID: 1487221100861830776, guid: bf118a25ce4dc0146835cd9d5b373486, type: 3}
+      propertyPath: gemPurchasePanel
+      value: 
+      objectReference: {fileID: 1641441815}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -89043,7 +89131,7 @@ GameObject:
   - component: {fileID: 1641441816}
   - component: {fileID: 1641441819}
   - component: {fileID: 1641441818}
-  - component: {fileID: 1641441817}
+  - component: {fileID: 1641441820}
   m_Layer: 5
   m_Name: BuyLandPanel
   m_TagString: Untagged
@@ -89073,20 +89161,6 @@ RectTransform:
   m_AnchoredPosition: {x: -24.651001, y: 414.29236}
   m_SizeDelta: {x: -1341.6741, y: -888.6047}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1641441817
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1641441815}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7b87936672d27c49ab8a04a4746c905, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gemCostText: {fileID: 533613274}
-  purchaseButton: {fileID: 715475806}
 --- !u!114 &1641441818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89125,6 +89199,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1641441815}
   m_CullTransparentMesh: 1
+--- !u!114 &1641441820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1641441815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7b87936672d27c49ab8a04a4746c905, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gemCostText: {fileID: 533613274}
+  purchaseButton: {fileID: 715475806}
 --- !u!4 &1642921035 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8785183679996678720, guid: d970214030ab257478266ee050613e9a, type: 3}
@@ -89709,6 +89797,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1487221100861830776, guid: bf118a25ce4dc0146835cd9d5b373486, type: 3}
+      propertyPath: gemCost
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1487221100861830776, guid: bf118a25ce4dc0146835cd9d5b373486, type: 3}
       propertyPath: barrierID
       value: 12
       objectReference: {fileID: 0}
@@ -89716,6 +89808,10 @@ PrefabInstance:
       propertyPath: requiredMarks
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 1487221100861830776, guid: bf118a25ce4dc0146835cd9d5b373486, type: 3}
+      propertyPath: gemPurchasePanel
+      value: 
+      objectReference: {fileID: 1641441815}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -89779,6 +89875,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1487221100861830776, guid: bf118a25ce4dc0146835cd9d5b373486, type: 3}
+      propertyPath: gemCost
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1487221100861830776, guid: bf118a25ce4dc0146835cd9d5b373486, type: 3}
       propertyPath: barrierID
       value: 11
       objectReference: {fileID: 0}
@@ -89786,6 +89886,10 @@ PrefabInstance:
       propertyPath: requiredMarks
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 1487221100861830776, guid: bf118a25ce4dc0146835cd9d5b373486, type: 3}
+      propertyPath: gemPurchasePanel
+      value: 
+      objectReference: {fileID: 1641441815}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -90089,6 +90193,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1487221100861830776, guid: bf118a25ce4dc0146835cd9d5b373486, type: 3}
+      propertyPath: gemCost
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1487221100861830776, guid: bf118a25ce4dc0146835cd9d5b373486, type: 3}
       propertyPath: barrierID
       value: 7
       objectReference: {fileID: 0}
@@ -90096,6 +90204,10 @@ PrefabInstance:
       propertyPath: requiredMarks
       value: 70
       objectReference: {fileID: 0}
+    - target: {fileID: 1487221100861830776, guid: bf118a25ce4dc0146835cd9d5b373486, type: 3}
+      propertyPath: gemPurchasePanel
+      value: 
+      objectReference: {fileID: 1641441815}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
