@@ -22,7 +22,8 @@ public class GemsManager : MonoBehaviour
 
     public void UpdateGems()
     {
-        string lastPlayedDateStr = PlayerPrefs.GetString("LastPlayedDate", string.Empty);
+        DateTime currentDate = DateTime.Now.Date;
+        string lastPlayedDateStr = PlayerPrefs.GetString("LastPlayedDate", currentDate.ToString());
         Debug.Log("Last played date: " + lastPlayedDateStr);
         DateTime lastPlayedDate;
 
@@ -30,8 +31,6 @@ public class GemsManager : MonoBehaviour
         {
             lastPlayedDate = DateTime.Now.AddDays(-1); // Default to yesterday if no last played date
         }
-
-        DateTime currentDate = DateTime.Now.Date;
 
         // Fetch data from the last played date up to the day before the current date
         DateTime dateToFetch = lastPlayedDate.Date;
