@@ -89,6 +89,8 @@ public class SaveManager : MonoBehaviour
         LoadBarrierStates();
         LoadInventoryState();
         LoadPlacedItemsState();
+        // Update gems display
+        GemsDisplay.Instance.UpdateGemsDisplay();
         Debug.Log("Game Loaded.");
     }
 
