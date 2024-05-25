@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
@@ -22,7 +23,7 @@ public class PlayerController : MonoBehaviour
 
     private bool isDashing = false;
 
-    private int quizMarks = 80;
+    private int quizMarks;
 
     private void Awake()
     {
@@ -38,6 +39,8 @@ public class PlayerController : MonoBehaviour
     {
         playerControls.Combat.Dash.performed += _ => Dash();
         SaveManager.Instance.LoadGame();
+
+        StartCoroutine(InitializeQuizMarks());
     }
 
     private void OnEnable()
@@ -136,6 +139,7 @@ public class PlayerController : MonoBehaviour
     public void SetQuizMarks(int marks)
     {
         quizMarks = marks;
+        PlayerPrefs.SetInt("QuizMarks", marks);
     }
 
     public void SetPlayerPosition(Vector3 position)
@@ -152,5 +156,42 @@ public class PlayerController : MonoBehaviour
         myTrailRenderer.emitting = false;
         yield return new WaitForSeconds(dashCD);
         isDashing = false;
+    }
+
+    private IEnumerator InitializeQuizMarks()
+    {
+        if (PlayerPrefs.HasKey("QuizMarks"))
+        {
+            quizMarks = PlayerPrefs.GetInt("QuizMarks");
+            yield break;
+        }
+        else
+        {
+            string userId = GetMethod.userID; // Replace with actual user ID retrieval
+            string jwtToken = GetMethod.jwtToken2; // Replace with actual JWT token retrieval
+            string url = $"http://localhost:8080/energy-quest/user/score/{userId}";
+
+            UnityWebRequest request = UnityWebRequest.Get(url);
+            request.SetRequestHeader("Authorization", $"Bearer {jwtToken}");
+
+            yield return request.SendWebRequest();
+
+            if (request.result == UnityWebRequest.Result.Success)
+            {
+                if (int.TryParse(request.downloadHandler.text, out int fetchedQuizMarks))
+                {
+                    quizMarks = fetchedQuizMarks;
+                    PlayerPrefs.SetInt("QuizMarks", quizMarks);
+                }
+                else
+                {
+                    Debug.LogError("Failed to parse quiz marks from server response.");
+                }
+            }
+            else
+            {
+                Debug.LogError($"Failed to fetch quiz marks: {request.error}");
+            }
+        }
     }
 }
