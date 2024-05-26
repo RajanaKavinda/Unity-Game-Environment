@@ -15,7 +15,7 @@ public class EnergyStatusController : MonoBehaviour
     private long tenSecondPeriods;
     private string jwtToken = GetMethod.jwtToken;
     private string urlExtension1 = "/power-consumption/current/view";
-    private float averageEnergyConsumption;
+    public float averageEnergyConsumption;
     public int fruitsOrFlowers = 0;
 
 
