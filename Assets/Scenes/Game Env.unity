@@ -33828,7 +33828,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 370e4e98c3f2ec3478bb54cceb8f334f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gems: 0
   gemsText: {fileID: 574141853}
 --- !u!4 &821044250
 Transform:
@@ -89956,7 +89955,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lastEnergyReading: 0
-  fruits: 0
+  fruitsOrFlowers: 0
 --- !u!1 &1802468692
 GameObject:
   m_ObjectHideFlags: 0

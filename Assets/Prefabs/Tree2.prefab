@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 4408714430322241006}
   - component: {fileID: 4333534723510278130}
   - component: {fileID: 3670753904278681879}
+  - component: {fileID: 4295456912766990207}
+  - component: {fileID: 5929908805459967323}
   m_Layer: 0
   m_Name: Tree2
   m_TagString: Untagged
@@ -120,3 +122,36 @@ CapsuleCollider2D:
   m_Offset: {x: 0.035277773, y: 0.11477788}
   m_Size: {x: 0.88183355, y: 0.49700832}
   m_Direction: 1
+--- !u!95 &4295456912766990207
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3264505468771940135}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c97feb461f7861f408cbf30f7fa923f0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5929908805459967323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3264505468771940135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca224ec028979354884cd4f9fdc08505, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
