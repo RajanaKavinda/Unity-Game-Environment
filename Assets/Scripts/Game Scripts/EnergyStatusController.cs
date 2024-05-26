@@ -11,7 +11,7 @@ public class EnergyStatusController : MonoBehaviour
  
     private float lastEnergyReading;
     private float currentEnergyReading;
-    private DateTime lastTime ; // May 12, 2024, 6:28:00 PM; = new DateTime(2024, 5, 12, 18, 28, 0)
+    private DateTime lastTime ; 
     private long tenSecondPeriods;
     private string jwtToken = GetMethod.jwtToken;
     private string urlExtension1 = "/power-consumption/current/view";
@@ -37,68 +37,41 @@ public class EnergyStatusController : MonoBehaviour
             {
                 DateTime currentTime = DateTime.Now;
 
-                if (currentTime.Date == lastTime.Date)
+                // Send HTTP GET request
+                yield return StartCoroutine(httpRequest.SendHttpRequest("get", "givenBackend", urlExtension1, jwtToken, ""));
+
+                // Check if the request was successful
+                string result = (string)httpRequest.result;
+                if (result == "Error")
                 {
-                    Debug.Log("Current date is the same as the last date."+currentTime);
-
-                    // Send HTTP GET request
-                    yield return StartCoroutine(httpRequest.SendHttpRequest("get", "givenBackend", urlExtension1, jwtToken, ""));
-
-                    // Check if the request was successful
-                    string result = (string)httpRequest.result;
-                    if (result == "Error")
-                    {
-                        Debug.LogError("Error checking profile and questionnaire");
-                        yield break;
-                    }
-
-                    // Deserialize the JSON string into a JsonData object
-                    CurrentConsumptionResponse jsonData = JsonUtility.FromJson<CurrentConsumptionResponse>(result);
-
-                    currentEnergyReading = jsonData.currentConsumption; 
-                    Debug.LogError("currentEnergyReading"+currentEnergyReading);
-
-                    // Calculate the time difference between the current and previous readings
-                    TimeSpan timeDifference = currentTime - lastTime;
-
-
-
-                    // Convert the time difference to seconds
-                    float timeDifferenceInSeconds = (float)timeDifference.TotalSeconds;
-
-                    tenSecondPeriods = (long) timeDifferenceInSeconds/10;
-                    if (tenSecondPeriods==0){
-                        tenSecondPeriods+=1;
-                    }
-
-                    // Print the timestamp
-                    Debug.Log("Timestamp: " + currentTime + " , timeDifference " + timeDifference + " timeDifferenceInSeconds " + timeDifferenceInSeconds);
-
-                    // Calculate the average energy consumption for 10 s
-                    float energyConsumptionFromLastTime = currentEnergyReading - lastEnergyReading;
-                    averageEnergyConsumption = energyConsumptionFromLastTime * 10 / timeDifferenceInSeconds;
-                    updateFruits(averageEnergyConsumption);
-                    Debug.Log("averageEnergyConsumption: " + averageEnergyConsumption);
-
-                    //updateFruits(averageEnergyConsumption,tenSecondPeriods);
-
-                    
-
-                    lastTime = currentTime;
-                    lastEnergyReading = currentEnergyReading;
-
-                    // Wait for 10 seconds before the next update
-                    yield return new WaitForSeconds(10f);
-
+                    Debug.LogError("Error checking profile and questionnaire");
+                    yield break;
                 }
-                else if (currentTime.Month == lastTime.Month && currentTime.Year == lastTime.Year)
-                {
-                   Debug.Log("Current date is in the same month as the last date.");
-                }
-                else
-                {
-                    Debug.Log("Current date is not in the same month as the last date.");
-                }
+
+                // Deserialize the JSON string into a JsonData object
+                CurrentConsumptionResponse jsonData = JsonUtility.FromJson<CurrentConsumptionResponse>(result);
+
+                currentEnergyReading = jsonData.currentConsumption; 
+                Debug.LogError("currentEnergyReading"+currentEnergyReading);
+
+                // Calculate the time difference between the current and previous readings
+                TimeSpan timeDifference = currentTime - lastTime;
+
+                // Convert the time difference to seconds
+                float timeDifferenceInSeconds = (float)timeDifference.TotalSeconds;
+
+                // Calculate the average energy consumption for 10 s
+                float energyConsumptionFromLastTime = currentEnergyReading - lastEnergyReading;
+                averageEnergyConsumption = energyConsumptionFromLastTime * 10 / timeDifferenceInSeconds;
+                updateFruitsOrFlowers(averageEnergyConsumption);
+                Debug.Log("averageEnergyConsumption: " + averageEnergyConsumption);
+
+                lastTime = currentTime;
+                lastEnergyReading = currentEnergyReading;
+
+                // Wait for 10 seconds before the next update
+                yield return new WaitForSeconds(10f);
+
             }
             else
             {
@@ -137,18 +110,20 @@ public class EnergyStatusController : MonoBehaviour
 
     
 
-    public void updateFruits(float averageEnergyConsumption){
-        if (averageEnergyConsumption<0.2){
+    public void updateFruitsOrFlowers(float averageEnergyConsumption){
+        if (averageEnergyConsumption<0.1){
             fruitsOrFlowers += 5;
         } else if (averageEnergyConsumption<0.4){
             fruitsOrFlowers += 3;
         } else if (averageEnergyConsumption<0.8){
             fruitsOrFlowers += 1;
-        } else if (averageEnergyConsumption<1){
+        } else if (averageEnergyConsumption<0.9){
             fruitsOrFlowers -= 1;
-        } else{
+        } else if (averageEnergyConsumption<1){
             fruitsOrFlowers -= 3;
+        }else{
+            fruitsOrFlowers -= 5;
         }
-        Debug.LogError("totalFruits: "+fruitsOrFlowers);
+        Debug.LogError("total: "+fruitsOrFlowers);
     }
 }
