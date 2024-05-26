@@ -16,7 +16,7 @@ public class EnergyStatusController : MonoBehaviour
     private string jwtToken = GetMethod.jwtToken;
     private string urlExtension1 = "/power-consumption/current/view";
     private float averageEnergyConsumption;
-    public int fruits = 0;
+    public int fruitsOrFlowers = 0;
 
 
     private void Start()
@@ -139,16 +139,16 @@ public class EnergyStatusController : MonoBehaviour
 
     public void updateFruits(float averageEnergyConsumption){
         if (averageEnergyConsumption<0.2){
-            fruits += 5;
+            fruitsOrFlowers += 5;
         } else if (averageEnergyConsumption<0.4){
-            fruits += 3;
+            fruitsOrFlowers += 3;
         } else if (averageEnergyConsumption<0.8){
-            fruits += 1;
+            fruitsOrFlowers += 1;
         } else if (averageEnergyConsumption<1){
-            fruits -= 1;
+            fruitsOrFlowers -= 1;
         } else{
-            fruits -= 3;
+            fruitsOrFlowers -= 3;
         }
-        Debug.LogError("totalFruits: "+fruits);
+        Debug.LogError("totalFruits: "+fruitsOrFlowers);
     }
 }

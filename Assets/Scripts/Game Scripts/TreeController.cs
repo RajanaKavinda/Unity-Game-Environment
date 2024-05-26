@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 using System;
 using System.Text.RegularExpressions;
 
-public class FruitsController : MonoBehaviour
+public class TreeController : MonoBehaviour
 {
     
     
@@ -68,8 +68,8 @@ public class FruitsController : MonoBehaviour
 
     void UpdateTreeAnimation()
     {
-        int fruits = energyStatusController.fruits;
-            if (fruits<=-5){
+        int fruitsOrFlowers = energyStatusController.fruitsOrFlowers;
+            if (fruitsOrFlowers<=-5){
                 treeAnim.SetBool(DIE1_ANIMATION, true);
                 treeAnim.SetBool(DIE2_ANIMATION, true);
 
@@ -84,7 +84,7 @@ public class FruitsController : MonoBehaviour
                 treeAnim.SetBool(GROW9_ANIMATION, false);
                 treeAnim.SetBool(GROW10_ANIMATION, false);
                 treeAnim.SetBool(GROW11_ANIMATION, false);
-            }else if (fruits<0){
+            }else if (fruitsOrFlowers<0){
                 treeAnim.SetBool(DIE1_ANIMATION, true);
                 treeAnim.SetBool(DIE2_ANIMATION, false);
 
@@ -99,7 +99,7 @@ public class FruitsController : MonoBehaviour
                 treeAnim.SetBool(GROW9_ANIMATION, false);
                 treeAnim.SetBool(GROW10_ANIMATION, false);
                 treeAnim.SetBool(GROW11_ANIMATION, false);
-            }else if (fruits<=5){
+            }else if (fruitsOrFlowers<=5){
                 treeAnim.SetBool(DIE1_ANIMATION, false);
                 treeAnim.SetBool(DIE2_ANIMATION, false);
 
@@ -114,7 +114,7 @@ public class FruitsController : MonoBehaviour
                 treeAnim.SetBool(GROW9_ANIMATION, false);
                 treeAnim.SetBool(GROW10_ANIMATION, false);
                 treeAnim.SetBool(GROW11_ANIMATION, false);
-            }else if (fruits<=10){
+            }else if (fruitsOrFlowers<=10){
                 treeAnim.SetBool(DIE1_ANIMATION, false);
                 treeAnim.SetBool(DIE2_ANIMATION, false);
 
@@ -129,7 +129,7 @@ public class FruitsController : MonoBehaviour
                 treeAnim.SetBool(GROW9_ANIMATION, false);
                 treeAnim.SetBool(GROW10_ANIMATION, false);
                 treeAnim.SetBool(GROW11_ANIMATION, false);
-            } else if (fruits<=20){
+            } else if (fruitsOrFlowers<=20){
                 treeAnim.SetBool(DIE1_ANIMATION, false);
                 treeAnim.SetBool(DIE2_ANIMATION, false);
 
@@ -144,7 +144,7 @@ public class FruitsController : MonoBehaviour
                 treeAnim.SetBool(GROW9_ANIMATION, false);
                 treeAnim.SetBool(GROW10_ANIMATION, false);
                 treeAnim.SetBool(GROW11_ANIMATION, false);
-            } else if (fruits<=30){
+            } else if (fruitsOrFlowers<=30){
                 treeAnim.SetBool(DIE1_ANIMATION, false);
                 treeAnim.SetBool(DIE2_ANIMATION, false);
 
@@ -159,7 +159,7 @@ public class FruitsController : MonoBehaviour
                 treeAnim.SetBool(GROW9_ANIMATION, false);
                 treeAnim.SetBool(GROW10_ANIMATION, false);
                 treeAnim.SetBool(GROW11_ANIMATION, false);
-            } else if (fruits<=40){
+            } else if (fruitsOrFlowers<=40){
                 treeAnim.SetBool(DIE1_ANIMATION, false);
                 treeAnim.SetBool(DIE2_ANIMATION, false);
 
@@ -174,7 +174,7 @@ public class FruitsController : MonoBehaviour
                 treeAnim.SetBool(GROW9_ANIMATION, false);
                 treeAnim.SetBool(GROW10_ANIMATION, false);
                 treeAnim.SetBool(GROW11_ANIMATION, false);
-            } else if (fruits<=50){
+            } else if (fruitsOrFlowers<=50){
                 treeAnim.SetBool(DIE1_ANIMATION, false);
                 treeAnim.SetBool(DIE2_ANIMATION, false);
 
@@ -189,7 +189,7 @@ public class FruitsController : MonoBehaviour
                 treeAnim.SetBool(GROW9_ANIMATION, false);
                 treeAnim.SetBool(GROW10_ANIMATION, false);
                 treeAnim.SetBool(GROW11_ANIMATION, false);
-            } else if (fruits<=60){
+            } else if (fruitsOrFlowers<=60){
                 treeAnim.SetBool(DIE1_ANIMATION, false);
                 treeAnim.SetBool(DIE2_ANIMATION, false);
 
@@ -204,7 +204,7 @@ public class FruitsController : MonoBehaviour
                 treeAnim.SetBool(GROW9_ANIMATION, false);
                 treeAnim.SetBool(GROW10_ANIMATION, false);
                 treeAnim.SetBool(GROW11_ANIMATION, false);
-            } else if (fruits<=70){
+            } else if (fruitsOrFlowers<=70){
                 treeAnim.SetBool(DIE1_ANIMATION, false);
                 treeAnim.SetBool(DIE2_ANIMATION, false);
 
@@ -219,7 +219,7 @@ public class FruitsController : MonoBehaviour
                 treeAnim.SetBool(GROW9_ANIMATION, false);
                 treeAnim.SetBool(GROW10_ANIMATION, false);
                 treeAnim.SetBool(GROW11_ANIMATION, false);
-            } else if (fruits<=80){
+            } else if (fruitsOrFlowers<=80){
                 treeAnim.SetBool(DIE1_ANIMATION, false);
                 treeAnim.SetBool(DIE2_ANIMATION, false);
 
@@ -234,7 +234,7 @@ public class FruitsController : MonoBehaviour
                 treeAnim.SetBool(GROW9_ANIMATION, false);
                 treeAnim.SetBool(GROW10_ANIMATION, false);
                 treeAnim.SetBool(GROW11_ANIMATION, false);
-            } else if (fruits<=90){
+            } else if (fruitsOrFlowers<=90){
                 treeAnim.SetBool(DIE1_ANIMATION, false);
                 treeAnim.SetBool(DIE2_ANIMATION, false);
 
@@ -249,7 +249,7 @@ public class FruitsController : MonoBehaviour
                 treeAnim.SetBool(GROW9_ANIMATION, true);
                 treeAnim.SetBool(GROW10_ANIMATION, false);
                 treeAnim.SetBool(GROW11_ANIMATION, false);
-            } else if (fruits<=100){
+            } else if (fruitsOrFlowers<=100){
                 treeAnim.SetBool(DIE1_ANIMATION, false);
                 treeAnim.SetBool(DIE2_ANIMATION, false);
 
