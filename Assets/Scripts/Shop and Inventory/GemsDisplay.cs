@@ -5,7 +5,7 @@ public class GemsDisplay : MonoBehaviour
 {
     public static GemsDisplay Instance { get; private set; }
 
-    public int gems;
+    private int gems;
     public Text gemsText;
 
     private void Awake()
@@ -50,23 +50,12 @@ public class GemsDisplay : MonoBehaviour
         }
     }
 
-    public int GetGems()
-    {
-        return gems;
-    }
-
-    public void AddGems(int amount)
-    {
-        gems += amount;
-        UpdateGemsDisplay();
-    }
-
     public bool UseGems(int amount)
-    {
+    {   
+        gems = PlayerPrefs.GetInt("TotalGems", 0);
         if (gems >= amount)
         {
-            gems -= amount;
-            UpdateGemsDisplay();
+            ChangeSavedGems(-amount);
             return true;
         }
         else
@@ -85,5 +74,13 @@ public class GemsDisplay : MonoBehaviour
         }
         gemsText.text = gems.ToString();
         Debug.Log("Total Gems From PlayerPref: " + gemsText.text);
+    }
+
+    public void ChangeSavedGems(int amount)
+    {
+        gems = PlayerPrefs.GetInt("TotalGems", 0);
+        gems += amount;
+        PlayerPrefs.SetInt("TotalGems", gems);
+        UpdateGemsDisplay();
     }
 }
