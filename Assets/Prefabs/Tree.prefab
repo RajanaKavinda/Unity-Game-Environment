@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4623704613776606164}
   - component: {fileID: 5914090577834730425}
   - component: {fileID: 2373962936422815854}
-  - component: {fileID: 9046405674032045605}
+  - component: {fileID: -3680577332298463662}
   m_Layer: 0
   m_Name: Tree
   m_TagString: Untagged
@@ -143,7 +143,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &9046405674032045605
+--- !u!114 &-3680577332298463662
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

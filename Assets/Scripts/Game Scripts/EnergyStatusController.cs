@@ -19,6 +19,13 @@ public class EnergyStatusController : MonoBehaviour
 
     private void Start()
     {
+        RefreshControllers();
+
+        StartCoroutine(UpdatePowerConsumption());
+    }
+
+    private void RefreshControllers()
+    {
         // Find all TreeController instances in the scene
         treeControllers = new List<TreeController>(FindObjectsOfType<TreeController>());
         if (treeControllers.Count == 0)
@@ -40,8 +47,6 @@ public class EnergyStatusController : MonoBehaviour
         {
             Debug.Log(lightingControllers.Count + " LightingController instances found in the scene.");
         }
-
-        StartCoroutine(UpdatePowerConsumption());
     }
 
     IEnumerator UpdatePowerConsumption()
@@ -50,11 +55,12 @@ public class EnergyStatusController : MonoBehaviour
 
         while (true)
         {
-            
+            RefreshControllers(); // Refresh the controllers list
+
             if (lastTime != DateTime.MinValue)
             {
                 DateTime currentTime = DateTime.Now;
-                
+
                 yield return StartCoroutine(httpRequest.SendHttpRequest("get", "givenBackend", urlExtension1, jwtToken, ""));
                 string result = (string)httpRequest.result;
                 if (result == "Error")
@@ -82,7 +88,6 @@ public class EnergyStatusController : MonoBehaviour
             }
             else
             {
-                
                 yield return StartCoroutine(httpRequest.SendHttpRequest("get", "givenBackend", urlExtension1, jwtToken, ""));
                 string result = (string)httpRequest.result;
                 if (result == "Error")
@@ -106,7 +111,6 @@ public class EnergyStatusController : MonoBehaviour
 
     private void UpdateFruitsOrFlowers(float averageEnergyConsumption)
     {
-        
         if (averageEnergyConsumption < 0.1)
         {
             fruitsOrFlowers += 5;
@@ -138,7 +142,6 @@ public class EnergyStatusController : MonoBehaviour
         {
             if (treeController != null)
             {
-                
                 treeController.UpdateTree(fruitsOrFlowers);
             }
             else
@@ -150,13 +153,11 @@ public class EnergyStatusController : MonoBehaviour
 
     private void UpdateLighting(float averageEnergyConsumption)
     {
-        
         // Notify each LightingController about the updated averageEnergyConsumption
         foreach (var lightingController in lightingControllers)
         {
             if (lightingController != null)
             {
-                
                 lightingController.UpdateLightingColor(averageEnergyConsumption);
             }
             else
