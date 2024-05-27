@@ -6,7 +6,6 @@ using UnityEngine.Rendering.Universal;
 public class LightingController : MonoBehaviour
 {
     private Light2D globalLight;
-    private EnergyStatusController energyStatusController;
 
     // Colors to represent different energy consumption levels
     public Color lowConsumptionColor = new Color32(0xFF, 0xFF, 0xFF, 0xFF);
@@ -20,39 +19,15 @@ public class LightingController : MonoBehaviour
         if (globalLight == null)
         {
             Debug.LogError("No Light2D component found on the GameObject.");
-            return;
-        }
-
-        energyStatusController = FindObjectOfType<EnergyStatusController>();
-        if (energyStatusController == null)
-        {
-            Debug.LogError("No EnergyStatusController component found in the scene.");
-            return;
         }
     }
 
-    private void Start()
+    public void UpdateLightingColor(float averageEnergyConsumption)
     {
-        StartCoroutine(UpdateLightingCoroutine());
-    }
-
-    private IEnumerator UpdateLightingCoroutine()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(10f);
-            UpdateLightingColor();
-        }
-    }
-
-    private void UpdateLightingColor()
-    {
-        if (globalLight == null || energyStatusController == null)
+        if (globalLight == null)
         {
             return;
         }
-
-        float averageEnergyConsumption = energyStatusController.averageEnergyConsumption;
 
         if (averageEnergyConsumption < 0.2f)
         {

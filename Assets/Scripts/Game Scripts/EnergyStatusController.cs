@@ -6,41 +6,56 @@ using System;
 
 public class EnergyStatusController : MonoBehaviour
 {
-    
-    [SerializeField]
- 
+    private List<TreeController> treeControllers; // List of TreeController references
+    private List<LightingController> lightingControllers; // List of LightingController references
+
     private float lastEnergyReading;
     private float currentEnergyReading;
-    private DateTime lastTime ; 
-    private long tenSecondPeriods;
+    private DateTime lastTime; 
     private string jwtToken = GetMethod.jwtToken;
     private string urlExtension1 = "/power-consumption/current/view";
     public float averageEnergyConsumption;
     public int fruitsOrFlowers = 0;
 
-
     private void Start()
     {
-        // Start the coroutine to update power consumption
+        // Find all TreeController instances in the scene
+        treeControllers = new List<TreeController>(FindObjectsOfType<TreeController>());
+        if (treeControllers.Count == 0)
+        {
+            Debug.LogError("No TreeController instances found in the scene.");
+        }
+        else
+        {
+            Debug.Log(treeControllers.Count + " TreeController instances found in the scene.");
+        }
+
+        // Find all LightingController instances in the scene
+        lightingControllers = new List<LightingController>(FindObjectsOfType<LightingController>());
+        if (lightingControllers.Count == 0)
+        {
+            Debug.LogError("No LightingController instances found in the scene.");
+        }
+        else
+        {
+            Debug.Log(lightingControllers.Count + " LightingController instances found in the scene.");
+        }
+
         StartCoroutine(UpdatePowerConsumption());
     }
 
-
     IEnumerator UpdatePowerConsumption()
     {
-        // Create an instance of the HttpRequest class
         HttpRequest httpRequest = new HttpRequest();
 
         while (true)
         {
-            if (lastTime!=DateTime.MinValue)
+            
+            if (lastTime != DateTime.MinValue)
             {
                 DateTime currentTime = DateTime.Now;
-
-                // Send HTTP GET request
+                
                 yield return StartCoroutine(httpRequest.SendHttpRequest("get", "givenBackend", urlExtension1, jwtToken, ""));
-
-                // Check if the request was successful
                 string result = (string)httpRequest.result;
                 if (result == "Error")
                 {
@@ -48,56 +63,38 @@ public class EnergyStatusController : MonoBehaviour
                     yield break;
                 }
 
-                // Deserialize the JSON string into a JsonData object
                 CurrentConsumptionResponse jsonData = JsonUtility.FromJson<CurrentConsumptionResponse>(result);
-
                 currentEnergyReading = jsonData.currentConsumption; 
-                Debug.LogError("currentEnergyReading"+currentEnergyReading);
-
-                // Calculate the time difference between the current and previous readings
+                
                 TimeSpan timeDifference = currentTime - lastTime;
-
-                // Convert the time difference to seconds
                 float timeDifferenceInSeconds = (float)timeDifference.TotalSeconds;
 
-                // Calculate the average energy consumption for 10 s
                 float energyConsumptionFromLastTime = currentEnergyReading - lastEnergyReading;
                 averageEnergyConsumption = energyConsumptionFromLastTime * 10 / timeDifferenceInSeconds;
-                updateFruitsOrFlowers(averageEnergyConsumption);
-                Debug.Log("averageEnergyConsumption: " + averageEnergyConsumption);
+                Debug.Log("Average energy consumption: " + averageEnergyConsumption);
+                UpdateFruitsOrFlowers(averageEnergyConsumption);
+                UpdateLighting(averageEnergyConsumption);
 
                 lastTime = currentTime;
                 lastEnergyReading = currentEnergyReading;
 
-                // Wait for 10 seconds before the next update
                 yield return new WaitForSeconds(10f);
-
             }
             else
             {
-               Debug.LogError("Last time null.");
-               // Send HTTP GET request
-               yield return StartCoroutine(httpRequest.SendHttpRequest("get", "givenBackend", urlExtension1, jwtToken, ""));
-
-               // Check if the request was successful
-               string result = (string)httpRequest.result;
-               if (result == "Error")
-               {
+                
+                yield return StartCoroutine(httpRequest.SendHttpRequest("get", "givenBackend", urlExtension1, jwtToken, ""));
+                string result = (string)httpRequest.result;
+                if (result == "Error")
+                {
                     Debug.LogError("Error checking profile and questionnaire");
                     yield break;
-               }
+                }
 
-               // Deserialize the JSON string into a JsonData object
-               CurrentConsumptionResponse jsonData = JsonUtility.FromJson<CurrentConsumptionResponse>(result);
-
-               lastEnergyReading = jsonData.currentConsumption;
-               Debug.LogError("lastEnergyReading"+lastEnergyReading);
-
-               //lastEnergyReading = jsonData.currentConsumption; 
-               lastTime = DateTime.Now;
-               
-
-               
+                CurrentConsumptionResponse jsonData = JsonUtility.FromJson<CurrentConsumptionResponse>(result);
+                lastEnergyReading = jsonData.currentConsumption;
+                
+                lastTime = DateTime.Now;
             }  
         }
     }
@@ -105,25 +102,67 @@ public class EnergyStatusController : MonoBehaviour
     public class CurrentConsumptionResponse
     {
         public float currentConsumption;
-       
     }
 
-    
-
-    public void updateFruitsOrFlowers(float averageEnergyConsumption){
-        if (averageEnergyConsumption<0.1){
+    private void UpdateFruitsOrFlowers(float averageEnergyConsumption)
+    {
+        
+        if (averageEnergyConsumption < 0.1)
+        {
             fruitsOrFlowers += 5;
-        } else if (averageEnergyConsumption<0.4){
+        }
+        else if (averageEnergyConsumption < 0.4)
+        {
             fruitsOrFlowers += 3;
-        } else if (averageEnergyConsumption<0.8){
+        }
+        else if (averageEnergyConsumption < 0.8)
+        {
             fruitsOrFlowers += 1;
-        } else if (averageEnergyConsumption<0.9){
+        }
+        else if (averageEnergyConsumption < 0.9)
+        {
             fruitsOrFlowers -= 1;
-        } else if (averageEnergyConsumption<1){
+        }
+        else if (averageEnergyConsumption < 1)
+        {
             fruitsOrFlowers -= 3;
-        }else{
+        }
+        else
+        {
             fruitsOrFlowers -= 5;
         }
-        Debug.LogError("total: "+fruitsOrFlowers);
+        Debug.Log("Total fruits or flowers: " + fruitsOrFlowers);
+
+        // Notify each TreeController about the updated fruitsOrFlowers
+        foreach (var treeController in treeControllers)
+        {
+            if (treeController != null)
+            {
+                
+                treeController.UpdateTree(fruitsOrFlowers);
+            }
+            else
+            {
+                Debug.LogError("TreeController reference is null.");
+            }
+        }
+    }
+
+    private void UpdateLighting(float averageEnergyConsumption)
+    {
+        
+        // Notify each LightingController about the updated averageEnergyConsumption
+        foreach (var lightingController in lightingControllers)
+        {
+            if (lightingController != null)
+            {
+                
+                lightingController.UpdateLightingColor(averageEnergyConsumption);
+            }
+            else
+            {
+                Debug.LogError("LightingController reference is null.");
+            }
+        }
     }
 }
