@@ -469,7 +469,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 769a0c41c71f7f34e92a849992ce9d94, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3714,6 +3714,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9044552506757137572, guid: d970214030ab257478266ee050613e9a, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 769a0c41c71f7f34e92a849992ce9d94, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3837,7 +3841,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 769a0c41c71f7f34e92a849992ce9d94, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -29534,6 +29538,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Blue Slime (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7791124513899321377, guid: 8518d6a30b1fa8b4397b5e63e4383581, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 769a0c41c71f7f34e92a849992ce9d94, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -29943,6 +29951,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Blue Slime (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 7791124513899321377, guid: 8518d6a30b1fa8b4397b5e63e4383581, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 769a0c41c71f7f34e92a849992ce9d94, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -30003,6 +30015,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Blue Slime (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 7791124513899321377, guid: 8518d6a30b1fa8b4397b5e63e4383581, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 769a0c41c71f7f34e92a849992ce9d94, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -30027,6 +30043,10 @@ PrefabInstance:
       propertyPath: m_FlipX
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4333534723510278130, guid: e0c9443be0b1ee543b646183a5dcae94, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 769a0c41c71f7f34e92a849992ce9d94, type: 2}
     - target: {fileID: 4408714430322241006, guid: e0c9443be0b1ee543b646183a5dcae94, type: 3}
       propertyPath: m_LocalPosition.x
       value: 6.08
@@ -30368,7 +30388,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 769a0c41c71f7f34e92a849992ce9d94, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -31706,6 +31726,105 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 533613272}
   m_CullTransparentMesh: 1
+--- !u!1 &534239920
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 534239922}
+  - component: {fileID: 534239921}
+  - component: {fileID: 534239923}
+  m_Layer: 0
+  m_Name: Light 2D
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &534239921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 534239920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ComponentVersion: 1
+  m_LightType: 4
+  m_BlendStyleIndex: 0
+  m_FalloffIntensity: 0.5
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 1
+  m_LightVolumeIntensity: 1
+  m_LightVolumeIntensityEnabled: 0
+  m_ApplyToSortingLayers: 00000000
+  m_LightCookieSprite: {fileID: 0}
+  m_DeprecatedPointLightCookieSprite: {fileID: 0}
+  m_LightOrder: 0
+  m_AlphaBlendOnOverlap: 0
+  m_OverlapOperation: 0
+  m_NormalMapDistance: 3
+  m_NormalMapQuality: 2
+  m_UseNormalMap: 0
+  m_ShadowIntensityEnabled: 0
+  m_ShadowIntensity: 0.75
+  m_ShadowVolumeIntensityEnabled: 0
+  m_ShadowVolumeIntensity: 0.75
+  m_LocalBounds:
+    m_Center: {x: 0, y: -0.00000011920929, z: 0}
+    m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
+  m_PointLightInnerAngle: 360
+  m_PointLightOuterAngle: 360
+  m_PointLightInnerRadius: 0
+  m_PointLightOuterRadius: 1
+  m_ShapeLightParametricSides: 5
+  m_ShapeLightParametricAngleOffset: 0
+  m_ShapeLightParametricRadius: 1
+  m_ShapeLightFalloffSize: 0.5
+  m_ShapeLightFalloffOffset: {x: 0, y: 0}
+  m_ShapePath:
+  - {x: -0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: 0.5, z: 0}
+  - {x: -0.5, y: 0.5, z: 0}
+--- !u!4 &534239922
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 534239920}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -10.627565, y: 7.010263, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &534239923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 534239920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 312a5afce95f15341a1f6677313910df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lowConsumptionColor: {r: 1, g: 1, b: 1, a: 1}
+  mediumConsumptionColor: {r: 0.7137255, g: 0.3019608, b: 0.3019608, a: 1}
+  highConsumptionColor: {r: 0.5882353, g: 0.15686275, b: 0.15686275, a: 1}
+  veryHighConsumptionColor: {r: 0.5019608, g: 0.101960786, b: 0.101960786, a: 1}
 --- !u!1 &539354512
 GameObject:
   m_ObjectHideFlags: 0
@@ -33015,6 +33134,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Blue Slime (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 7791124513899321377, guid: 8518d6a30b1fa8b4397b5e63e4383581, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 769a0c41c71f7f34e92a849992ce9d94, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -33075,6 +33198,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9044552506757137572, guid: d970214030ab257478266ee050613e9a, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 769a0c41c71f7f34e92a849992ce9d94, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -34329,6 +34456,10 @@ PrefabInstance:
       propertyPath: m_FlipX
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4333534723510278130, guid: e0c9443be0b1ee543b646183a5dcae94, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 769a0c41c71f7f34e92a849992ce9d94, type: 2}
     - target: {fileID: 4408714430322241006, guid: e0c9443be0b1ee543b646183a5dcae94, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.34
@@ -35074,6 +35205,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9044552506757137572, guid: d970214030ab257478266ee050613e9a, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 769a0c41c71f7f34e92a849992ce9d94, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -35131,6 +35266,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9044552506757137572, guid: d970214030ab257478266ee050613e9a, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 769a0c41c71f7f34e92a849992ce9d94, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -35298,7 +35437,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 769a0c41c71f7f34e92a849992ce9d94, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -87758,6 +87897,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9044552506757137572, guid: d970214030ab257478266ee050613e9a, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 769a0c41c71f7f34e92a849992ce9d94, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -89955,6 +90098,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lastEnergyReading: 0
+  averageEnergyConsumption: 0
   fruitsOrFlowers: 0
 --- !u!1 &1802468692
 GameObject:
@@ -91281,6 +91425,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Blue Slime
       objectReference: {fileID: 0}
+    - target: {fileID: 7791124513899321377, guid: 8518d6a30b1fa8b4397b5e63e4383581, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 769a0c41c71f7f34e92a849992ce9d94, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -91337,6 +91485,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3915170894871564294, guid: 85483fdbdc044fc48a69c8b50ae3cded, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 769a0c41c71f7f34e92a849992ce9d94, type: 2}
     - target: {fileID: 8070192467925716446, guid: 85483fdbdc044fc48a69c8b50ae3cded, type: 3}
       propertyPath: m_Name
       value: Tree
@@ -91414,6 +91566,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9044552506757137572, guid: d970214030ab257478266ee050613e9a, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 769a0c41c71f7f34e92a849992ce9d94, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -91437,3 +91593,4 @@ SceneRoots:
   - {fileID: 147397592}
   - {fileID: 627128211}
   - {fileID: 821044250}
+  - {fileID: 534239922}
