@@ -7,7 +7,7 @@ public class Barrier : MonoBehaviour
     public int requiredMarks;
     public int gemCost;
     public GameObject gemPurchasePanel;
-
+    private int boughtLands;
     public bool IsDestroyed { get; private set; }
 
     private void Start()
@@ -55,6 +55,7 @@ public class Barrier : MonoBehaviour
         PlayerPrefs.SetInt(barrierID, IsDestroyed ? 1 : 0); // Save the state
         GetComponent<Collider2D>().enabled = false; // Disable the collider
         gameObject.SetActive(false); // Deactivate the game object
+
     }
 
     // Method to show the gem purchase panel
@@ -99,5 +100,16 @@ public class Barrier : MonoBehaviour
     public void UnlockWithGems()
     {
         DestroyBarrier(); // Destroy the barrier
+        if (PlayerPrefs.HasKey("BoughtLands"))
+        {
+            boughtLands = PlayerPrefs.GetInt("BoughtLands");
+            boughtLands += 1;
+            PlayerPrefs.SetInt("BoughtLands", boughtLands);
+        }
+        else
+        {
+            boughtLands = 1;
+            PlayerPrefs.SetInt("BoughtLands", boughtLands);
+        }
     }
 }
