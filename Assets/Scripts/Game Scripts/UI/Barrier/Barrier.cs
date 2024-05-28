@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Barrier : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class Barrier : MonoBehaviour
     public GameObject gemPurchasePanel;
 
     public bool IsDestroyed { get; private set; }
+
+    public static event UnityAction<string> OnBarrierDestroyed;
 
     private void Start()
     {
@@ -21,7 +24,6 @@ public class Barrier : MonoBehaviour
         LoadBarrierState();
     }
 
-    // Method called when the player collides with the barrier
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
@@ -34,30 +36,29 @@ public class Barrier : MonoBehaviour
             else
             {
                 Debug.Log("You need more marks to access this area!");
-                ShowGemPurchasePanel(); // Show the gem purchase panel
+                ShowGemPurchasePanel();
             }
         }
     }
 
-    // Method called when the player exits the barrier's collision area
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            HideGemPurchasePanel(); // Hide the gem purchase panel
+            HideGemPurchasePanel();
         }
     }
 
-    // Method to destroy the barrier
     private void DestroyBarrier()
     {
-        IsDestroyed = true; // Set the barrier as destroyed
-        PlayerPrefs.SetInt(barrierID, IsDestroyed ? 1 : 0); // Save the state
-        GetComponent<Collider2D>().enabled = false; // Disable the collider
-        gameObject.SetActive(false); // Deactivate the game object
+        IsDestroyed = true;
+        PlayerPrefs.SetInt(barrierID, IsDestroyed ? 1 : 0);
+        GetComponent<Collider2D>().enabled = false;
+        gameObject.SetActive(false);
+
+        OnBarrierDestroyed?.Invoke(barrierID);
     }
 
-    // Method to show the gem purchase panel
     private void ShowGemPurchasePanel()
     {
         if (gemPurchasePanel != null)
@@ -65,13 +66,12 @@ public class Barrier : MonoBehaviour
             GemPurchasePanel gemPurchasePanelScript = gemPurchasePanel.GetComponent<GemPurchasePanel>();
             if (gemPurchasePanelScript != null)
             {
-                gemPurchasePanelScript.SetBarrier(this); // Set the barrier
-                gemPurchasePanelScript.Show(); // Show the gem purchase panel
+                gemPurchasePanelScript.SetBarrier(this);
+                gemPurchasePanelScript.Show();
             }
         }
     }
 
-    // Method to hide the gem purchase panel
     private void HideGemPurchasePanel()
     {
         if (gemPurchasePanel != null)
@@ -79,25 +79,24 @@ public class Barrier : MonoBehaviour
             GemPurchasePanel gemPurchasePanelScript = gemPurchasePanel.GetComponent<GemPurchasePanel>();
             if (gemPurchasePanelScript != null)
             {
-                gemPurchasePanelScript.Hide(); // Hide the gem purchase panel
+                gemPurchasePanelScript.Hide();
             }
         }
     }
 
-    // Method to load the barrier state
     public void LoadBarrierState()
     {
         if (PlayerPrefs.GetInt(barrierID, 0) == 1)
         {
-            IsDestroyed = true; // Set the barrier as destroyed
-            GetComponent<Collider2D>().enabled = false; // Disable the collider
-            gameObject.SetActive(false); // Deactivate the game object
+            IsDestroyed = true;
+            GetComponent<Collider2D>().enabled = false;
+            gameObject.SetActive(false);
+            OnBarrierDestroyed?.Invoke(barrierID); // Ensure event is triggered on load
         }
     }
 
-    // Method to unlock the barrier with gems
     public void UnlockWithGems()
     {
-        DestroyBarrier(); // Destroy the barrier
+        DestroyBarrier();
     }
 }
