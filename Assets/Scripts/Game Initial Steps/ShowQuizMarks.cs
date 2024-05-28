@@ -9,13 +9,13 @@ public class ShowQuizMarks : MonoBehaviour
     public int Land = 0;
     public int GameCoins = 0;
     public int EnergyCoins = 0;
-    public int gameLevel = 0;
+    
 
     // Reference to the Text component where you want to display the marks
     public Text LandText;
     public Text GameCoinText;
     public Text EnergyCoinText;
-    public Text GameLevelText;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -57,14 +57,14 @@ public class ShowQuizMarks : MonoBehaviour
 
                 GameCoins = PlayerPrefs.GetInt("Score");
                 EnergyCoins = PlayerPrefs.GetInt("TotalGems");
-                gameLevel = (profileResponse.gameLevel);
+                
 
 
                 // Update the UI text with marks
                 LandText.text = Land.ToString();
                 GameCoinText.text = GameCoins.ToString();
                 EnergyCoinText.text = EnergyCoins.ToString();
-                GameLevelText.text = "Level " + gameLevel.ToString();
+                
             }
         }
     }
@@ -76,9 +76,6 @@ public class ShowQuizMarks : MonoBehaviour
         public bool profileEdited;
         public bool questionnaireTaken;
         public int questionnaireScore;
-        public int gameCoin;
-        public int energyCoin;
-        public int gameLevel;
 
     }
 }
