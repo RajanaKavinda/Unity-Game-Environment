@@ -49,9 +49,14 @@ public class ShowQuizMarks : MonoBehaviour
                 PlayerProfileResponse profileResponse = JsonUtility.FromJson<PlayerProfileResponse>(request.downloadHandler.text);
 
                 // Set questionnaireCompleted property
-                Land = (profileResponse.questionnaireScore)/10 + 4;
-                GameCoins = (profileResponse.gameCoin);
-                EnergyCoins = (profileResponse.energyCoin);
+                Land = (profileResponse.questionnaireScore)/10 + 1;
+                if (PlayerPrefs.HasKey("BoughtLands"))
+                {
+                    Land += PlayerPrefs.GetInt("BoughtLands");
+                }
+
+                GameCoins = PlayerPrefs.GetInt("Score");
+                EnergyCoins = PlayerPrefs.GetInt("TotalGems");
                 gameLevel = (profileResponse.gameLevel);
 
 

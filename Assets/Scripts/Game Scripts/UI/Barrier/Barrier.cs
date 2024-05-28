@@ -8,7 +8,7 @@ public class Barrier : MonoBehaviour
     public int requiredMarks;
     public int gemCost;
     public GameObject gemPurchasePanel;
-
+    private int boughtLands;
     public bool IsDestroyed { get; private set; }
 
     public static event UnityAction<string> OnBarrierDestroyed;
@@ -98,5 +98,16 @@ public class Barrier : MonoBehaviour
     public void UnlockWithGems()
     {
         DestroyBarrier();
+        if (PlayerPrefs.HasKey("BoughtLands"))
+        {
+            boughtLands = PlayerPrefs.GetInt("BoughtLands");
+            boughtLands += 1;
+            PlayerPrefs.SetInt("BoughtLands", boughtLands);
+        }
+        else
+        {
+            boughtLands = 1;
+            PlayerPrefs.SetInt("BoughtLands", boughtLands);
+        }
     }
 }
