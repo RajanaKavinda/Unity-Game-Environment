@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -32,8 +33,9 @@ public class SceneNavigator : MonoBehaviour
     {
         PlayerPrefs.DeleteAll();
         PlayerPrefs.Save();
-        CoinManager.SetCoins(0); 
-        GoToGameScene(); 
+        CoinManager.SetCoins(0);
+        PlayerPrefs.SetInt("TotalGems", 0);
+        PlayerPrefs.SetString("LastPlayedDate", DateTime.Now.ToString("yyyy-MM-dd"));
+        GoToGameScene();
     }
-
 }

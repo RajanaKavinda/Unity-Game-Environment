@@ -1,10 +1,12 @@
+
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SaveManager : MonoBehaviour
 {
     public static SaveManager Instance { get; private set; }
-    private List<GameObject> placedItems = new List<GameObject>(); // List to track placed items
+    private List<GameObject> placedItems = new List<GameObject>();
 
     private void Awake()
     {
@@ -24,6 +26,7 @@ public class SaveManager : MonoBehaviour
         SavePlayerState();
         SaveInventoryState();
         SavePlacedItemsState();
+        SaveLastPlayedDate();
         PlayerPrefs.Save();
         Debug.Log("Game Saved.");
     }
@@ -38,6 +41,7 @@ public class SaveManager : MonoBehaviour
             PlayerPrefs.SetFloat("PlayerY", playerPosition.y);
             PlayerPrefs.SetFloat("PlayerZ", playerPosition.z);
             PlayerPrefs.SetInt("Score", CoinManager.currentCoins);
+            PlayerPrefs.SetInt("TotalGems", GemsManager.Instance.totalGems); // Save total gems
             Debug.Log("Saved player state.");
         }
         else
@@ -57,7 +61,6 @@ public class SaveManager : MonoBehaviour
 
     private void SavePlacedItemsState()
     {
-        // Remove any null objects from the list
         placedItems.RemoveAll(item => item == null);
 
         for (int i = 0; i < placedItems.Count; i++)
@@ -74,8 +77,14 @@ public class SaveManager : MonoBehaviour
         Debug.Log("Placed Items Saved.");
     }
 
+    private void SaveLastPlayedDate()
+    {
+        PlayerPrefs.SetString("LastPlayedDate", DateTime.Now.ToString("yyyy-MM-dd"));
+    }
+
     public void LoadGame()
     {
+        GemsManager.Instance.UpdateGems();
         LoadPlayerState();
         LoadBarrierStates();
         LoadInventoryState();
@@ -99,6 +108,11 @@ public class SaveManager : MonoBehaviour
         if (PlayerPrefs.HasKey("Score"))
         {
             CoinManager.currentCoins = PlayerPrefs.GetInt("Score");
+        }
+
+        if (PlayerPrefs.HasKey("TotalGems"))
+        {
+            GemsManager.Instance.totalGems = PlayerPrefs.GetInt("TotalGems");
         }
 
         Debug.Log("Loaded player state.");
@@ -136,7 +150,6 @@ public class SaveManager : MonoBehaviour
 
             Vector3 position = new Vector3(x, y, 0);
 
-            // Instantiate the item based on its type and position
             GameObject itemPrefab = Resources.Load<GameObject>(itemType);
             if (itemPrefab != null)
             {
@@ -145,6 +158,19 @@ public class SaveManager : MonoBehaviour
             }
         }
         Debug.Log("Placed Items Loaded.");
+    }
+
+    public int GetPlacedItemCount(string itemName)
+    {
+        int count = 0;
+        foreach (GameObject item in placedItems)
+        {
+            if (item != null && item.name.Contains(itemName))
+            {
+                count++;
+            }
+        }
+        return count;
     }
 
     public void AddPlacedItem(GameObject item)
