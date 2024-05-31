@@ -107,3 +107,4 @@ public class GemsManager : MonoBehaviour
         PlayerPrefs.SetString("LastPlayedDate", DateTime.Now.ToString("yyyy-MM-dd"));
     }
 }
+

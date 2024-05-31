@@ -136,12 +136,6 @@ public class PlayerController : MonoBehaviour
         return quizMarks;
     }
 
-    public void SetQuizMarks(int marks)
-    {
-        quizMarks = marks;
-        PlayerPrefs.SetInt("QuizMarks", marks);
-    }
-
     public void SetPlayerPosition(Vector3 position)
     {
         transform.position = position;

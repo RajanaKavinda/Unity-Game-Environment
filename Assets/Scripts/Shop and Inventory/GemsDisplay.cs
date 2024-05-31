@@ -51,7 +51,7 @@ public class GemsDisplay : MonoBehaviour
     }
 
     public bool UseGems(int amount)
-    {   
+    {
         gems = PlayerPrefs.GetInt("TotalGems", 0);
         if (gems >= amount)
         {
@@ -70,7 +70,7 @@ public class GemsDisplay : MonoBehaviour
         gems = PlayerPrefs.GetInt("TotalGems", 0);
         if (gemsText == null)
         {
-            gemsText = GameObject.FindWithTag("Gems").GetComponent<Text>();          
+            gemsText = GameObject.FindWithTag("Gems").GetComponent<Text>();
         }
         gemsText.text = gems.ToString();
         Debug.Log("Total Gems From PlayerPref: " + gemsText.text);

@@ -41,7 +41,6 @@ public class SaveManager : MonoBehaviour
             PlayerPrefs.SetFloat("PlayerY", playerPosition.y);
             PlayerPrefs.SetFloat("PlayerZ", playerPosition.z);
             PlayerPrefs.SetInt("Score", CoinManager.currentCoins);
-            PlayerPrefs.SetInt("TotalGems", GemsManager.Instance.totalGems); // Save total gems
             Debug.Log("Saved player state.");
         }
         else

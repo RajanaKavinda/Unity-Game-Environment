@@ -1,4 +1,3 @@
-
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -94,3 +93,4 @@ public class DailyPowerConsumptionView
     public int month;
     public Dictionary<string, float> dailyUnits;
 }
+
