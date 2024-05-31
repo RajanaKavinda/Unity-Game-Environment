@@ -2,33 +2,32 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
 using TMPro;
-
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-
 public class ViewUserProfile : MonoBehaviour
 {
+    // URL for fetching user profile data
     private const string apiUrl = "http://20.15.114.131:8080/api/user/profile/view";
-    
 
+    // Text fields to display user profile data
     public Text firstName;
     public Text lastName;
     public Text username;
     public Text NIC;
     public Text phoneNumber;
     public Text email;
-    
 
+    // Holder for current user data
     private UserData currentUserData;
-    
 
     void Start()
     {
+        // Fetch user profile data when the script starts
         StartCoroutine(FetchUserData());
-        
     }
 
+    // Coroutine to fetch user profile data from the server
     IEnumerator FetchUserData()
     {
         UnityWebRequest request = UnityWebRequest.Get(apiUrl);
@@ -42,6 +41,7 @@ public class ViewUserProfile : MonoBehaviour
 
             if (userDataResponse != null && userDataResponse.user != null)
             {
+                // Store received user data and update profile fields
                 currentUserData = userDataResponse.user;
                 UpdateProfileFields();
                 Debug.Log("Player data received");
@@ -58,6 +58,7 @@ public class ViewUserProfile : MonoBehaviour
         }
     }
 
+    // Method to update profile fields with fetched user data
     void UpdateProfileFields()
     {
         firstName.text = currentUserData.firstname;
@@ -66,17 +67,16 @@ public class ViewUserProfile : MonoBehaviour
         NIC.text = currentUserData.nic;
         phoneNumber.text = currentUserData.phoneNumber;
         email.text = currentUserData.email;
-        
     }
 
-    
-
+    // Serializable class to parse user data JSON response
     [System.Serializable]
     private class UserDataResponse
     {
         public UserData user;
     }
 
+    // Serializable class to hold user data fields
     [System.Serializable]
     private class UserData
     {
@@ -86,8 +86,5 @@ public class ViewUserProfile : MonoBehaviour
         public string nic;
         public string phoneNumber;
         public string email;
-        
     }
-
-    
 }

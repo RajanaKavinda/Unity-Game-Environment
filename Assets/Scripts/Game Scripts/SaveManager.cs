@@ -1,26 +1,31 @@
-
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SaveManager : MonoBehaviour
 {
+    // Singleton instance
     public static SaveManager Instance { get; private set; }
+
+    // List to store placed items
     private List<GameObject> placedItems = new List<GameObject>();
 
+    // Awake is called when the script instance is being loaded
     private void Awake()
     {
+        // Singleton pattern implementation
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(gameObject); // Persist across scenes
         }
         else
         {
-            Destroy(gameObject);
+            Destroy(gameObject); // If another instance exists, destroy this one
         }
     }
 
+    // Save the game state
     public void SaveGame()
     {
         SavePlayerState();
@@ -31,6 +36,7 @@ public class SaveManager : MonoBehaviour
         Debug.Log("Game Saved.");
     }
 
+    // Save player state
     private void SavePlayerState()
     {
         PlayerController playerController = PlayerController.Instance;
@@ -49,6 +55,7 @@ public class SaveManager : MonoBehaviour
         }
     }
 
+    // Save inventory state
     private void SaveInventoryState()
     {
         InventoryManager inventoryManager = FindObjectOfType<InventoryManager>();
@@ -58,6 +65,7 @@ public class SaveManager : MonoBehaviour
         }
     }
 
+    // Save placed items state
     private void SavePlacedItemsState()
     {
         placedItems.RemoveAll(item => item == null);
@@ -76,11 +84,13 @@ public class SaveManager : MonoBehaviour
         Debug.Log("Placed Items Saved.");
     }
 
+    // Save last played date
     private void SaveLastPlayedDate()
     {
         PlayerPrefs.SetString("LastPlayedDate", DateTime.Now.ToString("yyyy-MM-dd"));
     }
 
+    // Load the game state
     public void LoadGame()
     {
         GemsManager.Instance.UpdateGems();
@@ -93,6 +103,7 @@ public class SaveManager : MonoBehaviour
         Debug.Log("Game Loaded.");
     }
 
+    // Load player state
     private void LoadPlayerState()
     {
         PlayerController playerController = PlayerController.Instance;
@@ -119,6 +130,7 @@ public class SaveManager : MonoBehaviour
         Debug.Log("Loaded player state.");
     }
 
+    // Load barrier states
     private void LoadBarrierStates()
     {
         Barrier[] barriers = FindObjectsOfType<Barrier>();
@@ -129,6 +141,7 @@ public class SaveManager : MonoBehaviour
         Debug.Log("Loaded barrier states.");
     }
 
+    // Load inventory state
     private void LoadInventoryState()
     {
         InventoryManager inventoryManager = FindObjectOfType<InventoryManager>();
@@ -138,6 +151,7 @@ public class SaveManager : MonoBehaviour
         }
     }
 
+    // Load placed items state
     private void LoadPlacedItemsState()
     {
         int placedItemCount = PlayerPrefs.GetInt("PlacedItemCount", 0);
@@ -161,6 +175,7 @@ public class SaveManager : MonoBehaviour
         Debug.Log("Placed Items Loaded.");
     }
 
+    // Get the count of placed items with a specific name
     public int GetPlacedItemCount(string itemName)
     {
         int count = 0;
@@ -174,6 +189,7 @@ public class SaveManager : MonoBehaviour
         return count;
     }
 
+    // Add a placed item to the list
     public void AddPlacedItem(GameObject item)
     {
         placedItems.Add(item);

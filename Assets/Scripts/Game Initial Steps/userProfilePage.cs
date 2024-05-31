@@ -7,9 +7,11 @@ using UnityEngine.SceneManagement;
 
 public class UserProfilePage : MonoBehaviour
 {
+    // URLs for fetching and updating user data
     private const string apiUrl = "http://20.15.114.131:8080/api/user/profile/view";
     private const string updateUrl = "http://20.15.114.131:8080/api/user/profile/update";
 
+    // UI elements for displaying and editing user data
     public Text username;
     public TMP_InputField firstName;
     public TMP_InputField lastName;
@@ -17,16 +19,19 @@ public class UserProfilePage : MonoBehaviour
     public TMP_InputField phoneNumber;
     public TMP_InputField email;
 
+    // Prompt for displaying messages
     public PromptMsg Prompt;
 
+    // Current and changed user data
     private UserData currentUserData;
     private NewUserData ChangedUserData;
 
     void Start()
     {
+        // Fetch user data when the profile page is loaded
         StartCoroutine(FetchUserData());
 
-        
+        // Find and attach click listener to the submit button
         GameObject submitButton = GameObject.Find("submit");
         if (submitButton != null)
         {
@@ -38,6 +43,7 @@ public class UserProfilePage : MonoBehaviour
         }
     }
 
+    // Coroutine to fetch user data from the server
     IEnumerator FetchUserData()
     {
         UnityWebRequest request = UnityWebRequest.Get(apiUrl);
@@ -67,6 +73,7 @@ public class UserProfilePage : MonoBehaviour
         }
     }
 
+    // Update UI fields with fetched user data
     void UpdateProfileFields()
     {
         firstName.text = currentUserData.firstname;
@@ -77,6 +84,7 @@ public class UserProfilePage : MonoBehaviour
         email.text = currentUserData.email;
     }
 
+    // Save changes made to user data
     public void SaveChanges()
     {
         // Check if any field is empty
@@ -97,9 +105,7 @@ public class UserProfilePage : MonoBehaviour
         }
     }
 
-
-
-
+    // Coroutine to update user data on the server
     IEnumerator UpdateUserData()
     {
         ChangedUserData = new NewUserData();
@@ -129,6 +135,7 @@ public class UserProfilePage : MonoBehaviour
         }
     }
 
+    // Coroutine to set profileEdited status on the server
     IEnumerator SetProfileEdited()
     {
         string url = "http://localhost:8080/energy-quest/user/profile/" + GetMethod.userID;
@@ -150,14 +157,14 @@ public class UserProfilePage : MonoBehaviour
         }
     }
 
-
-
+    // Class for parsing user data JSON response
     [System.Serializable]
     private class UserDataResponse
     {
         public UserData user;
     }
 
+    // Class for holding user data
     [System.Serializable]
     private class UserData
     {
@@ -169,6 +176,7 @@ public class UserProfilePage : MonoBehaviour
         public string email;
     }
 
+    // Class for holding changed user data
     private class NewUserData
     {
         public string firstname;
