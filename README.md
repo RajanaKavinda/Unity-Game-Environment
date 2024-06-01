@@ -51,5 +51,10 @@ Gems are awarded based on the player's daily energy consumption, which is fetche
 3. **LightingController:**
    - Controls the color and intensity of the environment lighting.
    - Adjusts based on the average energy consumption received from the EnergyStatusController.
+  
+ ## State Persistence
+   - The game state, including barrier destruction, total coins, gems,player position, inventory state and placed item state is saved using `PlayerPrefs`.
+   - This ensures the player's progress is maintained across sessions.
+
 
 This repository contains the game's source code, assets, and documentation necessary for understanding and contributing to the project.
