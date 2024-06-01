@@ -75,6 +75,9 @@ public class EnergyStatusController : MonoBehaviour
     // Notify all observers about the data update
     private void NotifyObservers()
     {
+        // Remove any null references from the observers list
+        observers.RemoveAll(observer => observer == null);
+
         foreach (var observer in observers)
         {
             observer.UpdateData(averageEnergyConsumption, fruitsOrFlowers);
@@ -91,7 +94,6 @@ public class EnergyStatusController : MonoBehaviour
             if (lastTime != DateTime.MinValue)
             {
                 DateTime currentTime = DateTime.Now;
-
                 // Send HTTP request to obtain current energy consumption
                 yield return StartCoroutine(httpRequest.SendHttpRequest("get", "givenBackend", urlExtension1, jwtToken, ""));
                 string result = (string)httpRequest.result;
@@ -101,21 +103,22 @@ public class EnergyStatusController : MonoBehaviour
                     yield break;
                 }
 
+                // Calculate Average energy for 10s
                 CurrentConsumptionResponse jsonData = JsonUtility.FromJson<CurrentConsumptionResponse>(result);
                 currentEnergyReading = jsonData.currentConsumption;
 
-                // Calculate average energy consumption for 10s
                 TimeSpan timeDifference = currentTime - lastTime;
                 float timeDifferenceInSeconds = (float)timeDifference.TotalSeconds;
+
                 float energyConsumptionFromLastTime = currentEnergyReading - lastEnergyReading;
                 averageEnergyConsumption = energyConsumptionFromLastTime * 10 / timeDifferenceInSeconds;
                 Debug.Log("Average energy consumption: " + averageEnergyConsumption);
 
-                // update tree animations
+                // Update valuse of FruitsOrFlower
                 UpdateFruitsOrFlowers(averageEnergyConsumption);
                 NotifyObservers();
 
-                // update last time and lastEnergyReading
+                // Reset lastTime and lastEnergyReading
                 lastTime = currentTime;
                 lastEnergyReading = currentEnergyReading;
 
@@ -123,7 +126,7 @@ public class EnergyStatusController : MonoBehaviour
             }
             else
             {
-                // reset last time and lastEnergyReading
+                // Initiate lastTime and lastEnergyReading
                 yield return StartCoroutine(httpRequest.SendHttpRequest("get", "givenBackend", urlExtension1, jwtToken, ""));
                 string result = (string)httpRequest.result;
                 if (result == "Error")
@@ -144,7 +147,6 @@ public class EnergyStatusController : MonoBehaviour
     {
         public float currentConsumption;
     }
-
 
     // Update the number of fruits or flowers based on energy consumption
     private void UpdateFruitsOrFlowers(float averageEnergyConsumption)
