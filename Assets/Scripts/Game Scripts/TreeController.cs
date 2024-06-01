@@ -1,7 +1,8 @@
 using System.Collections;
 using UnityEngine;
 
-public class TreeController : MonoBehaviour
+// Concrete observer class for tree control
+public class TreeController : MonoBehaviour, IObserver
 {
     private Animator treeAnim;
 
@@ -15,17 +16,16 @@ public class TreeController : MonoBehaviour
     {
         treeAnim = GetComponent<Animator>();
         ResetAllAnimations();
+        EnergyStatusController.Instance.RegisterObserver(this);
     }
 
-    public void UpdateTree(int fruitsOrFlowers)
+    public void UpdateData(float averageEnergyConsumption, int fruitsOrFlowers)
     {
-        
         StartCoroutine(UpdateCoroutine(fruitsOrFlowers));
     }
 
     private IEnumerator UpdateCoroutine(int fruitsOrFlowers)
     {
-        
         if (fruitsOrFlowers <= -5)
         {
             SetDieAnimation(true, true);
@@ -51,14 +51,12 @@ public class TreeController : MonoBehaviour
 
     private void SetDieAnimation(bool die1, bool die2)
     {
-        
         treeAnim.SetBool(DIE1_ANIMATION, die1);
         treeAnim.SetBool(DIE2_ANIMATION, die2);
     }
 
     private void SetGrowAnimation(bool grow)
     {
-        
         foreach (var animation in growAnimations)
         {
             treeAnim.SetBool(animation, grow);
@@ -67,16 +65,14 @@ public class TreeController : MonoBehaviour
 
     private void SetGrowAnimationBasedOnFruitsOrFlowers(int fruitsOrFlowers)
     {
-        
         for (int i = 0; i < growAnimations.Length; i++)
         {
-            treeAnim.SetBool(growAnimations[i], i <= (fruitsOrFlowers / 10));
+            treeAnim.SetBool(growAnimations[i], i <= fruitsOrFlowers / 10);
         }
     }
 
     private void ResetAllAnimations()
     {
-        
         SetDieAnimation(false, false);
         SetGrowAnimation(false);
     }

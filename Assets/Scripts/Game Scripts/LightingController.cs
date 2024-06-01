@@ -1,17 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-public class LightingController : MonoBehaviour
+// Concrete observer class for lighting control, using the Strategy pattern for lighting updates
+public class LightingController : MonoBehaviour, IObserver
 {
     private Light2D globalLight;
-
-    // Colors to represent different energy consumption levels
-    public Color lowConsumptionColor = new Color32(0xFF, 0xFF, 0xFF, 0xFF);
-    public Color mediumConsumptionColor = new Color32(0xB6, 0x4D, 0x4D, 0xFF);
-    public Color highConsumptionColor = new Color32(0x96, 0x28, 0x28, 0xFF);
-    public Color veryHighConsumptionColor = new Color32(0x80, 0x1A, 0x1A, 0xFF);
+    private ILightingStrategy lightingStrategy;
 
     private void Awake()
     {
@@ -20,30 +14,71 @@ public class LightingController : MonoBehaviour
         {
             Debug.LogError("No Light2D component found on the GameObject.");
         }
+        EnergyStatusController.Instance.RegisterObserver(this);
     }
 
-    public void UpdateLightingColor(float averageEnergyConsumption)
+    public void UpdateData(float averageEnergyConsumption, int fruitsOrFlowers)
     {
-        if (globalLight == null)
-        {
-            return;
-        }
+        SetLightingStrategy(averageEnergyConsumption);
+        lightingStrategy.UpdateLighting(globalLight, averageEnergyConsumption);
+    }
 
+    private void SetLightingStrategy(float averageEnergyConsumption)
+    {
         if (averageEnergyConsumption < 0.2f)
         {
-            globalLight.color = lowConsumptionColor;
+            lightingStrategy = new LowConsumptionLighting();
         }
         else if (averageEnergyConsumption < 0.4f)
         {
-            globalLight.color = mediumConsumptionColor;
+            lightingStrategy = new MediumConsumptionLighting();
         }
         else if (averageEnergyConsumption < 0.8f)
         {
-            globalLight.color = highConsumptionColor;
+            lightingStrategy = new HighConsumptionLighting();
         }
         else
         {
-            globalLight.color = veryHighConsumptionColor;
+            lightingStrategy = new VeryHighConsumptionLighting();
         }
+    }
+}
+
+// Strategy interface for lighting update
+public interface ILightingStrategy
+{
+    void UpdateLighting(Light2D light, float averageEnergyConsumption);
+}
+
+// Concrete strategies for different lighting conditions
+public class LowConsumptionLighting : ILightingStrategy
+{
+    public void UpdateLighting(Light2D light, float averageEnergyConsumption)
+    {
+        light.color = new Color32(0xFF, 0xFF, 0xFF, 0xFF);
+    }
+}
+
+public class MediumConsumptionLighting : ILightingStrategy
+{
+    public void UpdateLighting(Light2D light, float averageEnergyConsumption)
+    {
+        light.color = new Color32(0xB6, 0x4D, 0x4D, 0xFF);
+    }
+}
+
+public class HighConsumptionLighting : ILightingStrategy
+{
+    public void UpdateLighting(Light2D light, float averageEnergyConsumption)
+    {
+        light.color = new Color32(0x96, 0x28, 0x28, 0xFF);
+    }
+}
+
+public class VeryHighConsumptionLighting : ILightingStrategy
+{
+    public void UpdateLighting(Light2D light, float averageEnergyConsumption)
+    {
+        light.color = new Color32(0x80, 0x1A, 0x1A, 0xFF);
     }
 }

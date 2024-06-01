@@ -1,21 +1,19 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
 
+// Helper class to handle HTTP requests
 public class HttpRequest : MonoBehaviour
 {
     private string givenBackend = "http://20.15.114.131:8080/api";
     private string ourBackend = "http://localhost:8080/energy-quest";
     public string result = null;
 
-    // Method for sending HTTP requests
-   public IEnumerator SendHttpRequest(string requestType, string url, string urlExtension, string jwtToken, string bodyJson)
+    // Sends an HTTP request and returns the result
+    public IEnumerator SendHttpRequest(string requestType, string url, string urlExtension, string jwtToken, string bodyJson)
     {
         UnityWebRequest request = null;
-        
 
-        // Select URL
         switch (url)
         {
             case "givenBackend":
@@ -29,7 +27,6 @@ public class HttpRequest : MonoBehaviour
                 break;
         }
 
-        // Create request based on request type
         switch (requestType)
         {
             case "get":
@@ -49,13 +46,10 @@ public class HttpRequest : MonoBehaviour
                 yield break;
         }
 
-        // Set headers
         request.SetRequestHeader("Authorization", "Bearer " + jwtToken);
 
-        // Send request
         yield return request.SendWebRequest();
 
-        // Check for errors
         if (request.result != UnityWebRequest.Result.Success)
         {
             Debug.LogError("Error sending HTTP request: " + request.error);
@@ -66,8 +60,6 @@ public class HttpRequest : MonoBehaviour
             result = request.downloadHandler.text;
         }
 
-        // Return the result of the request
         yield return result;
     }
-
 }
