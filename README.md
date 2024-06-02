@@ -32,7 +32,7 @@ Gems are awarded based on the player's daily energy consumption, which is fetche
      - Greater than 10 units, the player does not earn gems for the particular date.
        
 ## Additional Features
-- **Enemies:** Once a barrier is destroyed, new enemies (Blue Slimes) are spawned, adding challenges as the player progresses.
+- **Enemies:** Once a barrier is destroyed, new enemies (Blue Slimes) are spawned, adding challenges as the player progresses. If player touches an enemy his coin count will be reduced. 
 - **Coins and Dash:** The player can collect coins and dash for faster movement.
 - **Shop:** Collected coins can be used to buy more trees and bushes from the shop and add them to the inventory.
 - **Inventory Management:** The player can drag and drop inventory items within the game environment as desired.
