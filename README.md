@@ -1,5 +1,7 @@
 # Energy Quest Game - Team CodeCrafters (Group No 13)
 
+![image](https://github.com/RajanaKavinda/Unity-Game-Environment/assets/91953272/18e1ac4f-c9cc-481c-b27f-3306a56449a6)
+
 # Game Description and Behavior
 
 ## Overview
@@ -55,6 +57,18 @@ Gems are awarded based on the player's daily energy consumption, which is fetche
  ## State Persistence
    - The game state, including barrier destruction, total coins, gems,player position, inventory state and placed item state is saved using `PlayerPrefs`.
    - This ensures the player's progress is maintained across sessions.
+
+## Player Controlling Keys
+  Movements:
+  
+ - W: Move up
+ - S: Move down
+ - A: Move left
+ - D: Move right
+  
+  Dashing:
+  
+ - Space: Player dashing
 
 # Software Design Patterns used for main scripts in the Game
 
