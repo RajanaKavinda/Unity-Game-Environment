@@ -1,4 +1,4 @@
-# Unity Game Environment - Team CodeCrafters (Group No 13)
+# Energy Quest Game - Team CodeCrafters (Group No 13)
 
 # Game Description and Behavior
 
@@ -55,6 +55,71 @@ Gems are awarded based on the player's daily energy consumption, which is fetche
  ## State Persistence
    - The game state, including barrier destruction, total coins, gems,player position, inventory state and placed item state is saved using `PlayerPrefs`.
    - This ensures the player's progress is maintained across sessions.
+
+# Software Design Patterns used for main scripts in the Game
+
+1. **Barrier**:
+   - **Observer Pattern**: The `Barrier` class likely notifies the `BarrierCoinSpawner` when it is destroyed using an event (`OnBarrierDestroyed`).
+
+2. **CoinManager**:
+   - **Strategy Pattern**: Provides different strategies for modifying the coin count using methods like `DecreaseCoins`, `IncreaseCoins`, and `SetCoins`.
+
+3. **CoinSpawner**:
+   - **Factory Pattern**: Dynamically creates coin objects at runtime using predefined spawn points.
+   - **Iterator Pattern**: Uses a coroutine (`SpawnCoinsRoutine`) to spawn coins at intervals.
+
+4. **BarrierCoinSpawner**:
+   - **Observer Pattern**: Subscribes to the `Barrier.OnBarrierDestroyed` event to spawn coins when a barrier is destroyed.
+   - **Factory Pattern**: Similar to `CoinSpawner`, it dynamically creates coin objects.
+
+5. **DataFetcher**:
+   - **Singleton Pattern**: Ensures there is only one instance of `DataFetcher` and provides a global point of access to it.
+   - **Iterator Pattern**: Uses a coroutine (`FetchDataCoroutine`) to handle data fetching step-by-step.
+   - **Data Transfer Object (DTO)**: Uses classes (`PowerConsumptionResponse`, `DailyPowerConsumptionView`) to transfer data between the API and the game.
+
+6. **EnemySpawner**:
+   - **Factory Pattern**: Creates enemy objects dynamically at runtime using predefined spawn points.
+   - **Iterator Pattern**: Uses a coroutine to manage the timing of enemy spawns.
+
+7. **GemsDisplay**:
+   - **Observer Pattern**: Likely observes changes in gem count to update the display accordingly.
+
+8. **GemsManager**:
+   - **Singleton Pattern**: Ensures a single instance of `GemsManager` for managing gems across the game.
+   - **Observer Pattern**: Updates the display or other game elements when the gem count changes.
+
+9. **PlayerController**:
+   - **Singleton Pattern**: Ensures a single instance of `PlayerController` to manage the player state.
+   - **Command Pattern**: Encapsulates player actions like movement and state changes as methods.
+
+10. **SaveManager**:
+    - **Singleton Pattern**: Ensures a single instance of `SaveManager` for managing save/load operations across scenes.
+    - **Command Pattern**: Methods like `SavePlayerState`, `LoadPlayerState`, `SaveInventoryState`, and `LoadInventoryState` encapsulate different save/load operations.
+    - **Iterator Pattern**: Uses loops to save/load placed items state.
+
+11. **PauseWithPopup**:
+    - **Singleton Pattern**: Ensures a single instance of `PauseWithPopup` to manage the pause state across the game.
+    - **Command Pattern**: Encapsulates the pause and resume functionality as methods.
+
+12. **TreeController**:
+   - **Observer Pattern**: Implements the `IObserver` interface to receive updates from the `EnergyStatusController`. It updates the tree's animations based on the energy consumption and fruits or flowers count.
+   - **State Pattern**: Manages different states (growth, partial death, complete death) through animations.
+   - **Iterator Pattern**: Uses a coroutine (`UpdateCoroutine`) to handle updates step-by-step.
+
+13. **LightingController**:
+   - **Observer Pattern**: Implements the `IObserver` interface to receive updates from the `EnergyStatusController`. It adjusts the lighting based on energy consumption.
+   - **Strategy Pattern**: Uses different strategies (`LowConsumptionLighting`, `MediumConsumptionLighting`, `HighConsumptionLighting`, `VeryHighConsumptionLighting`) to update the lighting condition based on the energy consumption level.
+
+14. **EnergyStatusController**:
+   - **Singleton Pattern**: Ensures a single instance of `EnergyStatusController` to manage energy status and notify observers.
+   - **Observer Pattern**: Manages a list of observers (e.g., `TreeController`, `LightingController`) and notifies them when the energy consumption data is updated.
+   - **Iterator Pattern**: Uses a coroutine (`UpdatePowerConsumption`) to periodically update the energy consumption data.
+
+15. **HttpRequest**:
+   - **Command Pattern**: Encapsulates different HTTP request operations (`get`, `post`, `put`, `delete`) as methods and handles their execution.
+   - **Iterator Pattern**: Uses a coroutine (`SendHttpRequest`) to handle the asynchronous HTTP requests step-by-step.
+
+By applying these design principles, the scripts are more modular, maintainable, and scalable, contributing to a well-structured and robust game architecture.
 
 
 This repository contains the game's source code, assets, and documentation necessary for understanding and contributing to the project.
