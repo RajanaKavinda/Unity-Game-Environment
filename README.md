@@ -70,6 +70,23 @@ Gems are awarded based on the player's daily energy consumption, which is fetche
   
  - Space: Player dashing
 
+
+## How to Run This Game in Your Browser in Localhost
+
+1. Clone this repository [MCQ-Application](https://github.com/Ishana-Dewmini/MCQ-Application) into your local repository.
+2. Run `MCQ-Application/Backend` (Springboot appilication), `MCQ-Application/quiz-frontend`(React Vite application) on your local machine.
+3. Clone this repository into your local repository.
+4. Navigate to `Unity-Game-Environment -> WebGL Builds` folder.
+5. Right click on the window and click `Open in terminal` (Command prompt / Windows Powershell will be opened).
+6. Type the following command:
+   ```
+   py -m http.server
+   ```
+   (Install Python if you haven't)
+7. Go to the browser and type the following URL: [http://localhost:8000/](http://localhost:8000/)
+
+Follow these steps to enjoy playing the game on your own machine without the need for any additional setup or installations.
+
 # Software Design Patterns used for main scripts in the Game
 
 1. **Barrier**:
@@ -137,3 +154,4 @@ By applying these design principles, the scripts are more modular, maintainable,
 
 
 This repository contains the game's source code, assets, and documentation necessary for understanding and contributing to the project.
+
