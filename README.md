@@ -37,8 +37,11 @@ Gems are awarded based on the player's daily energy consumption, which is fetche
 - **Shop:** Collected coins can be used to buy more trees and bushes from the shop and add them to the inventory.
 - **Inventory Management:** The player can drag and drop inventory items within the game environment as desired.
 
-## Logics
+## Real-Time Energy Consumption Indication
 
+To get an understanding of the real-time energy consumption of the user, game lighting and trees are used as indicators. When current energy consumption is high, the game environment becomes darker and the trees start to die. When current energy consumption is low, the game environment becomes brighter and the trees start to fill with fruits and flowers.
+
+### The Logic
 1. **EnergyStatusController:**
    - Obtains current energy consumption periodically using HTTP GET requests.
    - Calculates the average energy consumption for 10 seconds over time.
@@ -47,7 +50,7 @@ Gems are awarded based on the player's daily energy consumption, which is fetche
 2. **TreeController:**
    - Animates tree growth and decay based on energy levels.
    - Receives updates from the EnergyStatusController.
-
+     
 3. **LightingController:**
    - Controls the color and intensity of the environment lighting.
    - Adjusts based on the average energy consumption received from the EnergyStatusController.
