@@ -1,17 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq; 
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using TMPro;
 
 public class Leaderboard : MonoBehaviour
 {
     private readonly string[] apiKeys = {
-        "NjVkNDIyMjNmMjc3NmU3OTI5MWJmZGIyOjY1ZDQyMjIzZjI3NzZlNzkyOTFiZmRhOA", 
-        "NjVkNDIyMjNmMjc3NmU3OTI5MWJmZGIzOjY1ZDQyMjIzZjI3NzZlNzkyOTFiZmRhOQ", 
+        "NjVkNDIyMjNmMjc3NmU3OTI5MWJmZGIyOjY1ZDQyMjIzZjI3NzZlNzkyOTFiZmRhOA",
+        "NjVkNDIyMjNmMjc3NmU3OTI5MWJmZGIzOjY1ZDQyMjIzZjI3NzZlNzkyOTFiZmRhOQ",
         "NjVkNDIyMjNmMjc3NmU3OTI5MWJmZGI0OjY1ZDQyMjIzZjI3NzZlNzkyOTFiZmRhYQ"
     };
     public Text user1;
@@ -52,35 +51,21 @@ public class Leaderboard : MonoBehaviour
 
     private IEnumerator GetJwtToken(HttpRequest httpRequest, string apiKey, int index)
     {
-        string uri = "http://20.15.114.131:8080/api/login";
         string jsonRequestBody = "{\"apiKey\":\"" + apiKey + "\"}";
-
-        using (UnityWebRequest request = new UnityWebRequest(uri, "POST"))
+        yield return StartCoroutine(httpRequest.SendHttpRequest("post", "givenBackend", urlExtension1, "", jsonRequestBody));
+        string result = (string)httpRequest.result;
+        if (result == "Error")
         {
-            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonRequestBody);
-            request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
-            request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
-            request.SetRequestHeader("Content-Type", "application/json");
-
-            yield return request.SendWebRequest();
-
-            if (request.result != UnityWebRequest.Result.Success)
-            {
-                outputArea.text = "Error: " + request.error;
-                yield return new WaitForSeconds(1f);
-                SceneManager.LoadScene("Error");
-            }
-            else
-            {
-                string jsonResponse = request.downloadHandler.text;
-                LoginResponse loginResponse = JsonUtility.FromJson<LoginResponse>(jsonResponse);
-                string jwtToken = loginResponse.token;
-                Debug.Log("JWT token for API key index " + index + ": " + jwtToken);
-
-                // Obtain the user name
-                yield return StartCoroutine(GetUserName(httpRequest, jwtToken));
-            }
+            Debug.LogError("Error obtaining JWT token for API key index " + index);
+            yield break;
         }
+
+        LoginResponse loginResponse = JsonUtility.FromJson<LoginResponse>(result);
+        string jwtToken = loginResponse.token;
+        Debug.Log("JWT token for API key index " + index + ": " + jwtToken);
+
+        // Obtain the user name
+        yield return StartCoroutine(GetUserName(httpRequest, jwtToken));
     }
 
     private IEnumerator GetUserName(HttpRequest httpRequest, string jwtToken)
@@ -147,9 +132,8 @@ public class Leaderboard : MonoBehaviour
 
     private void UpdateLeaderboardUI()
     {
-        // Sort the dictionary by energy consumption values in assending order
+        // Sort the dictionary by energy consumption values in ascending order
         var sortedList = userEnergyConsumption.OrderBy(x => x.Value.Item2).ToList();
-        
 
         // Ensure there are at least three users before updating the UI
         if (sortedList.Count >= 3)
