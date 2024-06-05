@@ -8,6 +8,7 @@ public class HttpRequest : MonoBehaviour
     private string givenBackend = "http://20.15.114.131:8080/api";
     private string ourBackend = "http://localhost:8080/energy-quest";
     public string result = null;
+    
 
     // Sends an HTTP request and returns the result
     public IEnumerator SendHttpRequest(string requestType, string url, string urlExtension, string jwtToken, string bodyJson)
@@ -33,7 +34,11 @@ public class HttpRequest : MonoBehaviour
                 request = UnityWebRequest.Get(url);
                 break;
             case "post":
-                request = UnityWebRequest.PostWwwForm(url, bodyJson);
+                request = new UnityWebRequest(url, "POST");
+                byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(bodyJson);
+                request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
+                request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+                request.SetRequestHeader("Content-Type", "application/json");
                 break;
             case "put":
                 request = UnityWebRequest.Put(url, bodyJson);
@@ -46,7 +51,10 @@ public class HttpRequest : MonoBehaviour
                 yield break;
         }
 
-        request.SetRequestHeader("Authorization", "Bearer " + jwtToken);
+        if (jwtToken != " "){
+            request.SetRequestHeader("Authorization", "Bearer " + jwtToken);
+        }
+        
 
         yield return request.SendWebRequest();
 

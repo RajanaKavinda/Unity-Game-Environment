@@ -11,6 +11,7 @@ public class SceneNavigator : MonoBehaviour
         GameObject.Find("ResetGame").GetComponent<Button>().onClick.AddListener(ResetAllPlayerPrefs);
         GameObject.Find("ViewProfile").GetComponent<Button>().onClick.AddListener(GoToProfilePage);
         GameObject.Find("QuizReview").GetComponent<Button>().onClick.AddListener(GoToQuizScene);
+        GameObject.Find("Leaderboard").GetComponent<Button>().onClick.AddListener(GoToLeaderboardScene);
     }
 
     public void GoToGameScene()
@@ -27,6 +28,12 @@ public class SceneNavigator : MonoBehaviour
     public void GoToProfilePage()
     {
         SceneManager.LoadScene("View Player Profile");
+    }
+
+    public void GoToLeaderboardScene()
+    {
+        SceneManager.LoadScene("Leaderboard");
+        
     }
 
     public void ResetAllPlayerPrefs()

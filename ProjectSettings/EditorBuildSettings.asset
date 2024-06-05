@@ -32,10 +32,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Questionere.unity
     guid: cb31a1576de1dc14d8da809f3e710f22
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Game Menu.unity
     guid: a8131987fc214364697b8d2f11fd1e29
   - enabled: 1
     path: Assets/Scenes/Game Env.unity
     guid: 9f8ac1166fa4e544cb34bf09b06a88ba
+  - enabled: 1
+    path: Assets/Scenes/Leaderboard.unity
+    guid: 6e0d69b57fde1f04fac0e41e74756364
   m_configObjects: {}
