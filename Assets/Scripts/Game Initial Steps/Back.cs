@@ -7,9 +7,6 @@ public class BackToMenu : MonoBehaviour
     void Start()
     {
         GameObject.Find("Back").GetComponent<Button>().onClick.AddListener(GoToMainMenu);
-
-
-
     }
 
     public void GoToMainMenu()

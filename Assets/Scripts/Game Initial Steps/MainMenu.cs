@@ -11,6 +11,7 @@ public class SceneNavigator : MonoBehaviour
         GameObject.Find("ResetGame").GetComponent<Button>().onClick.AddListener(ResetAllPlayerPrefs);
         GameObject.Find("ViewProfile").GetComponent<Button>().onClick.AddListener(GoToProfilePage);
         GameObject.Find("QuizReview").GetComponent<Button>().onClick.AddListener(GoToQuizScene);
+        GameObject.Find("Leaderboard").GetComponent<Button>().onClick.AddListener(GoToLeaderboardScene);
     }
 
     public void GoToGameScene()
@@ -38,4 +39,10 @@ public class SceneNavigator : MonoBehaviour
         PlayerPrefs.SetString("LastPlayedDate", DateTime.Now.ToString("yyyy-MM-dd"));
         GoToGameScene();
     }
+
+    public void GoToLeaderboardScene()
+    {
+        SceneManager.LoadScene("LeaderBoard");
+    }    
+
 }

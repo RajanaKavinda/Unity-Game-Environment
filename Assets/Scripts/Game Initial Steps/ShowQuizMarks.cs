@@ -6,9 +6,9 @@ using static GetMethod;
 
 public class ShowQuizMarks : MonoBehaviour
 {
-    public int Land = 0;
-    public int GameCoins = 0;
-    public int EnergyCoins = 0;
+    public static int Land = 0;
+    public static int GameCoins = 0;
+    public static int EnergyCoins = 0;
     
 
     // Reference to the Text component where you want to display the marks
