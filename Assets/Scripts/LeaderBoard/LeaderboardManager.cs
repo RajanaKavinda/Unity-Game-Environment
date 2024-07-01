@@ -92,12 +92,15 @@ public class LeaderboardManager : MonoBehaviour
             Destroy(child.gameObject);
         }
 
+        // Set a variable to store the rank of the current player
+        int rank = 0;
         foreach (PlayerData player in players)
         {
+            rank++;
             GameObject entry = Instantiate(leaderboardEntryPrefab, leaderboardContent);
             LeaderboardEntry leaderboardEntry = entry.GetComponent<LeaderboardEntry>();
 
-            leaderboardEntry.SetEntryText($"{player.Username}: {player.Score} (Gems: {player.GemCount}, Lands: {player.LandCount}, Coins: {player.CoinCount})");
+            leaderboardEntry.SetEntryText($"{rank} {player.Username}: {player.Score} ({player.LandCount}, {player.GemCount},  {player.CoinCount})");
 
         }
     }
