@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class LeaderboardManager : MonoBehaviour
 {
     [SerializeField] private GameObject leaderboardEntryPrefab;
-    [SerializeField] private Transform leaderboardContent;
+    [SerializeField] private Transform leaderboardRank;
 
     private string userListUrl = "http://20.15.114.131:8080/api/user/profile/list";
     private List<PlayerData> players = new List<PlayerData>();
@@ -87,7 +87,7 @@ public class LeaderboardManager : MonoBehaviour
     {
         players.Sort((a, b) => b.Score.CompareTo(a.Score));
 
-        foreach (Transform child in leaderboardContent)
+        foreach (Transform child in leaderboardRank)
         {
             Destroy(child.gameObject);
         }
@@ -97,10 +97,10 @@ public class LeaderboardManager : MonoBehaviour
         foreach (PlayerData player in players)
         {
             rank++;
-            GameObject entry = Instantiate(leaderboardEntryPrefab, leaderboardContent);
+            GameObject entry = Instantiate(leaderboardEntryPrefab, leaderboardRank);
             LeaderboardEntry leaderboardEntry = entry.GetComponent<LeaderboardEntry>();
 
-            leaderboardEntry.SetEntryText($"{rank} {player.Username}: {player.Score} ({player.LandCount}, {player.GemCount},  {player.CoinCount})");
+            leaderboardEntry.SetEntryRank($"{rank} {player.Username}: {player.Score} ({player.LandCount}, {player.GemCount},  {player.CoinCount})");
 
         }
     }

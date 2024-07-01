@@ -3,10 +3,10 @@ using UnityEngine.UI;
 
 public class LeaderboardEntry : MonoBehaviour
 {
-    public Text entryText;
+    public Text entryRank;
 
-    public void SetEntryText(string text)
+    public void SetEntryRank(string text)
     {
-        entryText.text = text;
+        entryRank.text = text;
     }
 }
