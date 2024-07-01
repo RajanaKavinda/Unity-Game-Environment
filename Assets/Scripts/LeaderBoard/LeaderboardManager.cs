@@ -8,6 +8,7 @@ public class LeaderboardManager : MonoBehaviour
 {
     [SerializeField] private GameObject leaderboardEntryPrefab;
     [SerializeField] private Transform leaderboardRank;
+    [SerializeField] private Transform leaderboardPlayer;
 
     private string userListUrl = "http://20.15.114.131:8080/api/user/profile/list";
     private List<PlayerData> players = new List<PlayerData>();
@@ -92,16 +93,23 @@ public class LeaderboardManager : MonoBehaviour
             Destroy(child.gameObject);
         }
 
+        foreach (Transform child in leaderboardPlayer)
+        {
+            Destroy(child.gameObject);
+        }
+
         // Set a variable to store the rank of the current player
         int rank = 0;
         foreach (PlayerData player in players)
         {
             rank++;
-            GameObject entry = Instantiate(leaderboardEntryPrefab, leaderboardRank);
-            LeaderboardEntry leaderboardEntry = entry.GetComponent<LeaderboardEntry>();
-
-            leaderboardEntry.SetEntryRank($"{rank} {player.Username}: {player.Score} ({player.LandCount}, {player.GemCount},  {player.CoinCount})");
-
+            GameObject entryRank = Instantiate(leaderboardEntryPrefab, leaderboardRank);
+            GameObject entryPlayer = Instantiate(leaderboardEntryPrefab, leaderboardPlayer);
+            LeaderboardEntry leaderboardEntryRank = entryRank.GetComponent<LeaderboardEntry>();
+            LeaderboardEntry leaderboardEntryPlayer = entryPlayer.GetComponent<LeaderboardEntry>();
+            //leaderboardEntry.SetEntryRank($"{rank} {player.Username}: {player.Score} ({player.LandCount}, {player.GemCount},  {player.CoinCount})");
+            leaderboardEntryRank.SetEntryRank($"{rank}");
+            leaderboardEntryPlayer.SetEntryPlayer($"{player.Username}");
         }
     }
 

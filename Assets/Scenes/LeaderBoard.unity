@@ -985,6 +985,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leaderboardEntryPrefab: {fileID: 7195095961158385926, guid: 9a861ba040689044996f63c9f1ea64be, type: 3}
   leaderboardRank: {fileID: 1353756376}
+  leaderboardPlayer: {fileID: 1634504927}
 --- !u!4 &1327427260
 Transform:
   m_ObjectHideFlags: 0

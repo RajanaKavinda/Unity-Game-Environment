@@ -93,3 +93,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   entryRank: {fileID: 4011182617284689936}
+  entryPlayer: {fileID: 4011182617284689936}
