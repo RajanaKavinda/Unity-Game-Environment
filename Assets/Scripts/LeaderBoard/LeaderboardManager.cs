@@ -9,6 +9,10 @@ public class LeaderboardManager : MonoBehaviour
     [SerializeField] private GameObject leaderboardEntryPrefab;
     [SerializeField] private Transform leaderboardRank;
     [SerializeField] private Transform leaderboardPlayer;
+    [SerializeField] private Transform leaderboardScore;
+    [SerializeField] private Transform leaderboardLandCount;
+    [SerializeField] private Transform leaderboardGemCount;
+    [SerializeField] private Transform leaderboardCoinCount;
 
     private string userListUrl = "http://20.15.114.131:8080/api/user/profile/list";
     private List<PlayerData> players = new List<PlayerData>();
@@ -98,6 +102,26 @@ public class LeaderboardManager : MonoBehaviour
             Destroy(child.gameObject);
         }
 
+        foreach (Transform child in leaderboardScore)
+        {
+            Destroy(child.gameObject);
+        }
+
+        foreach (Transform child in leaderboardLandCount)
+        {
+            Destroy(child.gameObject);
+        }
+
+        foreach (Transform child in leaderboardGemCount)
+        {
+            Destroy(child.gameObject);
+        }
+
+        foreach (Transform child in leaderboardCoinCount)
+        {
+            Destroy(child.gameObject);
+        }
+
         // Set a variable to store the rank of the current player
         int rank = 0;
         foreach (PlayerData player in players)
@@ -105,11 +129,23 @@ public class LeaderboardManager : MonoBehaviour
             rank++;
             GameObject entryRank = Instantiate(leaderboardEntryPrefab, leaderboardRank);
             GameObject entryPlayer = Instantiate(leaderboardEntryPrefab, leaderboardPlayer);
+            GameObject entryScore = Instantiate(leaderboardEntryPrefab, leaderboardScore);
+            GameObject entryLandCount = Instantiate(leaderboardEntryPrefab, leaderboardLandCount);
+            GameObject entryGemCount = Instantiate(leaderboardEntryPrefab, leaderboardGemCount);
+            GameObject entryCoinCount = Instantiate(leaderboardEntryPrefab, leaderboardCoinCount);
             LeaderboardEntry leaderboardEntryRank = entryRank.GetComponent<LeaderboardEntry>();
             LeaderboardEntry leaderboardEntryPlayer = entryPlayer.GetComponent<LeaderboardEntry>();
+            LeaderboardEntry leaderboardEntryScore = entryScore.GetComponent<LeaderboardEntry>();
+            LeaderboardEntry leaderboardEntryLandCount = entryLandCount.GetComponent<LeaderboardEntry>();
+            LeaderboardEntry leaderboardEntryGemCount = entryGemCount.GetComponent<LeaderboardEntry>();
+            LeaderboardEntry leaderboardEntryCoinCount = entryCoinCount.GetComponent<LeaderboardEntry>();
             //leaderboardEntry.SetEntryRank($"{rank} {player.Username}: {player.Score} ({player.LandCount}, {player.GemCount},  {player.CoinCount})");
             leaderboardEntryRank.SetEntryRank($"{rank}");
             leaderboardEntryPlayer.SetEntryPlayer($"{player.Username}");
+            leaderboardEntryScore.SetEntryScore($"{player.Score}");
+            leaderboardEntryLandCount.SetEntryLandCount($"{player.LandCount}");
+            leaderboardEntryGemCount.SetEntryGemCount($"{player.GemCount}");
+            leaderboardEntryCoinCount.SetEntryCoinCount($"{player.CoinCount}");
         }
     }
 

@@ -94,3 +94,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entryRank: {fileID: 4011182617284689936}
   entryPlayer: {fileID: 4011182617284689936}
+  entryScore: {fileID: 4011182617284689936}
+  entryLandCount: {fileID: 4011182617284689936}
+  entryGemCount: {fileID: 4011182617284689936}
+  entryCoinCount: {fileID: 4011182617284689936}
