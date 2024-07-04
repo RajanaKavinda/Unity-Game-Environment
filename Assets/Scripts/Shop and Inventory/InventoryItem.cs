@@ -26,7 +26,6 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         }
 
         initialPosition = rectTransform.anchoredPosition; // Store the initial position
-        Debug.Log("Initial Position: " + initialPosition);
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -37,7 +36,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         }
 
         rectTransform.anchoredPosition += eventData.delta / gridTransform.localScale.x; // Consider the scale of the grid
-        Debug.Log("Dragged Position: " + rectTransform.anchoredPosition);
+        
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -49,11 +48,11 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
         // Use a fixed Z-depth for the world point conversion
         Vector3 worldPoint = mainCamera.ScreenToWorldPoint(new Vector3(eventData.position.x, eventData.position.y, mainCamera.nearClipPlane)); // Adjust nearClipPlane to an appropriate depth if needed
-        Debug.Log("World Pointer Position: " + worldPoint);
+        
 
         // Snap the drop position to the grid
         Vector3 snappedPosition = SnapToGrid(worldPoint);
-        Debug.Log("Snapped Position: " + snappedPosition);
+        
 
         // Instantiate the corresponding game object in the game environment at the snapped position
         GameObject newObject = Instantiate(itemPrefab, snappedPosition, Quaternion.identity);
@@ -67,26 +66,19 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         // Reduce item count
         inventoryManager.DecreaseItemCount(itemType);
 
-        // Ensure the new object is visible
-        newObject.transform.position = new Vector3(newObject.transform.position.x, newObject.transform.position.y, 0.0f);
+        // Add the new item to the SaveManager's list of placed items
+        SaveManager.Instance.AddPlacedItem(newObject);
 
-        // Return the item to its initial position
+        // Move the UI item back to its initial position
         rectTransform.anchoredPosition = initialPosition;
     }
 
-    // Snap the given position to the nearest grid point
     private Vector3 SnapToGrid(Vector3 position)
     {
-        Vector3 localPosition = gridTransform.InverseTransformPoint(position);
-
-        // Adjust to grid spacing if necessary (assuming grid spacing of 1 unit)
-        float gridSpacing = 1.0f; // Adjust this value based on your grid size
-        Vector3 snappedPosition = new Vector3(
-            Mathf.Round(localPosition.x / gridSpacing) * gridSpacing,
-            Mathf.Round(localPosition.y / gridSpacing) * gridSpacing,
-            Mathf.Round(localPosition.z / gridSpacing) * gridSpacing
-        );
-
-        return gridTransform.TransformPoint(snappedPosition);
+        // Implement your grid snapping logic here
+        float gridSize = 1.0f; // Set your grid size
+        float snappedX = Mathf.Round(position.x / gridSize) * gridSize;
+        float snappedY = Mathf.Round(position.y / gridSize) * gridSize;
+        return new Vector3(snappedX, snappedY, position.z);
     }
 }

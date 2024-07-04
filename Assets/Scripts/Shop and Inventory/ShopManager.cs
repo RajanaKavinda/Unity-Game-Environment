@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class ShopManager : MonoBehaviour
 {
+
     public GameObject shopUI; // Reference to the Shop UI panel
 
     // Start is called before the first frame update

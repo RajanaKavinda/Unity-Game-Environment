@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 469463696203062725}
   - component: {fileID: 4623704613776606164}
   - component: {fileID: 5914090577834730425}
+  - component: {fileID: 238269916661262401}
+  - component: {fileID: 1354060767714412837}
   m_Layer: 0
   m_Name: Tree 02
   m_TagString: Untagged
@@ -53,7 +55,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 769a0c41c71f7f34e92a849992ce9d94, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -120,3 +122,36 @@ CapsuleCollider2D:
   m_Offset: {x: 0.028724235, y: 0.078101985}
   m_Size: {x: 1.2611873, y: 0.809604}
   m_Direction: 1
+--- !u!95 &238269916661262401
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2332269785892312124}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: fcc7678b93df14040ad3393b3af14748, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1354060767714412837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2332269785892312124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca224ec028979354884cd4f9fdc08505, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
