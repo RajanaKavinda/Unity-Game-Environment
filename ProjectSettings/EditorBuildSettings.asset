@@ -25,7 +25,7 @@ EditorBuildSettings:
     guid: cec65d06aaa063f41a34dcf47d104f6d
   - enabled: 0
     path: Assets/Scenes/Game.unity
-    guid: 5eed33f047bd9614aa8c2a43c21b81b8
+    guid: 9f8ac1166fa4e544cb34bf09b06a88ba
   - enabled: 1
     path: Assets/Scenes/View Player Profile.unity
     guid: 95378d3fa34ab2d488b7d5b78b114675
@@ -35,10 +35,13 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Game Menu.unity
     guid: a8131987fc214364697b8d2f11fd1e29
-  - enabled: 1
-    path: Assets/Scenes/Game Env.unity
+  - enabled: 0
+    path: Assets/Scenes/Game.unity
     guid: 9f8ac1166fa4e544cb34bf09b06a88ba
   - enabled: 1
     path: Assets/Scenes/LeaderBoard.unity
     guid: 6e0d69b57fde1f04fac0e41e74756364
+  - enabled: 1
+    path: Assets/Scenes/Game Env.unity
+    guid: f301ccefbdf7afd469722d2d65fc6b52
   m_configObjects: {}
