@@ -16,6 +16,7 @@ public class LeaderboardManager : MonoBehaviour
 
     private string userListUrl = "http://20.15.114.131:8080/api/user/profile/list";
     private List<PlayerData> players = new List<PlayerData>();
+    private string currentPlayerUsername;
 
     private void Start()
     {
@@ -33,19 +34,20 @@ public class LeaderboardManager : MonoBehaviour
         if (request.result == UnityWebRequest.Result.Success)
         {
             UserListResponse userList = JsonUtility.FromJson<UserListResponse>(request.downloadHandler.text);
-  
+
             int userNo = 1;
             foreach (var user in userList.userViews)
             {
                 if (userNo == 13) // Ensure this matches your player's username
                 {
+                    currentPlayerUsername = user.username;
                     AddCurrentPlayerData(user.username);
                 }
                 else
                 {
-                    int gemCount = Random.Range(0, 200); 
-                    int landCount = Random.Range(1, 14); 
-                    int coinCount = Random.Range(0, 1000); 
+                    int gemCount = Random.Range(0, 200);
+                    int landCount = Random.Range(1, 14);
+                    int coinCount = Random.Range(0, 1000);
 
                     int score = ScoringSystem.CalculateScore(gemCount, landCount, coinCount);
 
@@ -71,8 +73,8 @@ public class LeaderboardManager : MonoBehaviour
 
     private void AddCurrentPlayerData(string username)
     {
-        int gemCount = PlayerPrefs.GetInt("TotalGems",0);
-        int landCount = (PlayerPrefs.GetInt("QuizMarks",0)/10 + 1) + PlayerPrefs.GetInt("BoughtLands",0);
+        int gemCount = PlayerPrefs.GetInt("TotalGems", 0);
+        int landCount = (PlayerPrefs.GetInt("QuizMarks", 0) / 10 + 1) + PlayerPrefs.GetInt("BoughtLands", 0);
         int coinCount = PlayerPrefs.GetInt("Score", 0);
 
         int score = ScoringSystem.CalculateScore(gemCount, landCount, coinCount);
@@ -87,11 +89,11 @@ public class LeaderboardManager : MonoBehaviour
         });
     }
 
-
     private void UpdateLeaderboard()
     {
         players.Sort((a, b) => b.Score.CompareTo(a.Score));
 
+        // Clear existing leaderboard entries
         foreach (Transform child in leaderboardRank)
         {
             Destroy(child.gameObject);
@@ -122,7 +124,6 @@ public class LeaderboardManager : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        // Set a variable to store the rank of the current player
         int rank = 0;
         foreach (PlayerData player in players)
         {
@@ -133,19 +134,46 @@ public class LeaderboardManager : MonoBehaviour
             GameObject entryLandCount = Instantiate(leaderboardEntryPrefab, leaderboardLandCount);
             GameObject entryGemCount = Instantiate(leaderboardEntryPrefab, leaderboardGemCount);
             GameObject entryCoinCount = Instantiate(leaderboardEntryPrefab, leaderboardCoinCount);
+
             LeaderboardEntry leaderboardEntryRank = entryRank.GetComponent<LeaderboardEntry>();
             LeaderboardEntry leaderboardEntryPlayer = entryPlayer.GetComponent<LeaderboardEntry>();
             LeaderboardEntry leaderboardEntryScore = entryScore.GetComponent<LeaderboardEntry>();
             LeaderboardEntry leaderboardEntryLandCount = entryLandCount.GetComponent<LeaderboardEntry>();
             LeaderboardEntry leaderboardEntryGemCount = entryGemCount.GetComponent<LeaderboardEntry>();
             LeaderboardEntry leaderboardEntryCoinCount = entryCoinCount.GetComponent<LeaderboardEntry>();
-            //leaderboardEntry.SetEntryRank($"{rank} {player.Username}: {player.Score} ({player.LandCount}, {player.GemCount},  {player.CoinCount})");
+
             leaderboardEntryRank.SetEntryRank($"{rank}");
             leaderboardEntryPlayer.SetEntryPlayer($"{player.Username}");
             leaderboardEntryScore.SetEntryScore($"{player.Score}");
             leaderboardEntryLandCount.SetEntryLandCount($"{player.LandCount}");
             leaderboardEntryGemCount.SetEntryGemCount($"{player.GemCount}");
             leaderboardEntryCoinCount.SetEntryCoinCount($"{player.CoinCount}");
+
+            // Check if this is the current player and set the color to red
+            if (player.Username == currentPlayerUsername)
+            {
+                Color highlightColor = Color.red;
+                leaderboardEntryRank.SetEntryColor(highlightColor);
+                leaderboardEntryPlayer.SetEntryColor(highlightColor);
+                leaderboardEntryScore.SetEntryColor(highlightColor);
+                leaderboardEntryLandCount.SetEntryColor(highlightColor);
+                leaderboardEntryGemCount.SetEntryColor(highlightColor);
+                leaderboardEntryCoinCount.SetEntryColor(highlightColor);
+
+                Debug.Log($"Highlighting player {player.Username} with red color.");
+            }
+            else
+            {
+                Color highlightColor = Color.blue;
+                leaderboardEntryRank.SetEntryColor(highlightColor);
+                leaderboardEntryPlayer.SetEntryColor(highlightColor);
+                leaderboardEntryScore.SetEntryColor(highlightColor);
+                leaderboardEntryLandCount.SetEntryColor(highlightColor);
+                leaderboardEntryGemCount.SetEntryColor(highlightColor);
+                leaderboardEntryCoinCount.SetEntryColor(highlightColor);
+
+                Debug.Log($"Highlighting player {player.Username} with blue color.");
+            }
         }
     }
 

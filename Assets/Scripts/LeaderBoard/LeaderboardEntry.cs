@@ -39,4 +39,14 @@ public class LeaderboardEntry : MonoBehaviour
     {
         entryCoinCount.text = coinCount;
     }
+
+    public void SetEntryColor(Color color)
+    {
+        entryRank.color = color;
+        entryPlayer.color = color;
+        entryScore.color = color;
+        entryLandCount.color = color;
+        entryGemCount.color = color;
+        entryCoinCount.color = color;
+    }
 }
