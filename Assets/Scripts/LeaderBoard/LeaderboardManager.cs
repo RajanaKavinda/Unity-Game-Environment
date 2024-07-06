@@ -43,9 +43,9 @@ public class LeaderboardManager : MonoBehaviour
                 }
                 else
                 {
-                    int gemCount = Random.Range(-5, 5); // Random change once a day
-                    int landCount = Random.Range(0, 2); // Rare increase
-                    int coinCount = Random.Range(0, 50); // Frequent change
+                    int gemCount = Random.Range(0, 200); 
+                    int landCount = Random.Range(1, 14); 
+                    int coinCount = Random.Range(0, 1000); 
 
                     int score = ScoringSystem.CalculateScore(gemCount, landCount, coinCount);
 
