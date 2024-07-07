@@ -156,6 +156,64 @@ Follow these steps to enjoy playing the game on your own machine without the nee
 
 By applying these design principles, the scripts are more modular, maintainable, and scalable, contributing to a well-structured and robust game architecture.
 
+# Leaderboard 
+
+The leaderboard in this implementation displays a ranked list of players based on their scores. Each player's entry includes their rank, username, score, land count, gem count, and coin count. The current player's entry is highlighted to differentiate it from other players. The current player's entry is highlighted in red, while other players' entries are highlighted in blue.
+
+## How Players Are Ranked
+
+Players are ranked based on their scores, which are calculated using a custom scoring system. The scoring system considers the number of gems, lands, and coins each player has collected and applies specific weights to each. Current player's gems, lands are coin count is taken from the game itself.
+Since we can not take energy consumption data & game performances for other players gems, lands and coins are randomly assigned for them. These randomly generated values are then used to calculate the score for each player as follows.
+
+### Scoring Method
+
+The scoring system is based on the following function:
+
+```csharp
+public static int CalculateScore(int gemCount, int landCount, int coinCount)
+{
+    return (gemCount * 5) + (landCount * 100) + (coinCount * 1);
+}
+```
+
+- **Gems**: Each gem is worth 5 points.
+- **Lands**: Each land is worth 100 points.
+- **Coins**: Each coin is worth 1 point.
+
+Hence, by collecting more gems, coins, and lands, a player can move to a higher position on the leaderboard.
+
+## Main Steps in the Implementation
+
+1. **Fetching User Data**:
+   - A coroutine `FetchUserList` is used to fetch all players data from given backend server.
+   - The fetched players data is parsed and stored in a list of `PlayerData`.
+
+2. **Adding Current Player Data**:
+   - The current player's data is fetched from the game environment and added to the `players` list.
+
+3. **Updating the Leaderboard**:
+   - Players are sorted by their scores in descending order.
+   - Existing leaderboard entries are cleared.
+   - New entries are created and populated with player data.
+   - The current player's entry is highlighted in red, while other players' entries are highlighted in blue.
+
+## Applied Design Patterns
+
+### 1. **Singleton Pattern**
+The `LeaderboardManager` class is designed to be a singleton, ensuring that only one instance of the leaderboard manager exists at any time. 
+
+### 2. **MVC (Model-View-Controller) Pattern**
+The implementation follows the MVC pattern:
+- **Model**: `PlayerData` and the fetched user data.
+- **View**: The `LeaderboardEntry` prefab and UI elements for displaying the leaderboard.
+- **Controller**: `LeaderboardManager`, which handles data fetching, sorting, and updating the leaderboard UI.
+
+### 3. **Factory Method Pattern**
+The instantiation of leaderboard entries uses a factory-like approach by creating instances of the `leaderboardEntryPrefab` dynamically and populating them with data.
+
+### 4. **Observer Pattern**
+The `SyncHeight` class can be seen as an implementation of the observer pattern, where it observes the height of a target `RectTransform` and adjusts its own height accordingly.
+
 
 This repository contains the game's source code, assets, and documentation necessary for understanding and contributing to the project.
 
