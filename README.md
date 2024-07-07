@@ -182,7 +182,11 @@ public static int CalculateScore(int gemCount, int landCount, int coinCount)
 - **Lands**: Each land is worth 100 points.
 - **Coins**: Each coin is worth 1 point.
 
+> Gems are related to the energy-saving data received through the mock APIs. By saving more energy and increasing the tree count within the game environment, a player can increase their gem count.
+
+
 Hence, by collecting more gems, coins, and lands, a player can move to a higher position on the leaderboard.
+
 
 ## Main Steps in the Implementation
 
