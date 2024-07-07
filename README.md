@@ -158,6 +158,8 @@ By applying these design principles, the scripts are more modular, maintainable,
 
 # Leaderboard 
 
+![image](https://github.com/RajanaKavinda/Unity-Game-Environment/assets/91953272/cbe17647-925c-4ac4-b310-c1a41093bb39)
+
 The leaderboard in this implementation displays a ranked list of players based on their scores. Each player's entry includes their rank, username, score, land count, gem count, and coin count. The current player's entry is highlighted to differentiate it from other players. The current player's entry is highlighted in red, while other players' entries are highlighted in blue.
 
 ## How Players Are Ranked
